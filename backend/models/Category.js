@@ -5,8 +5,7 @@ const categorySchema = mongoose.Schema({
         type:String,
         maxlength:255,
         required:true,
-        trum:true
+        trim:true
     }
 })
-module.exports.categorySchema = categorySchema
-module.exports.Category = mongoose.model('Category',categorySchema)
+module.exports = mongoose.model('Category',categorySchema)

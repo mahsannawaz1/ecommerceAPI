@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { categorySchema } = require('./Category')
+
 
 const productSchema = new mongoose.Schema({
     sku: {
@@ -12,6 +12,7 @@ const productSchema = new mongoose.Schema({
     },
     name: {
         type:String,
+        minlength:5,
         maxlength:255,
         trim:true,
         required:true,
@@ -39,7 +40,8 @@ const productSchema = new mongoose.Schema({
         }
     },
     category: {
-        type: [categorySchema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Category',
         validate:{
             validator: (value)=> value.length > 0,
             message: 'Category cannot be empty'
