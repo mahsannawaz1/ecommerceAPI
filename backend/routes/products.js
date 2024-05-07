@@ -47,8 +47,8 @@ router.post('/',upload.array('images'),async (req,res)=>{
         sizes:product.sizes,
         images:images
     })
+
     res.send(await prod.save())
-    res.send(images)
 })
 
 const validateProduct = (data)=>{
