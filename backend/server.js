@@ -1,5 +1,5 @@
 require('dotenv').config()
-// require('express-async-errors')
+require('express-async-errors')
 
 const { products } = require('./routes/products')
 const error = require('./middlewares/error')

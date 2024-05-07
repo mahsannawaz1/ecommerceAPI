@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
         maxlength:10,
         trim:true,
         required:true,
+        unique:true
         
     },
     name: {
@@ -39,26 +40,51 @@ const productSchema = new mongoose.Schema({
             message: 'Images cannot be empty'
         }
     },
-    sizes: {
+    sizeColorNames: {
         type: [ 
             {
                 name: {
-                type:String,
-                enum:['S','M','L','XL'],
-                required:true
+                    type:String,
+                    enum:['6-7Y','7-8Y','8-9Y','9-10Y','10-11Y','11-12Y','13-14Y','XS','S','M','L','XL','2XL'],
+                    required:true
                 },
-                qty: {
-                type:Number,
-                min:0,
-                required:true
-                }
+                colors: [
+                        {
+                            name :{
+                                type:String,
+                                validate:{
+                                    validator: (value)=> value.length > 0,
+                                    message: 'Colors cannot be empty'
+                                },
+                                required:true
+                            },
+                            qty: {
+                                type:Number,
+                                min:0,
+                                required:true
+                            }
+                        }   
+                ]
+                
             }   
         ],
         validate:{
             validator: (value)=> value.length > 0,
             message: 'Sizes cannot be empty'
-        }
+        },
+        unique:true
+    },
+    manufacturer:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Manufacturer',
+        required:true
+    },
+    category:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Category',
+        required:true
     }
+
 })
 
 module.exports.productSchema = productSchema
