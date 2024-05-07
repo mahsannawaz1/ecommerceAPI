@@ -39,14 +39,6 @@ const productSchema = new mongoose.Schema({
             message: 'Images cannot be empty'
         }
     },
-    category: {
-        type:[mongoose.Schema.Types.ObjectId],
-        ref:'Category',
-        validate:{
-            validator: (value)=> value.length > 0,
-            message: 'Category cannot be empty'
-        }
-    },
     sizes: {
         type: [ 
             {
@@ -69,5 +61,6 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Product',productSchema)
+module.exports.productSchema = productSchema
+module.exports.Product = mongoose.model('Product',productSchema)
 

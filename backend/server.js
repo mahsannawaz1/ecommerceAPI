@@ -1,7 +1,7 @@
 require('dotenv').config()
 require('express-async-errors')
 
-const products = require('./routes/products')
+const { products } = require('./routes/products')
 const error = require('./middlewares/error')
 const morgan = require('morgan')
 const winston = require('winston')
