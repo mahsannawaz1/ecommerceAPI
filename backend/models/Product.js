@@ -62,7 +62,8 @@ const productSchema = new mongoose.Schema({
                                 type:Number,
                                 min:0,
                                 required:true
-                            }
+                            },
+                            _id:false,
                         }   
                 ]
                 
@@ -72,6 +73,7 @@ const productSchema = new mongoose.Schema({
             validator: (value)=> value.length > 0,
             message: 'Sizes cannot be empty'
         },
+        _id:false,
         unique:true
     },
     manufacturer:{
