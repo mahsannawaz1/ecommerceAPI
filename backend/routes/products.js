@@ -12,11 +12,11 @@ const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
     
-    let queryParams = null
-    if(req.query)
-        queryParams = req.query
-    console.log(queryParams)
-    res.send(await Product.find({category:queryParams.category}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${queryParams.sort_by}`))  
+    if(req.query.type){
+        res.send(await Product.find({category:req.query.category,type:req.query.type}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
+        return
+    }
+    res.send(await Product.find({category:req.query.category}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
 })
 router.get('/:id',async(req,res)=>{
     const product = await Product.findById(req.params.id).populate({path:'category',select:'-_id'}).select('-manufacturer')
@@ -53,6 +53,7 @@ router.post('/',upload.array('images'),async (req,res)=>{
         manufacturer:product.manufacturer,
         category:product.category,
         sizeColorNames:product.sizeColorNames,
+        type:product.type,
         images:images
     })
 
@@ -68,6 +69,7 @@ const validateProduct = (data)=>{
         category:Joi.objectId().required(),
         price:Joi.number().min(0).required(),
         fit:Joi.string().valid('regular','relaxed','slim','loose').required(),
+        type:Joi.string().valid('t-shirts','polos','shirts','trousers','jeans','activewear').required(),
         sizeColorNames:Joi.array().unique('name').min(1).items(
             Joi.object(
                 {

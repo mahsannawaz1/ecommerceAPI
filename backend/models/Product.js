@@ -94,6 +94,11 @@ const productSchema = new mongoose.Schema({
         type:String,
         enum:['regular','relaxed','slim','loose'],
         required:true
+    },
+    type:{
+        type:String,
+        enum:['t-shirts','polos','shirts','trousers','jeans','activewear'],
+        required:true
     }
 
 })
