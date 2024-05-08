@@ -1,27 +1,25 @@
 const { Product } = require('../models/Product')
 const Category = require('../models/Category')
 const Manufacturer = require('../models/Manufacturer')
+const upload = require('../middlewares/productUpload')
 
 const fs = require('fs')
 const _ = require('lodash')
 const Joi = require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
-const multer = require('multer')
 
 const router = require('express').Router()
 
-
-const storage = multer.diskStorage({
-    destination: (req,file,cb)=>{
-        return cb(null,'./uploads')
-    },
-    filename:(req,file,cb)=>{
-        return cb(null,`${Date.now()}_${file.originalname}`)
-    }
+router.get('/',async(req,res)=>{
+    res.send(await Product.find().populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort('-createdAt'))  
 })
-const upload  = multer({
-    storage,
-    limits: 1 * 1024 * 1024
+router.get('/:id',async(req,res)=>{
+    const product = await Product.findById(req.params.id).populate({path:'category',select:'-_id'}).select('-manufacturer')
+    if(!product){
+        res.status(400).send({error:'Product ID not found'})
+        return;
+    }
+    res.send(product)  
 })
 
 router.post('/',upload.array('images'),async (req,res)=>{
@@ -46,6 +44,7 @@ router.post('/',upload.array('images'),async (req,res)=>{
         description:product.description,
         price:product.price,
         qtyInStock:qtyinStock,
+        fit:product.fit,
         manufacturer:product.manufacturer,
         category:product.category,
         sizeColorNames:product.sizeColorNames,
@@ -63,10 +62,11 @@ const validateProduct = (data)=>{
         manufacturer:Joi.objectId().required(),
         category:Joi.objectId().required(),
         price:Joi.number().min(0).required(),
+        fit:Joi.string().valid('regular','relaxed','slim','loose').required(),
         sizeColorNames:Joi.array().unique('name').min(1).items(
             Joi.object(
                 {
-                    name:Joi.string().valid('6-7Y','7-8Y','8-9Y','9-10Y','10-11Y','11-12Y','13-14Y','XS','S','M','L','XL','2XL').required(),
+                    name:Joi.string().valid('6-12M','12-18M','18-24M','2-3Y','3-4Y','4-5Y','5-6Y','6-7Y','7-8Y','8-9Y','9-10Y','10-11Y','11-12Y','13-14Y','XS','S','M','L','XL','2XL').required(),
                     colors:Joi.array().unique('name').min(1).items(
                         Joi.object(
                             {

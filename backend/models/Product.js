@@ -45,7 +45,7 @@ const productSchema = new mongoose.Schema({
             {
                 name: {
                     type:String,
-                    enum:['6-7Y','7-8Y','8-9Y','9-10Y','10-11Y','11-12Y','13-14Y','XS','S','M','L','XL','2XL'],
+                    enum:['6-12M','12-18M','18-24M','2-3Y','3-4Y','4-5Y','5-6Y','6-7Y','7-8Y','8-9Y','9-10Y','10-11Y','11-12Y','13-14Y','XS','S','M','L','XL','2XL'],
                     required:true
                 },
                 colors: [
@@ -84,6 +84,15 @@ const productSchema = new mongoose.Schema({
     category:{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Category',
+        required:true
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now
+    },
+    fit: {
+        type:String,
+        enum:['regular','relaxed','slim','loose'],
         required:true
     }
 
