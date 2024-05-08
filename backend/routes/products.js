@@ -11,7 +11,12 @@ Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
-    res.send(await Product.find().populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort('-createdAt'))  
+    
+    let queryParams = null
+    if(req.query)
+        queryParams = req.query
+    console.log(queryParams)
+    res.send(await Product.find({category:queryParams.category}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${queryParams.sort_by}`))  
 })
 router.get('/:id',async(req,res)=>{
     const product = await Product.findById(req.params.id).populate({path:'category',select:'-_id'}).select('-manufacturer')
