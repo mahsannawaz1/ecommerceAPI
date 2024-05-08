@@ -7,3 +7,5 @@ const router = require('express').Router()
 router.get('/',async(req,res)=>{
     res.send(await Category.find())
 })
+
+module.exports = router

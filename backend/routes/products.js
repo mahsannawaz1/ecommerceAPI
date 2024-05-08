@@ -1,6 +1,4 @@
 const { Product } = require('../models/Product')
-const Category = require('../models/Category')
-const Manufacturer = require('../models/Manufacturer')
 const upload = require('../middlewares/productUpload')
 
 const fs = require('fs')

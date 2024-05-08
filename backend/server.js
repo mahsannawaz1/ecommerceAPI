@@ -2,6 +2,8 @@ require('dotenv').config()
 require('express-async-errors')
 
 const { products } = require('./routes/products')
+const categories = require('./routes/categories')
+const carts = require('./routes/carts')
 const error = require('./middlewares/error')
 const morgan = require('morgan')
 const winston = require('winston')
@@ -22,6 +24,8 @@ mongoose.connect('mongodb://localhost/ecommerce')
 
 
 app.use('/api/products',products)
+app.use('/api/categories',categories)
+app.use('/api/cart',carts)
 app.use(error)
 
 const port = process.env.PORT || 3000
