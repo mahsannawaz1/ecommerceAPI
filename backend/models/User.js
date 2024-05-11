@@ -1,7 +1,6 @@
 const mongoose  = require('mongoose')
-const cities = require('../variables/cities')
 
-const customerSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
 
     email:{
         type:String,
@@ -23,4 +22,4 @@ const customerSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Customer',customerSchema)
+module.exports = mongoose.model('User',userSchema)

@@ -1,3 +1,4 @@
+
 const User = require('../models/User')
 const Customer = require('../models/Customer')
 const hashedPassword = require('../middlewares/hashPassword')
@@ -14,7 +15,7 @@ router.post('/register',async(req,res)=>{
         res.status(400).send({error:error.details[0].message})
         return
     }
-    let user = await User.find({email:value.email})
+    let user = await User.findOne({email:value.email})
     if(user){
         res.status(400).send({error:'User is already registered'})
         return
@@ -23,10 +24,10 @@ router.post('/register',async(req,res)=>{
         res.status(400).send({error:`Passwords doesn't match`})
         return
     }
-    const password = hashedPassword(value.password)
+    const password = await hashedPassword(value.password)
     user = new User({
-        email:value.email,
-        password:password
+        email: value.email,
+        password: password
     })
     user = await user.save()
     const customer = new Customer({
@@ -50,8 +51,10 @@ router.post('/login',async(req,res)=>{
         res.status(400).send({error:'Invalid Email or Password'})
         return
     }
-    res.send(user)
-
+    console.log(process.env.JWT_SECRET_KEY)
+    const token = jwt.sign({ _id:user._id,isAdmin:user.isAdmin,isStaff:user.isStaff },process.env.JWT_SECRET_KEY)
+    const customer = await Customer.findOne({userId:user._id})
+    res.header('x-auth-token',token).send(customer)
 })
 
 

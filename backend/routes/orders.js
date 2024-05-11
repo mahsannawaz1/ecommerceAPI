@@ -46,9 +46,9 @@ router.post('/',async(req,res)=>{
     res.send(order)
 })
 
-router.put('/shipping',async (res,res)=>{
-    console.log(req.body)
-})
+// router.put('/shipping',async (res,res)=>{
+//     console.log(req.body)
+// })
 
 
 async function updateStock(cartItems, products) {
