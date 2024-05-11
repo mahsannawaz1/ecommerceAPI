@@ -1,10 +1,13 @@
 const { number } = require('joi')
+const { min } = require('lodash')
 const mongoose = require('mongoose')
 
 const cardDetailSchema = mongoose.Schema({
     cardType:{
         type:String,
         enum:['Visa','MasterCard'],
+        min:16,
+        max:16,
         required:true
     },
     cardNumber:{
