@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+const auth = require('../middlewares/auth')
 const Cart = require('../models/Cart')
 const CartItem = require('../models/CartItem')
 const { Product } = require('../models/Product')
@@ -7,8 +9,6 @@ Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
 router.post('/',async(req,res)=>{
-    
-    
     const { value,error } = validateCartItem(req.body)
     if(error){
         res.status(400).send({error:error.details[0].message})
@@ -51,6 +51,19 @@ router.post('/',async(req,res)=>{
     res.send(await cartItem.save())
 })
 
+router.put('/:id',auth,async(req,res)=>{
+    if(!mongoose.isValidObjectId(req.params.id)){
+        res.status(400).send({error:'Invalid Cart ID'})
+        return
+    }
+    const cart = await Cart.findByIdAndUpdate(req.params.id,{
+        $set:{
+            customerId:req.user._id
+        }
+    },{new:true})
+
+    res.send(cart)
+})
 const validateCartItem = (data)=>{
     const schema  =Joi.object({
         cart_id:Joi.objectId().required(),

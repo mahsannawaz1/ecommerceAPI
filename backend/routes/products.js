@@ -3,12 +3,10 @@ const Manufacturer = require('../models/Manufacturer')
 const upload = require('../middlewares/productUpload')
 const auth = require('../middlewares/auth')
 const admin = require('../middlewares/admin')
-
 const fs = require('fs')
 const _ = require('lodash')
 const Joi = require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
-
 const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
