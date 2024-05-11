@@ -47,7 +47,7 @@ router.post('/',async(req,res)=>{
 })
 
 router.put('/shipping',async (res,res)=>{
-
+    console.log(req.body)
 })
 
 
@@ -65,13 +65,23 @@ async function updateStock(cartItems, products) {
         }
     }
 }
-const validateAddress = (data)=>{
+const validateShippingInfo = (data)=>{
     const schema = Joi.object({
         order_id:Joi.objectId().required(),
-        shippingAddress:Joi.object({
-            city:Joi.string().valid(cities).required()
-        })
+        customer:Joi.object({
+            firstName:Joi.string().required(),
+            lastName:Joi.string().required(),
+            email:Joi.string().email(),
+            phone:Joi.string().min(11).max(11),
+            shippingAddress:Joi.object({
+                city:Joi.string().valid(cities).required(),
+                country:Joi.string().required(),
+                address:Joi.string().required()
+            })
+        }),
+        
     })
+    return schema.validate(data)
 }
 module.exports = router
 

@@ -10,15 +10,10 @@ const customerSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    email:{
-            type:String,
-            required:true
-    },
     phone:{
         type:String,
         minlength:11,
         maxlength:11,
-        required:true
     },
     shippingAddress:{
         type: {
@@ -26,9 +21,22 @@ const customerSchema = new mongoose.Schema({
                 type:String,
                 enum: cities
             },
-            country:String,
-            address:String
+            country:{
+                type:String,
+            },
+            address:{
+                type:String,
+            },
         }
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        unique:true
+    },
+    isCustomer:{
+        type:Boolean,
+        default:true
     },
 })
 
