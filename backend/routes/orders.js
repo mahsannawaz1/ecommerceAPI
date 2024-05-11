@@ -11,12 +11,7 @@ const router = require('express').Router()
 router.post('/',async(req,res)=>{
     
     
-    const { value,error } = validateOrderItem(req.body)
-    if(error){
-        res.status(400).send({error:error.details[0].message})
-        return
-    }
-    const cart = await Cart.findById(value.cart_id)
+    const cart = await Cart.findById(req.body.cart_id)
     
     if(!cart){
         res.status(400).send({error:'Cart ID not found'})
@@ -29,9 +24,7 @@ router.post('/',async(req,res)=>{
         return
     }
     
-    let order = new Order({
-        cart_id: cart._id,
-    })
+    let order = new Order()
     order = await order.save()
     const productIDs=[]
     cartItems.forEach( async(cartItem)=>{
@@ -52,12 +45,6 @@ router.post('/',async(req,res)=>{
     res.send(order)
 })
 
-const validateOrderItem = (data)=>{
-    const schema  =Joi.object({
-        cart_id:Joi.objectId().required(),
-    })
-    return schema.validate(data)
-}
 async function updateStock(cartItems, products) {
     for (const item of cartItems) {
         for (const product of products) {

@@ -5,12 +5,23 @@ const orderSchema = mongoose.Schema({
         type:String,
         unique:true
     },
-    cart_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Cart'
+    qty: Number,
+    status:{
+        type:String,
+        enum:['Pending','In Progress','Completed','Cancelled'],
+        default:'Pending'
     },
-    qty:{
-        type:Number
-    }
+    shippingAddress:{
+        type: {
+            city:String,
+            country:String,
+            address:String
+        }
+    },
+    contact:{
+        type:{
+            email:String,
+        }
+    },
 })
 module.exports = mongoose.model('Order',orderSchema)
