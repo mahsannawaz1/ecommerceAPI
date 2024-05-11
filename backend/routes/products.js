@@ -2,6 +2,7 @@ const { Product } = require('../models/Product')
 const Manufacturer = require('../models/Manufacturer')
 const upload = require('../middlewares/productUpload')
 const auth = require('../middlewares/auth')
+const admin = require('../middlewares/admin')
 
 const fs = require('fs')
 const _ = require('lodash')
@@ -27,7 +28,7 @@ router.get('/:id',async(req,res)=>{
     res.send(product)  
 })
 
-router.post('/',[auth,upload.array('images')],async (req,res)=>{
+router.post('/',[auth,admin,upload.array('images')],async (req,res)=>{
     if(req.files && req.files.length<1){   
         res.status(400).send({error:'Images cannot be empty'})
         return
