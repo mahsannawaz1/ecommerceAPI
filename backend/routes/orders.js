@@ -3,6 +3,7 @@ const CartItem = require('../models/CartItem')
 const Order = require('../models/Order')
 const OrderItem = require('../models/OrderItem')
 const { Product } = require('../models/Product')
+const cities = require('../variables/cities')
 
 const Joi  =require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
@@ -45,6 +46,11 @@ router.post('/',async(req,res)=>{
     res.send(order)
 })
 
+router.put('/shipping',async (res,res)=>{
+
+})
+
+
 async function updateStock(cartItems, products) {
     for (const item of cartItems) {
         for (const product of products) {
@@ -59,7 +65,14 @@ async function updateStock(cartItems, products) {
         }
     }
 }
-
+const validateAddress = (data)=>{
+    const schema = Joi.object({
+        order_id:Joi.objectId().required(),
+        shippingAddress:Joi.object({
+            city:Joi.string().valid(cities).required()
+        })
+    })
+}
 module.exports = router
 
 
