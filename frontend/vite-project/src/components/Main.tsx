@@ -4,14 +4,12 @@ import Banner from './Banner'
 import SeasonBanner from './SeasonBanner'
 import ClothingBanner from './ClothingBanner'
 import FitBanner from './FitBanner'
+import ShopCarousel from './ShopCarousel'
 
 
 const Main = () => {
     return (
-        <Box paddingX={{
-            base:0,
-            lg:10
-        }}>
+        <Box>
             <Banner />
             <SeasonBanner />
             <ClothingBanner  type='b_baggy' />
@@ -19,6 +17,7 @@ const Main = () => {
             <ClothingBanner  type='t_women'/>
             <ClothingBanner  type='t_men'/>
             <FitBanner />
+            <ShopCarousel />
             
         </Box>
         
