@@ -1,4 +1,6 @@
+
 import Dilevery from './Dilevery'
+import Main from './Main'
 import NavBar from './NavBar'
 
 const Layout = () => {
@@ -6,6 +8,7 @@ const Layout = () => {
         <>
         <NavBar />
         <Dilevery />
+        <Main  />
         </>
     )
 }

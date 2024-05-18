@@ -9,7 +9,7 @@ const Dilevery = () => {
         }} direction={'row'} justifyContent={'space-evenly'}>
             <Typography variant='body2'><Typography component={'span'} sx={{
                 fontWeight:600
-            }}>Spend 2,990 RS/-</Typography> for free delivery</Typography>
+            }}>Spend 2,990 Rs/-</Typography> for free delivery</Typography>
             <Typography variant='body2'><Typography component={'span'} sx={{
                 fontWeight:600
             }}>Cash on delivery</Typography> is now available</Typography>
