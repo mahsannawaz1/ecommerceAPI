@@ -1,6 +1,8 @@
 import { Box, IconButton, Stack, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
+import { useState } from 'react'
+import CarouselModal from './CarouselModal'
 
 interface Props{
     url:string,
@@ -8,6 +10,13 @@ interface Props{
 }
 
 const ShopCarouselItem = ({url,type}:Props) => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    }
     return (
         <Box position='relative' width={{base:'300px',lg:'350px'}}  marginX={2}>
             {type=='video' ? 
@@ -27,7 +36,8 @@ const ShopCarouselItem = ({url,type}:Props) => {
 
             <Stack direction={'column'} alignItems='center' justifyContent='center'
             position={'absolute'} top='0'
-            width="100%" height='350px' maxHeight="100%" sx={{
+            width="100%" height='350px' maxHeight="100%" 
+            sx={{
                 bgcolor:'rgb(0,0,0,0.8)',
                 color:'var(--white)',
                 cursor:'pointer',
@@ -36,7 +46,9 @@ const ShopCarouselItem = ({url,type}:Props) => {
                     opacity:'1', 
                     zIndex:99
                 }
-            }}>
+            }}
+            onClick={handleOpen}
+            >
                 <Typography variant="h5">Shop Now</Typography>
                 <IconButton sx={{
                     color:'var(--white)',
@@ -46,6 +58,7 @@ const ShopCarouselItem = ({url,type}:Props) => {
                 </IconButton>
                 <Typography variant="body2">@ahsan&usama</Typography>
             </Stack>
+            <CarouselModal open={open} handleClose={handleClose} type={type} url={url} />
         </Box>
     )
 }

@@ -8,14 +8,14 @@ const CustomCarouselArrow = ({type, onClick, isEdge}:Props) => {
         <IconButton 
         disabled={isEdge} 
         disableRipple 
-        sx={{cursor:'pointer',visibility:isEdge ? 'hidden' : 'visible'}} 
-        onClick={onClick}> <ArrowBackIosNewIcon  /> 
+        sx={{cursor:'pointer',visibility:isEdge ? 'hidden' : 'visible',color:'var(--black)'}} 
+        onClick={onClick}> <ArrowBackIosNewIcon fontSize="large"  /> 
         </IconButton> 
         :
         <IconButton 
         disabled={isEdge} 
-        sx={{cursor:'pointer',visibility:isEdge ? 'hidden' : 'visible'}} 
-        disableRipple onClick={onClick}> <ArrowForwardIosIcon />
+        sx={{cursor:'pointer',visibility:isEdge ? 'hidden' : 'visible',color:'var(--black)'}} 
+        disableRipple onClick={onClick}> <ArrowForwardIosIcon fontSize="large" />
         </IconButton>
     )
 }

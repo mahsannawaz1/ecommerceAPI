@@ -1,18 +1,13 @@
 import Carousel, { ReactElasticCarouselProps } from 'react-elastic-carousel'
-
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import CloseIcon from '@mui/icons-material/Close'
 import video from '../../public/denim_vid.mp4'
 import girlsImg from '../../public/girls.webp'
 import shirts from '../../public/shirts.webp'
 import menWomen from '../../public/men_women.webp'
 import americanEagle from '../../public/american_eagle.webp'
-import { Box, Grid, IconButton, Modal, Stack, Typography } from '@mui/material'
-import { useState } from 'react'
+import { Box, Stack, Typography } from '@mui/material'
 import ShopCarouselItem from './ShopCarouselitem'
 import CustomCarouselArrow from './CustomCarouselArrow'
+
 
 export interface Props {
     type: 'PREV' | 'NEXT';
@@ -20,23 +15,7 @@ export interface Props {
     isEdge: boolean;
 }
 
-const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        boxShadow: 24,
-};
-
 const ShopCarousel = () => {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
     const breakpoints :ReactElasticCarouselProps['breakPoints'] = [
         { width:1, itemsToShow:1, itemsToScroll:1 },
         { width:600, itemsToShow:2, itemsToScroll:1},
@@ -61,127 +40,6 @@ const ShopCarousel = () => {
                         <ShopCarouselItem type='image' url={menWomen} />
                 </Carousel>
             </Box>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-        >
-        <Box  sx={{ ...style }}>
-            
-            <Stack direction='row'>
-            <video muted controls autoPlay width='400px'  style={{objectFit:'cover'}} src={video} />
-            <Box padding={2.5} maxWidth={230} maxHeight={'450px'} sx={{
-                overflowX:'hidden',
-                overflowY:'scroll',
-                lineHeight:'0.5'
-            }}>
-            
-                <Stack direction='row'>
-                    <Typography marginRight={3} alignSelf={'center'} variant='h5'>AU</Typography>
-                    <Typography alignSelf={'center'}>@ahsan&usama</Typography>
-                    <Box alignSelf={'flex-start'} sx={{
-                        transform:'translate(42px,-20px)'
-                    }}>
-                        <IconButton onClick={handleClose} sx={{
-                            color:'var(--black)',
-                        }} disableRipple>
-                            <CloseIcon fontSize='large' />
-                        </IconButton>
-                    </Box>
-                </Stack>
-                <Typography alignSelf={'center'}>Get Inspired! (3 items)</Typography>
-                <Grid container>
-                        <Grid item xs={6}>
-                            <Box width='100px' sx={{
-                                ':hover':{
-                                    textDecoration:'underline',
-                                    cursor:'pointer'
-                                }
-                            }}>
-                                <img src={menWomen}   height='100px' />
-                                <Typography variant='caption'>American Eagle Super Soft Thermal Shirt</Typography>
-                                <Typography variant='subtitle2'  color='error'>3500.00 
-                                    <Typography variant='subtitle2' component='span' marginLeft='5px' sx={{textDecoration:'line-through',color:'var(--black)'}}>5000.00 </Typography>
-                                </Typography>
-                            </Box>
-
-                        </Grid>
-                        <Grid item xs={6}>
-                        <Box width='100px' sx={{
-                                ':hover':{
-                                    textDecoration:'underline',
-                                    cursor:'pointer'
-                                }
-                            }}>
-                                <img src={menWomen}   height='100px' />
-                                <Typography variant='caption'>American Eagle Super Soft Thermal Shirt</Typography>
-                                <Typography variant='subtitle2'  color='error'>3500.00 
-                                    <Typography variant='subtitle2' component='span' marginLeft='5px' sx={{textDecoration:'line-through',color:'var(--black)'}}>5000.00 </Typography>
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={6}>
-                        <Box width='100px' sx={{
-                                ':hover':{
-                                    textDecoration:'underline',
-                                    cursor:'pointer'
-                                }
-                            }}>
-                                <img src={menWomen}   height='100px' />
-                                <Typography variant='caption'>American Eagle Super Soft Thermal Shirt</Typography>
-                                <Typography variant='subtitle2'  color='error'>3500.00 
-                                    <Typography variant='subtitle2' component='span' marginLeft={'5px'} sx={{textDecoration:'line-through',color:'var(--black)'}}>5000.00 </Typography>
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={6}>
-                        <Box width='100px' sx={{
-                                ':hover':{
-                                    textDecoration:'underline',
-                                    cursor:'pointer'
-                                }
-                            }}>
-                                <img src={menWomen}   height='100px' />
-                                <Typography variant='caption'>American Eagle Super Soft Thermal Shirt</Typography>
-                                <Typography variant='subtitle2'  color='error'>3500.00 
-                                    <Typography variant='subtitle2' component='span' marginLeft='5px' sx={{textDecoration:'line-through',color:'var(--black)'}}>5000.00 </Typography>
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={6}>
-                        <Box width='100px' sx={{
-                                ':hover':{
-                                    textDecoration:'underline',
-                                    cursor:'pointer'
-                                }
-                            }}>
-                                <img src={menWomen}   height='100px' />
-                                <Typography variant='caption'>American Eagle Super Soft Thermal Shirt</Typography>
-                                <Typography variant='subtitle2'  color='error'>3500.00 
-                                    <Typography variant='subtitle2' component='span' marginLeft='5px' sx={{textDecoration:'line-through',color:'var(--black)'}}>5000.00 </Typography>
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={6}>
-                        <Box width='100px' sx={{
-                                ':hover':{
-                                    textDecoration:'underline',
-                                    cursor:'pointer'
-                                }
-                            }}>
-                                <img src={menWomen}   height='100px' />
-                                <Typography variant='caption'>American Eagle Super Soft Thermal Shirt</Typography>
-                                <Typography variant='subtitle2'  color='error'>3500.00 
-                                    <Typography variant='subtitle2' component='span' marginLeft='5px' sx={{textDecoration:'line-through',color:'var(--black)'}}>5000.00 </Typography>
-                                </Typography>
-                            </Box>
-                        </Grid>
-                </Grid>
-            </Box>
-            </Stack>
-        </Box>
-        </Modal>
         </Stack>
             
     )
