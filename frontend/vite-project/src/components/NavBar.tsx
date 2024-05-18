@@ -4,7 +4,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SearchIcon from '@mui/icons-material/Search';
 import icon from '../../public/icon.png'
-import { Link } from 'react-router-dom'
 
 
 const NavBar = () => {
@@ -15,7 +14,7 @@ const NavBar = () => {
                 '& .MuiOutlinedInput-root': {
                     borderRadius: 0,
                 },
-            }} label="What are you looking for" size='small' color='secondary' InputProps={{
+            }} label="What are you looking for" size='small' color='success' InputProps={{
                 endAdornment: <InputAdornment position='end'> <SearchIcon /> </InputAdornment>
             }} />
             <Stack direction='row'  alignItems='center'>
@@ -24,12 +23,13 @@ const NavBar = () => {
             </Stack> 
             
             <Stack direction='row' paddingRight={4}>
-                <Button color='secondary'>Login</Button>
+            <Button disableRipple color='success'>Create an Account</Button>
+                <Button disableRipple color='success'>Login</Button>
                 <IconButton>
                     <FavoriteIcon style={{color:'#000'}} />
                 </IconButton>
                 <IconButton>
-                <Badge badgeContent={1} color="secondary">
+                <Badge badgeContent={1} color="success">
                     <ShoppingCartIcon style={{color:'#000'}} />
                 </Badge>
                 </IconButton>
@@ -76,6 +76,27 @@ const NavBar = () => {
                     },
 
                 }}>Girls</Typography>
+                <Typography  variant='body2' sx={{
+                    
+                    borderBottom: '1px solid transparent',
+                    fontWeight:'normal',
+                    '&:hover':{
+                        borderBottom:'1px solid black',
+                        cursor:'pointer'
+                    },
+
+                }}>Accessories</Typography>
+                
+                <Typography color='error' variant='body2' sx={{
+                    
+                    borderBottom: '1px solid transparent',
+                    fontWeight:'normal',
+                    '&:hover':{
+                        borderBottom:'1px solid #f44336',
+                        cursor:'pointer'
+                    },
+
+                }}>Clearance</Typography>
                 
             </Stack> 
         </>
