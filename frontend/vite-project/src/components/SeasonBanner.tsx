@@ -4,7 +4,7 @@ import season from '../../public/spring.webp'
 const SeasonBanner = () => {
     return (
 
-        <Box position={'relative'} marginY={2}>
+        <Box  position={'relative'} marginX={10} marginY={2}>
             <img width="100%" src={season}  />
             <Stack position={'absolute'} top={'calc(43% - 16px)'} right='10%'  direction={'column'}   spacing={2}>
                 <Button sx={{

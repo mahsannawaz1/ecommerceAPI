@@ -4,7 +4,7 @@ import fit from '../../public/fit.png'
 
 const FitBanner = () => {
     return (
-        <Box position={'relative'} marginY={2}>
+        <Box marginX={10} position={'relative'} marginY={2}>
                 <img width="100%" src={fit}  />
                 <Stack  position={'absolute'} top={' 50%'} left='50%' 
                 sx={{

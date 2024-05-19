@@ -4,7 +4,7 @@ import banner from '../../public/promo.webp'
 const Banner = () => {
     return (
 
-        <Stack justifyContent={'center'} paddingY={5}  height={350} sx={{
+        <Stack marginX={10} justifyContent={'center'} paddingY={5}  height={350} sx={{
             background:`url(${banner})`
         }}>
             <Typography textAlign={'center'} fontWeight={700}  variant='h1' color='var(--banner-color)'>40% OFF Everything</Typography>

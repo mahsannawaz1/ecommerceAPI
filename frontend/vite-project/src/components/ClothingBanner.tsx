@@ -45,7 +45,7 @@ const ClothingBanner = ({ type }:Props) => {
     }
     const {heading,text,btnText1,btnText2,btnColor,img} = bannerMap[type]
     return (
-        <Box position={'relative'} marginY={2}>
+        <Box marginX={10} position={'relative'} marginY={2}>
         <img width="100%" src={img} />
         <Stack position={'absolute'} top={'calc(43% - 16px)'} left='5%'  direction={'column'}   spacing={2}>
             <Box>
