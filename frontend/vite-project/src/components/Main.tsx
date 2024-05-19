@@ -5,6 +5,7 @@ import SeasonBanner from './SeasonBanner'
 import ClothingBanner from './ClothingBanner'
 import FitBanner from './FitBanner'
 import ShopCarousel from './ShopCarousel'
+import TrendingProducts from './TrendingProducts'
 
 
 const Main = () => {
@@ -12,12 +13,14 @@ const Main = () => {
         <Box>
             <Banner />
             <SeasonBanner />
+            <TrendingProducts />
             <ClothingBanner  type='b_baggy' />
             <ClothingBanner  type='b_relaxed'/>
             <ClothingBanner  type='t_women'/>
             <ClothingBanner  type='t_men'/>
             <FitBanner />
             <ShopCarousel />
+            
             
         </Box>
         

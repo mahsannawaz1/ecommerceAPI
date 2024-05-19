@@ -22,6 +22,7 @@ export interface ArrowProps {
     type: 'PREV' | 'NEXT';
     onClick: () => void;
     isEdge: boolean;
+    size?:'small' | 'large'
 }
 
 const ShopCarousel = () => {

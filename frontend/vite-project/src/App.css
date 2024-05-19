@@ -3,7 +3,7 @@
     --btn-color1:rgb(241, 174, 144);
     --btn-color2:rgb(203, 215, 223); 
     --btn-color3:rgb(252, 255, 226); 
-    --btn-color4:rgb(255, 255, 225);
+    --btn-color4:rgb(255, 255, 255);
     --btn:rgb(0, 57, 113);
     --black:rgb(0,0,0);
     --white:rgb(255,255,255);
@@ -40,4 +40,8 @@ background: #555;
 }
 .height-100{
     height:100%;
+}
+.active-btn{
+    background-color: var(--black);
+    color:var(--white);
 }

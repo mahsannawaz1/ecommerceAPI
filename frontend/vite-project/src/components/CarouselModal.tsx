@@ -48,7 +48,7 @@ const CarouselModal = ({open,currentItem,handleClose}:Props) => {
                 <Carousal isRTL={false} pagination={false} className='height-100'
                     initialActiveIndex={currentItem !== null ? currentItem : 0}
                     renderArrow={({type:t, onClick, isEdge}:ArrowProps)=><CustomCarouselArrow type={t} onClick={onClick} isEdge={isEdge}  />} 
-                    breakPoints={breakpoints}>
+                    >
                         {items.map(item=><Box position='relative' width={{base:'300px',lg:'350px'}}  marginX={2}>{item}</Box>)}
                 </Carousal>
                 </Box>
