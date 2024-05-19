@@ -7,9 +7,10 @@ import CarouselModal from './CarouselModal'
 interface Props{
     url:string,
     type:'video' | 'image',
+    index:number
 }
 
-const ShopCarouselItem = ({url,type}:Props) => {
+const ShopCarouselItem = ({url,type,index}:Props) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -58,7 +59,7 @@ const ShopCarouselItem = ({url,type}:Props) => {
                 </IconButton>
                 <Typography variant="body2">@ahsan&usama</Typography>
             </Stack>
-            <CarouselModal open={open} handleClose={handleClose} type={type} url={url} />
+            <CarouselModal open={open} handleClose={handleClose} type={type} url={url} currentItem={index} />
         </Box>
     )
 }

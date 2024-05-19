@@ -1,8 +1,8 @@
 import { IconButton } from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import { Props } from './ShopCarousel'
-const CustomCarouselArrow = ({type, onClick, isEdge}:Props) => {
+import { ArrowProps } from './ShopCarousel'
+const CustomCarouselArrow = ({type, onClick, isEdge}:ArrowProps) => {
     return (
         type=='PREV' ? 
         <IconButton 
