@@ -44,7 +44,7 @@ const CarouselModal = ({open,currentItem,handleClose}:Props) => {
         >
             <Box  sx={{ ...style }}>
                 <Stack direction='row'>
-                <Box width="600px">
+                <Box width="500px">
                 <Carousal isRTL={false} pagination={false} className='height-100'
                     initialActiveIndex={currentItem !== null ? currentItem : 0}
                     renderArrow={({type:t, onClick, isEdge}:ArrowProps)=><CustomCarouselArrow type={t} onClick={onClick} isEdge={isEdge}  />} 
@@ -62,7 +62,7 @@ const CarouselModal = ({open,currentItem,handleClose}:Props) => {
                             <Typography marginRight={3} alignSelf={'center'} variant='h5'>AU</Typography>
                             <Typography alignSelf={'center'}>@ahsan&usama</Typography>
                             <Box alignSelf={'flex-start'} sx={{
-                                transform:'translate(42px,-20px)'
+                                transform:'translate(20px,-20px)'
                             }}>
                                 <IconButton onClick={handleClose} sx={{
                                     color:'var(--black)',
