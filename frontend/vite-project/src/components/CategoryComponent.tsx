@@ -22,7 +22,7 @@ const CategoryComponent = ({type}:Props) => {
         <>
             {keys.map(key=>{
                 return (
-                    <React.Fragment>
+                    <React.Fragment key={key}>
                         <Box paddingBottom={1} marginBottom={1} sx={{ borderBottom:'1px solid var(--border)'}}>
                     <Typography>{key}</Typography>
                         </Box>

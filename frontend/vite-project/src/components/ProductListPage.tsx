@@ -9,6 +9,7 @@ import under from '../../public/underAvatar.png'
 import polos from '../../public/polosAvatar.png'
 import { useState } from 'react'
 import CategoryComponent from './CategoryComponent'
+import SizeComponent from './SizeComponent'
 
 const ProductListPage = () => {
     const [type,setType] = useState<string>('men')
@@ -101,7 +102,12 @@ const ProductListPage = () => {
                         <CategoryComponent type={type} />
                     </Box>
                 </Grid>
-                <Grid item md={10}></Grid>
+                <Grid item md={10}>
+                    <Box>
+                        <Typography variant='h4' textTransform={'uppercase'}>{type}</Typography>
+                        <SizeComponent type='juniors' />
+                    </Box>
+                </Grid>
         </Grid>
         </Stack>
     )
