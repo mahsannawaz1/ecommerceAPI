@@ -12,7 +12,7 @@ import CategoryComponent from './CategoryComponent'
 import SizeComponent from './SizeComponent'
 
 const ProductListPage = () => {
-    const [type,setType] = useState<string>('men')
+    const [type,setType] = useState<string>('women')
     return (
         <Stack>
         <Stack direction='row'  spacing={2}>
@@ -105,7 +105,7 @@ const ProductListPage = () => {
                 <Grid item md={10}>
                     <Box>
                         <Typography variant='h4' textTransform={'uppercase'}>{type}</Typography>
-                        <SizeComponent type='juniors' />
+                        <SizeComponent type={type} />
                     </Box>
                 </Grid>
         </Grid>

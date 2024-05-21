@@ -12,7 +12,7 @@ const CategoryComponent = ({type}:Props) => {
         category = clothingCategoriesMen
     else if(type=='women')
         category = clothingCategoriesWomen
-    else if(type=='junior')
+    else if(type=='juniors')
         category = clothingCategoriesJuniors
     else {
         throw new Error('Invalid type provided'); 

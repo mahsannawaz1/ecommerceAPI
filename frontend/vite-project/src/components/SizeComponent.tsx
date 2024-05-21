@@ -6,13 +6,13 @@ interface Props{
 }
 
 const SizeComponent = ({type}:Props) => {
-
     const [selectedSizes,setSelectedSizes] = useState<number[]>([])
     let sizes : typeof menWomenSizes | typeof juniorSizes = []
-    if(type == 'men' || 'women')
-        sizes = menWomenSizes
-    else if(type == 'juniors')
+    if(type == 'juniors')
         sizes = juniorSizes
+    else if( type == 'men' || 'women')
+        sizes = menWomenSizes
+    
     const handleChangeSize = ( value:number )=>{
         if(foundColor(value)>=0){
             setSelectedSizes(selectedSizes?.filter(size=> size!=value ))
