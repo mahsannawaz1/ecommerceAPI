@@ -7,7 +7,9 @@
     --btn:rgb(0, 57, 113);
     --black:rgb(0,0,0);
     --white:rgb(255,255,255);
-    --link:#888888
+    --link:rgb(136, 136, 136);
+    --border: rgb(136, 136, 136,0.2);
+
 }
 *:root{
     box-sizing: border-box;
