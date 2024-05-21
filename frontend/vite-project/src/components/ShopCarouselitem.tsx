@@ -57,7 +57,7 @@ const ShopCarouselItem = ({url,type,index}:Props) => {
                 }}>
                     <AddCircleOutlineIcon fontSize='large' />
                 </IconButton>
-                <Typography variant="body2">@ahsan&usama</Typography>
+                <Typography variant="body2">@dapperlane</Typography>
             </Stack>
             <CarouselModal open={open} handleClose={handleClose} type={type} url={url} currentItem={index} />
         </Box>

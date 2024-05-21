@@ -1,14 +1,15 @@
 
-import Dilevery from './Dilevery'
+
 import Main from './Main'
 import NavBar from './NavBar'
+import ProductListPage from './ProductListPage'
 
 const Layout = () => {
     return (
         <>
         <NavBar />
-        <Dilevery />
-        <Main  />
+        {/* <Main  /> */}
+        <ProductListPage />
         </>
     )
 }

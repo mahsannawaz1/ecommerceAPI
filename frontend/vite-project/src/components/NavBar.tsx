@@ -4,6 +4,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SearchIcon from '@mui/icons-material/Search';
 import icon from '../../public/icon.png'
+import Banner from './Banner'
+import Dilevery from './Dilevery'
 
 
 const NavBar = () => {
@@ -19,7 +21,7 @@ const NavBar = () => {
             }} />
             <Stack direction='row'  alignItems='center'>
                 <img  src={icon} width={'100px'} height='80px' />
-                <Typography variant='h6'>AHSAN & USAMA's</Typography>  
+                <Typography textTransform={'uppercase'} variant='h6'>DAPPERLANE</Typography>  
             </Stack> 
             
             <Stack direction='row' paddingRight={4}>
@@ -99,6 +101,8 @@ const NavBar = () => {
                 }}>Clearance</Typography>
                 
             </Stack> 
+            <Dilevery />
+            <Banner />
         </>
     )
 }

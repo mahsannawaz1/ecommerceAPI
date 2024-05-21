@@ -30,7 +30,7 @@ const ShopCarousel = () => {
     return (
         <Stack>
             <Typography fontWeight={600} variant='h5' textAlign={'center'}>Get Inspired!</Typography>
-            <Typography variant='subtitle1' textAlign={'center'}>Shop your favorite look! Mention @ahsan&usama's and you could be featured right here!</Typography>
+            <Typography variant='subtitle1' textAlign={'center'}>Shop your favorite look! Mention @dapperlane and you could be featured right here!</Typography>
             <Box paddingX={1} marginY={4}>
                 <Carousal isRTL={false} pagination={false}
                     renderArrow={({type, onClick, isEdge}:ArrowProps)=><CustomCarouselArrow type={type} onClick={onClick} isEdge={isEdge}  />} 

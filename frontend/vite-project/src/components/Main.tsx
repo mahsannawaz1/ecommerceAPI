@@ -1,6 +1,6 @@
 
 import { Box } from '@mui/material'
-import Banner from './Banner'
+
 import SeasonBanner from './SeasonBanner'
 import ClothingBanner from './ClothingBanner'
 import FitBanner from './FitBanner'
@@ -11,7 +11,6 @@ import TrendingProducts from './TrendingProducts'
 const Main = () => {
     return (
         <Box>
-            <Banner />
             <SeasonBanner />
             <TrendingProducts />
             <ClothingBanner  type='b_baggy' />
