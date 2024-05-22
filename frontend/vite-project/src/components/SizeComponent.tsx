@@ -18,7 +18,7 @@ const SizeComponent = ({type}:Props) => {
             setSelectedSizes(selectedSizes?.filter(size=> size!=value ))
             return;
         }
-        setSelectedSizes([...selectedSizes,value]);
+        setSelectedSizes([...selectedSizes,value])
     }
     const foundColor = (value:number) => {
         return selectedSizes.find(size=>value == size) == undefined ? -1 : value
