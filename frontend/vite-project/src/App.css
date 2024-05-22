@@ -51,3 +51,14 @@ background: #555;
     background-color: var(--black);
     color:var(--white);
 }
+.height-none {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 1s linear;
+}
+
+.height-auto {
+    max-height: 500px !important; /* Adjust as needed */
+    overflow: hidden !important;
+    transition: max-height 1s ease-in;
+}

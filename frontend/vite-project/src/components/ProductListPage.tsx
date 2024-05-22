@@ -11,10 +11,11 @@ import { useState } from 'react'
 import CategoryComponent from './CategoryComponent'
 import SizeComponent from './SizeComponent'
 import ProductListGrid from './ProductListGrid'
+import FilterComponent from './FilterComponent'
 
 
 const ProductListPage = () => {
-    const [type,setType] = useState<string>('women')
+    const [type,setType] = useState<string>('men')
     return (
         <Stack>
         <Stack direction='row'  spacing={2}>
@@ -108,6 +109,7 @@ const ProductListPage = () => {
                     <Box>
                         <Typography variant='h4' textTransform={'uppercase'}>{type}</Typography>
                         <SizeComponent type={type} />
+                        <FilterComponent />
                     </Box>
                     <ProductListGrid />
                 </Grid>
