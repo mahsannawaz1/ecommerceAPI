@@ -1,4 +1,4 @@
-import { Stack,Grid,Box, Typography, Button, IconButton } from '@mui/material'
+import { Stack,Grid,Box, Typography, Button} from '@mui/material'
 import newArrivals from '../../public/newArrivals.png'
 import tees from '../../public/teesAvatar.png'
 import hoodies from '../../public/hoodiesAvatar.png'
@@ -123,7 +123,7 @@ const ProductListPage = () => {
                 <Grid item md={10}>
                     <Box>
                         <Typography variant='h4' textTransform={'uppercase'}>{type}</Typography>
-                        <SizeComponent type={type} />
+                        <SizeComponent filters={filters} type={type} onHandleFilters={handleChangeFilters} />
                         <Stack direction={'row'} spacing={4} marginY={2}>
                             <SizeFilter filter={sortBy} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
                             <Filter filterType='color' onHandleFilters={handleChangeFilters} filter={colors} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
@@ -133,11 +133,12 @@ const ProductListPage = () => {
                         {
                             filters.length > 0 && 
                             <Stack marginY={2} direction='row' justifyContent={'space-between'} alignItems={'center'}>
-                                <Stack direction={'row'} spacing={1}>
-                                    <Typography>Selected Filters </Typography>
-                                    <Stack direction={'row'} spacing={1}>
+                                <Stack direction={'row'} spacing={2}>
+                                    <Typography whiteSpace={'nowrap'}>Selected Filters </Typography>
+                                    <Stack direction={'row'} flexWrap={'wrap'} rowGap={1} spacing={1}>
                                     {filters.map((filter,index)=>
                                         <Button 
+                                            onClick={()=>handleChangeFilters(filter)}
                                             key={index}
                                             disableRipple 
                                             sx={
@@ -157,17 +158,19 @@ const ProductListPage = () => {
                                         >
                                             <Typography marginRight={0.2} fontSize='12px'>{filter.label} </Typography>
                                         
-                                            <ClearIcon onClick={()=>handleChangeFilters(filter)} sx={{color:'var(--black)',fontSize:'12px'}}  />
+                                            <ClearIcon sx={{color:'var(--black)',fontSize:'12px'}}  />
                                         </Button>
                                     )}
                                     </Stack>
                                 </Stack>
                                 <Button 
+                                    
                                     onClick={()=>setFilters([])}
                                     sx={{
                                         textDecoration:'underline',
                                         cursor:'pointer',
                                         color:'var(--link)',
+                                        whiteSpace:'nowrap',
                                         '&:hover': { 
                                             background: 'none',
                                             textDecoration:'underline',
@@ -175,7 +178,7 @@ const ProductListPage = () => {
                                     }}
                                     >Clear Filters</Button>
                             
-                        </Stack>
+                            </Stack>
                         }
                         
                     </Box>

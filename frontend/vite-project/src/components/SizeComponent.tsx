@@ -2,10 +2,12 @@ import { Stack,Button } from '@mui/material'
 import { useState } from 'react'
 import { menWomenSizes,juniorSizes } from '../services/sizes'
 interface Props{
-    type:string
+    type:string,
+    filters:{label:string,value:string}[],
+    onHandleFilters:(value:{label:string,value:string})=>void
 }
 
-const SizeComponent = ({type}:Props) => {
+const SizeComponent = ({type,onHandleFilters,filters}:Props) => {
     const [selectedSizes,setSelectedSizes] = useState<number[]>([])
     let sizes : typeof menWomenSizes | typeof juniorSizes = []
     if(type == 'juniors')
@@ -13,7 +15,9 @@ const SizeComponent = ({type}:Props) => {
     else if( type == 'men' || 'women')
         sizes = menWomenSizes
     
-    const handleChangeSize = ( value:number )=>{
+    console.log(sizes)
+    const handleChangeSize = ( value:number,size:string )=>{
+        onHandleFilters({value:size,label:size})
         if(foundColor(value)>=0){
             setSelectedSizes(selectedSizes?.filter(size=> size!=value ))
             return;
@@ -27,9 +31,10 @@ const SizeComponent = ({type}:Props) => {
         <Stack marginY={1} direction='row' spacing={1}>
             {sizes.map((size,index)=> 
                 <Button 
+                    
                     key={index}
                     value={index} 
-                    onClick={()=>handleChangeSize(index)} 
+                    onClick={()=>handleChangeSize(index,size)} 
                     sx={{
                         '&:hover': {
                             backgroundColor: 'var(--black)',
@@ -39,14 +44,14 @@ const SizeComponent = ({type}:Props) => {
                         },
                         borderRadius:'30px',
                         fontSize:10,
-                        border:'1px solid black',
+                        border:'1px solid var(--border)',
 
                         padding:'5px 10px',
-                        bgcolor: foundColor(index) == index ? 'var(--black)' : 'var(--btn-color4)',
-                        color: foundColor(index) == index ? 'var(--white)' : 'var(--black)'
+                        bgcolor: filters.find(filter=>filter.value == size) ? 'var(--black)' : 'var(--btn-color4)',
+                        color: filters.find(filter=>filter.value == size) ? 'var(--white)' : 'var(--black)'
                         
                     }} 
-                    disableRipple variant='contained'>
+                    disableRipple>
                 {size}</Button>
             )}
         </Stack>
