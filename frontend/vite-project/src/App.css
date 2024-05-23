@@ -55,10 +55,12 @@ background: #555;
     max-height: 0 !important;
     overflow: hidden !important;
     transition: max-height 1s linear;
+    
 }
 
 .height-auto {
-    max-height: 500px !important; /* Adjust as needed */
+    max-height: 500px !important; 
     overflow: hidden !important;
-    transition: max-height 1s ease-in;
+    transition: max-height 1s linear;
+    overflow-y: scroll;
 }
