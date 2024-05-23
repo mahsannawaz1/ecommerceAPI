@@ -3,7 +3,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from 'react';
 import productImages from '../services/productImages'
-const ProductListGrid = () => {
+interface Props{
+    handleOpen:()=>void
+}
+const ProductListGrid = ({handleOpen}:Props) => {
 
     const [favourites,setFavourites] = useState<number[]>([])
 
@@ -44,7 +47,7 @@ const ProductListGrid = () => {
                         <Typography variant='caption' color='error'>(Save 40%)</Typography>
                     </Box>
                     <Stack >
-                        <Button color='secondary'>View Options</Button>
+                        <Button onClick={handleOpen} color='secondary'>View Options</Button>
                     </Stack>
             </Grid>)}
             

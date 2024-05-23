@@ -15,10 +15,16 @@ import SizeFilter from './SizeFilter'
 import { colors,prices,sortBy,sizes } from '../services/filter';
 import Filter from './Filter'
 import ClearIcon from '@mui/icons-material/Clear';
+import QuickView from './QuickView'
 
 
 const ProductListPage = () => {
+    const [open, setOpen] =  useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     const [type,setType] = useState<string>('men')
+
     const [activeFilter,setActiveFilter] = useState<string | null>(null)
     const [filters,setFilters] = useState<{label:string,value:string}[]>([])
     console.log(filters)
@@ -32,7 +38,8 @@ const ProductListPage = () => {
         setFilters([...filters,obj])
     }
     return (
-        <Container fixed >
+        <>
+        <Container fixed sx={{marginY:5}}>
             <Stack direction='row' spacing={2} overflow={'auto'}>
                 <Box  sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={newArrivals} alt="New Arrivals" />
@@ -182,10 +189,12 @@ const ProductListPage = () => {
                             }
                             
                         </Box>
-                        <ProductListGrid />
+                        <ProductListGrid handleOpen={handleOpen} />
                     </Grid>
             </Grid>
         </Container>
+        <QuickView open={open} handleClose={handleClose}  />
+        </>
     )
 }
 

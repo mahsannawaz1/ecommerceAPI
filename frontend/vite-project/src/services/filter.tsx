@@ -25,17 +25,12 @@ export const colors = [
     'Black',
     'Blue',
     'Brown',
-    'Burgundy',
     'Green',
     'Grey',
-    'Metallic',
-    'Multi-Colored',
-    'Neutral',
     'Orange',
     'Pink',
     'Purple',
     'Red',
-    'White',
     'Yellow',
 ].map(color => ({ label: color, value: color }));
 
