@@ -3,23 +3,28 @@ import { Box, Button, Radio, Stack, Typography, RadioGroup, FormControlLabel } f
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 interface Props{
-    filter:{label:string,value:string}[]
+    filter:{label:string,value:string}[],
+    activeFilter:string | null ,
+    setActiveFilter:(value:string | null)=>void
 }
 
-const SizeFilter = ( { filter } : Props ) => {
+const SizeFilter = ( { filter,activeFilter,setActiveFilter } : Props ) => {
 
 const [selectedValue, setSelectedValue] = useState('');
-const [active,setActive] = useState<boolean>(false)
+
 
 const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
 setSelectedValue(event.target.value);
 };
 const handleChangeHeight = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     event.stopPropagation()
-    setActive(!active)
+    if(activeFilter !='sort by')
+        setActiveFilter('sort by')
+    else
+        setActiveFilter(null)
 }
 document.addEventListener('click',()=>{
-    setActive(false)
+    setActiveFilter(null)
 })
 
 return (
@@ -31,7 +36,7 @@ return (
         fontSize='small'
         
         sx = {{
-            transform: active ? 'rotate(180deg)' : '',
+            transform: activeFilter =='sort by' ? 'rotate(180deg)' : '',
             transition:'transform 0.6s linear'
         }}
         /> 
@@ -44,7 +49,7 @@ return (
         position:'absolute', 
         zIndex:9,
         background:'var(--white)'
-    }} className={active ? 'height-auto' : 'height-none'}  >
+    }} className={activeFilter =='sort by' ? 'height-auto' : 'height-none'}  >
     <Stack>
     <RadioGroup  sx={{padding:'5px 10px 5px 5px'}}  value={selectedValue} onChange={handleChange}>
         {filter.map((obj,index)=>        

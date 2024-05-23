@@ -1,21 +1,25 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { useState } from "react";
 
 interface Props{
-    filterType:'Size' | 'Color' | 'Price'
-    filter:{label:string,value:string}[]
+    filterType:'size' | 'color' | 'price'
+    filter:{label:string,value:string}[],
+    activeFilter:string | null ,
+    setActiveFilter:(value:string | null)=>void
 }
 
-const Filter = ({ filterType,filter } : Props) => {
-    const [active,setActive] = useState<boolean>(false)
+const Filter = ({ filterType,filter,activeFilter,setActiveFilter } : Props) => {
 
     const handleChangeHeight = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+
         event.stopPropagation()
-        setActive(!active)
+        if(activeFilter != filterType )
+            setActiveFilter(filterType)
+        else
+            setActiveFilter(null)
     }
     document.addEventListener('click',()=>{
-        setActive(false)
+        setActiveFilter(null)
     })
     return (
         <Box position={'relative'}>
@@ -26,7 +30,7 @@ const Filter = ({ filterType,filter } : Props) => {
                 fontSize='small'
                 
                 sx = {{
-                    transform: active ? 'rotate(180deg)' : '',
+                    transform: activeFilter =='price' ? 'rotate(180deg)' : '',
                     transition:'transform 0.6s linear'
                 }}
                 /> 
@@ -40,7 +44,7 @@ const Filter = ({ filterType,filter } : Props) => {
                 position:'absolute', 
                 zIndex:9,
                 background:'var(--white)'
-            }} className={active ? 'height-auto' : 'height-none'}  >
+            }} className={activeFilter =='price' ? 'height-auto' : 'height-none'}  >
             <Stack sx={{padding:'5px 10px 5px 5px'}} >
             
                 {filter.map((obj,index)=>        
@@ -48,6 +52,7 @@ const Filter = ({ filterType,filter } : Props) => {
                         disableRipple 
                         sx={
                             { 
+                                fontSize:'12px',
                                 color:'var(--black)', 
                                 padding: 0,
                                 paddingBottom:0.6, 
