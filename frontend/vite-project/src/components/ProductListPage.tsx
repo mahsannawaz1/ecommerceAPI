@@ -1,4 +1,4 @@
-import { Stack,Grid,Box, Typography } from '@mui/material'
+import { Stack,Grid,Box, Typography, Button, IconButton } from '@mui/material'
 import newArrivals from '../../public/newArrivals.png'
 import tees from '../../public/teesAvatar.png'
 import hoodies from '../../public/hoodiesAvatar.png'
@@ -12,13 +12,25 @@ import CategoryComponent from './CategoryComponent'
 import SizeComponent from './SizeComponent'
 import ProductListGrid from './ProductListGrid'
 import SizeFilter from './SizeFilter'
-import { colors,prices,sortBy } from '../services/filter';
+import { colors,prices,sortBy,sizes } from '../services/filter';
 import Filter from './Filter'
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const ProductListPage = () => {
     const [type,setType] = useState<string>('men')
     const [activeFilter,setActiveFilter] = useState<string | null>(null)
+    const [filters,setFilters] = useState<{label:string,value:string}[]>([])
+    console.log(filters)
+    const handleChangeFilters = (obj:{label:string,value:string})=>{
+        console.log(obj)
+        const foundFilter = filters.find(filter=>filter.value == obj.value)
+        if(foundFilter){
+            setFilters(filters.filter(filter=> filter.value != obj.value ))
+            return
+        }
+        setFilters([...filters,obj])
+    }
     return (
         <Stack>
         <Stack direction='row'  spacing={2}>
@@ -112,10 +124,60 @@ const ProductListPage = () => {
                     <Box>
                         <Typography variant='h4' textTransform={'uppercase'}>{type}</Typography>
                         <SizeComponent type={type} />
-                        <Stack direction={'row'} spacing={2}>
+                        <Stack direction={'row'} spacing={4} marginY={2}>
                             <SizeFilter filter={sortBy} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
-                            <Filter filterType='price' filter={prices} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                            <Filter filterType='color' onHandleFilters={handleChangeFilters} filter={colors} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                            <Filter filterType='size' onHandleFilters={handleChangeFilters} filter={sizes} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                            <Filter filterType='price' onHandleFilters={handleChangeFilters} filter={prices} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
                         </Stack>
+                        {
+                            filters.length > 0 && 
+                            <Stack marginY={2} direction='row' justifyContent={'space-between'} alignItems={'center'}>
+                                <Stack direction={'row'} spacing={1}>
+                                    <Typography>Selected Filters </Typography>
+                                    <Stack direction={'row'} spacing={1}>
+                                    {filters.map((filter,index)=>
+                                        <Button 
+                                            key={index}
+                                            disableRipple 
+                                            sx={
+                                                {   
+                                                    border:'1px solid var(--border)',
+                                                    fontSize:'12px',
+                                                    borderRadius:0,
+                                                    color:'var(--black)', 
+                                                    paddingY: 0,
+                                                    paddingX:0.5,
+                                                    justifyContent:'space-evenly',
+                                                    '&:hover': { 
+                                                        background: 'none'
+                                                    } 
+                                                }
+                                            }
+                                        >
+                                            <Typography marginRight={0.2} fontSize='12px'>{filter.label} </Typography>
+                                        
+                                            <ClearIcon onClick={()=>handleChangeFilters(filter)} sx={{color:'var(--black)',fontSize:'12px'}}  />
+                                        </Button>
+                                    )}
+                                    </Stack>
+                                </Stack>
+                                <Button 
+                                    onClick={()=>setFilters([])}
+                                    sx={{
+                                        textDecoration:'underline',
+                                        cursor:'pointer',
+                                        color:'var(--link)',
+                                        '&:hover': { 
+                                            background: 'none',
+                                            textDecoration:'underline',
+                                        } 
+                                    }}
+                                    >Clear Filters</Button>
+                            
+                        </Stack>
+                        }
+                        
                     </Box>
                     <ProductListGrid />
                 </Grid>

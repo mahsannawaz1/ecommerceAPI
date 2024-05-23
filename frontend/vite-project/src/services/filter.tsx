@@ -1,3 +1,4 @@
+import { menWomenSizes,juniorSizes } from "./sizes";
 export const sortBy = [
     {label:'Recommended',value:''},
     {label:'Price High To Low',value:'-price'},
@@ -36,4 +37,6 @@ export const colors = [
     'Red',
     'White',
     'Yellow',
-]
+].map(color => ({ label: color, value: color }));
+
+export const sizes =  [...menWomenSizes,...juniorSizes].map(size => ({ label: size, value: size }));

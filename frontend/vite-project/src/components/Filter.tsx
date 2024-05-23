@@ -5,16 +5,17 @@ interface Props{
     filterType:'size' | 'color' | 'price'
     filter:{label:string,value:string}[],
     activeFilter:string | null ,
-    setActiveFilter:(value:string | null)=>void
+    setActiveFilter:(value:string | null)=>void,
+    onHandleFilters:(value:{label:string,value:string})=>void
 }
 
-const Filter = ({ filterType,filter,activeFilter,setActiveFilter } : Props) => {
-
+const Filter = ({ filterType,filter,activeFilter,setActiveFilter,onHandleFilters } : Props) => {
     const handleChangeHeight = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
 
         event.stopPropagation()
-        if(activeFilter != filterType )
+        if(activeFilter != filterType ){
             setActiveFilter(filterType)
+        }
         else
             setActiveFilter(null)
     }
@@ -30,7 +31,7 @@ const Filter = ({ filterType,filter,activeFilter,setActiveFilter } : Props) => {
                 fontSize='small'
                 
                 sx = {{
-                    transform: activeFilter =='price' ? 'rotate(180deg)' : '',
+                    transform: activeFilter ==filterType ? 'rotate(180deg)' : '',
                     transition:'transform 0.6s linear'
                 }}
                 /> 
@@ -38,17 +39,17 @@ const Filter = ({ filterType,filter,activeFilter,setActiveFilter } : Props) => {
             </Button>
             </Box>
             <Box  sx={{
-                
+                // overflowY: 'auto !important',
                 display:'inline-block',
                 whiteSpace:'nowrap',
                 position:'absolute', 
                 zIndex:9,
                 background:'var(--white)'
-            }} className={activeFilter =='price' ? 'height-auto' : 'height-none'}  >
-            <Stack sx={{padding:'5px 10px 5px 5px'}} >
+            }} className={activeFilter ==filterType ? 'height-auto' : 'height-none'}  >
+            <Stack sx={{padding:3}} >
             
                 {filter.map((obj,index)=>        
-                    <Button key={index}
+                    <Button onClick={()=>onHandleFilters(obj)} key={index}
                         disableRipple 
                         sx={
                             { 
