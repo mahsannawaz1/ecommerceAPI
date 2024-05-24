@@ -11,10 +11,12 @@ const CustomCarousalPagination = ({pages,active,onClick}:Props) => {
         <Stack marginY={1} direction='row' spacing={0.5}>
             {pages.map((page,index)=> <Box  key={index} width={5} height={5} onClick={()=>onClick(String(index))}
             sx={
-                {
-                    bgcolor:`${active == index ? 'var(--black)' : 'var(--white)'}`,
+                
+                {   
+
+                    bgcolor:`${active == index ? 'grey' : 'var(--white)'}`,
                     borderRadius:'100%',
-                    border:'1px solid black',
+                    border:'1px solid grey',
                     cursor:'pointer'
                 }
             }
