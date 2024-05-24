@@ -68,16 +68,27 @@ input[type='number'] {
     }
 }
 
-.vertical-carousel-container{
-    
-    transform: rotate(90deg);
-    transform-origin: top left;
-    
-}
-.carousel-item {
-    transform: rotate(-90deg);
 
+@media screen and (min-width: 1440px)  {
+    .vertical-carousel-container{
+    
+        transform: rotate(90deg);
+        transform-origin: top left;
+        position:absolute;
+        top:0;
+        left:0;
+        width:600px;
+        
+    } 
+    .carousel-item {
+        transform: rotate(-90deg);
+    
+    }
 }
+
 .carousel-item img{
     cursor:pointer;
+}
+.remove-border{
+    border:0 !important;
 }
