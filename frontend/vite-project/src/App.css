@@ -67,3 +67,17 @@ input[type='number'] {
         transform:translateX(10px);
     }
 }
+
+.vertical-carousel-container{
+    
+    transform: rotate(90deg);
+    transform-origin: top left;
+    
+}
+.carousel-item {
+    transform: rotate(-90deg);
+
+}
+.carousel-item img{
+    cursor:pointer;
+}

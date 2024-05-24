@@ -102,7 +102,7 @@ const NavBar = () => {
                 
             </Stack> 
             <Dilevery />
-            <Banner />
+            
         </>
     )
 }
