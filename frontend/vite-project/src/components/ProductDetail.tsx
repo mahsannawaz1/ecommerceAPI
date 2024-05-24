@@ -23,7 +23,7 @@ const ProductDetail = () => {
 
     return (
         <Container sx={{marginY:5}}>
-            <Stack direction={'row'}  spacing={4}>
+            <Stack direction={'row'}  spacing={8}>
 
             <Box position={'relative'}>
 
@@ -46,7 +46,7 @@ const ProductDetail = () => {
                     </Carousal>
                 </Box>
             </Box>
-            <Box width={'31%'}>
+            <Box width={{lg:'31%',md:'auto'}}>
                 <Typography variant='h5' textAlign={'center'} marginBottom={2}>AE SUPER SOFT LOGO GRAPHIC T-SHIRT</Typography>
                 <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={1}>
                     <Typography sx={{textDecoration:'line-through'}}>AED 130</Typography>
@@ -115,6 +115,7 @@ const ProductDetail = () => {
                     </Select>
                     </FormControl>
                 </Stack>
+
                 <Stack marginX={5} marginY={2} justifyContent={'center'}>
                     <Button sx={{
                             background: 'var(--black)',
@@ -128,22 +129,23 @@ const ProductDetail = () => {
                         }}
                     >Add to CART</Button>
                 </Stack>
+
                 <Stack marginY={0.5} direction='row' >
                         <Typography variant='body2' >FIT: </Typography>
                         <Typography  marginLeft={0.5} sx={{color:'var(--link)'}} variant='body2' textTransform={'capitalize'}>Regular Fit</Typography>
                 </Stack>
                 
-                        <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>THE NAME SAYS IT ALL THE RIGHT SIZE SLIGHTLY SNUGS THE BODY LEAVING ENOUGH ROOM FOR COMFORT IN THE SLEEVES AND WAIST. DOES NOT TAPER DOWN AND OFFERS A RELAXED SILHOUETTE FOR YOUR EVERYDAY LOOKS.</Typography>
-                        <Stack marginY={1}>
-                            <Typography variant='body2'>COMPOSITION & CARE</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>100% COTTON</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}> MACHINE WASH UP TO 30C/86F, GENTLE CYCLE</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT BLEACH</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>IRON UP TO 110C/230F</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT IRON DIRECTLY ON PRINTS/EMBROIDERY/EMBELLISHMENTS</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT DRY CLEAN</Typography>
-                            <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT TUMBLE DRY</Typography>
-                        </Stack>
+                <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>THE NAME SAYS IT ALL THE RIGHT SIZE SLIGHTLY SNUGS THE BODY LEAVING ENOUGH ROOM FOR COMFORT IN THE SLEEVES AND WAIST. DOES NOT TAPER DOWN AND OFFERS A RELAXED SILHOUETTE FOR YOUR EVERYDAY LOOKS.</Typography>
+                <Stack marginY={1}>
+                    <Typography variant='body2'>COMPOSITION & CARE</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>100% COTTON</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}> MACHINE WASH UP TO 30C/86F, GENTLE CYCLE</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT BLEACH</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>IRON UP TO 110C/230F</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT IRON DIRECTLY ON PRINTS/EMBROIDERY/EMBELLISHMENTS</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT DRY CLEAN</Typography>
+                    <Typography sx={{color:'var(--link)'}} variant='caption' textTransform={'capitalize'}>DO NOT TUMBLE DRY</Typography>
+                </Stack>
 
             </Box>
             
