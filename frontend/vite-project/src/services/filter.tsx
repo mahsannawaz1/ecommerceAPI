@@ -1,5 +1,5 @@
 import { menWomenSizes,juniorSizes } from "./sizes";
-export const sortBy = [
+export const sortByFilters = [
     {label:'Recommended',value:''},
     {label:'Price High To Low',value:'-price'},
     {label:'Price Low To High',value:'price'},

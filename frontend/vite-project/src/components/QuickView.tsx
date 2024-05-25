@@ -74,8 +74,8 @@ const QuickView = ({open,handleClose}:Props) => {
                         <Typography marginLeft={0.5} variant='body2'>{currentColor}</Typography>
                     </Stack>
                     <Box sx={{display:'flex',flexFlow:'row-wrap',flexWrap:'wrap',gap:0.5}}>
-                        {clrs.map(color=>
-                        <Box onClick={()=>setCurrentColor(color)} borderRadius={'100%'} sx={{
+                        {clrs.map((color,index)=>
+                        <Box key={index}  onClick={()=>setCurrentColor(color)} borderRadius={'100%'} sx={{
                             
                             border: currentColor == color ? '1px solid black' : '1px solid white',
                             cursor:'pointer',
@@ -141,11 +141,11 @@ const QuickView = ({open,handleClose}:Props) => {
                                     }}  
                                 />
                                 <Stack alignItems={'center'}>
-                                    <IconButton disabled={qty==6} disableRipple sx={{height:15}}>
-                                    <AddIcon onClick={()=>setQty(qty+1)} sx={{fontSize:15,cursor:'pointer'}} />
+                                    <IconButton onClick={()=>setQty(qty+1)} disabled={qty==6} disableRipple sx={{height:15}}>
+                                    <AddIcon  sx={{fontSize:15,cursor:'pointer'}} />
                                     </IconButton>
-                                    <IconButton disabled={qty==0} disableRipple sx={{height:15}}>
-                                    <RemoveIcon  onClick={()=>setQty(qty-1)} sx={{fontSize:15,cursor:'pointer'}} />
+                                    <IconButton onClick={()=>setQty(qty-1)} disabled={qty==0} disableRipple sx={{height:15}}>
+                                    <RemoveIcon   sx={{fontSize:15,cursor:'pointer'}} />
                                     </IconButton>
                                 
                                 

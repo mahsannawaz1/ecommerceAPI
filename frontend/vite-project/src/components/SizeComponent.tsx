@@ -14,8 +14,6 @@ const SizeComponent = ({type,onHandleFilters,filters}:Props) => {
         sizes = juniorSizes
     else if( type == 'men' || 'women')
         sizes = menWomenSizes
-    
-    console.log(sizes)
     const handleChangeSize = ( value:number,size:string )=>{
         onHandleFilters({value:size,label:size})
         if(foundColor(value)>=0){

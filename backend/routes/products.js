@@ -11,14 +11,21 @@ Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
+    console.log(req.query.filters)
     const foundCategory = await Category.findOne({name:req.query.category})
-    console.log(foundCategory)
-    if(req.query.type){
-        res.send(await Product.find({category:foundCategory._id,type:req.query.type}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
+    if(req.query.sort_by){
+        res.send(await Product.find({category:foundCategory._id })
+        .sort(`${req.query.sort_by}`))  
         return
     }
-    res.send(await Product.find({category:foundCategory._id}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
+    if(req.query.type){
+        res.send(await Product.find({category:foundCategory._id,type:req.query.type})
+        .sort(`${req.query.sort_by}`))  
+        return
+    }
+    res.send(await Product.find({category:foundCategory._id}).populate({path:'manufacturer',select:'-_id'}))  
 })
+
 router.get('/:id',async(req,res)=>{
     const product = await Product.findById(req.params.id).populate({path:'category',select:'-_id'}).select('-manufacturer')
     if(!product){

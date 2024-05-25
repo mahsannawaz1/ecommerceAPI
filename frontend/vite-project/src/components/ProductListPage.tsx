@@ -12,7 +12,7 @@ import CategoryComponent from './CategoryComponent'
 import SizeComponent from './SizeComponent'
 import ProductListGrid from './ProductListGrid'
 import SizeFilter from './SizeFilter'
-import { colors,prices,sortBy,sizes } from '../services/filter';
+import { colors,prices,sortByFilters,sizes } from '../services/filter';
 import Filter from './Filter'
 import ClearIcon from '@mui/icons-material/Clear';
 import QuickView from './QuickView'
@@ -25,20 +25,13 @@ interface Props{
 }
 
 const ProductListPage = ({ category }:Props) => {
-    const {data:products} = useQuery({
-        queryKey:['products'],
-        queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category } }).then(res=>res.data)
-    })
-
     const [open, setOpen] =  useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     const [type,setType] = useState<string>(category)
-
     const [activeFilter,setActiveFilter] = useState<string | null>(null)
     const [filters,setFilters] = useState<{label:string,value:string}[]>([])
-    console.log(filters)
+    const [currentSortBy,setCurrentSortBy] = useState<string>('')
     const handleChangeFilters = (obj:{label:string,value:string})=>{
         console.log(obj)
         const foundFilter = filters.find(filter=>filter.value == obj.value)
@@ -48,6 +41,16 @@ const ProductListPage = ({ category }:Props) => {
         }
         setFilters([...filters,obj])
     }
+    const handleChangeSort = (value:string)=>{
+        setCurrentSortBy(value)
+    }
+
+    const { data:products } = useQuery({
+        queryKey:['products',currentSortBy,filters],
+        queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,filters } }).then(res=>res.data)
+    })
+
+
     return (
         <>
         <Container fixed sx={{marginY:5}}>
@@ -143,7 +146,7 @@ const ProductListPage = ({ category }:Props) => {
                             <Typography variant='h4' textTransform={'uppercase'}>{type}</Typography>
                             <SizeComponent filters={filters} type={type} onHandleFilters={handleChangeFilters} />
                             <Stack direction={'row'} spacing={4} marginY={2}>
-                                <SizeFilter filter={sortBy} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+                                <SizeFilter selectedSortBy={currentSortBy} changeSelectedSort={handleChangeSort} filter={sortByFilters} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
                                 <Filter filterType='color' onHandleFilters={handleChangeFilters} filter={colors} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
                                 <Filter filterType='size' onHandleFilters={handleChangeFilters} filter={sizes} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
                                 <Filter filterType='price' onHandleFilters={handleChangeFilters} filter={prices} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
