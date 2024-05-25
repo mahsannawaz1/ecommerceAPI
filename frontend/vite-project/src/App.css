@@ -92,3 +92,12 @@ input[type='number'] {
 .remove-border{
     border:0 !important;
 }
+.on-hover{
+    overflow: hidden;
+}
+.on-hover-img:hover{
+    cursor: pointer;
+    scale: 1.5;
+    height:150% !important;
+    transition: all 0.3s linear;
+}

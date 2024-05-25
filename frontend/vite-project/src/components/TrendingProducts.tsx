@@ -24,7 +24,7 @@ const TrendingProducts = () => {
         <Box marginLeft='50px'>
             <Typography variant="h5">Trending</Typography>
             <Stack direction={'row'} spacing={2} marginY={2}>
-                <Button value={0} onClick={()=>setSelectedBtn(0)} sx={{
+                <Button disableElevation value={0} onClick={()=>setSelectedBtn(0)} sx={{
                         '&:hover': {
                             backgroundColor: selectedBtn == 0 ? 'var(--black)' : 'var(--btn-color4)',
                             
@@ -40,7 +40,7 @@ const TrendingProducts = () => {
                         
                     }} disableRipple variant='contained'>women's tops
                 </Button>
-                <Button value={1} onClick={()=>setSelectedBtn(1)} sx={{
+                <Button disableElevation value={1} onClick={()=>setSelectedBtn(1)} sx={{
                         '&:hover': {
                             backgroundColor: selectedBtn == 1 ? 'var(--black)' : 'var(--btn-color4)',
                             
@@ -56,7 +56,7 @@ const TrendingProducts = () => {
                         
                     }} disableRipple variant='contained'>men's tops
                 </Button>
-                <Button value={2} onClick={()=>setSelectedBtn(2)} sx={{
+                <Button disableElevation value={2} onClick={()=>setSelectedBtn(2)} sx={{
                         '&:hover': {
                             backgroundColor: selectedBtn == 2 ? 'var(--black)' : 'var(--btn-color4)',
                             
@@ -72,7 +72,7 @@ const TrendingProducts = () => {
                         
                     }} disableRipple variant='contained'>women's bottoms
                 </Button>
-                <Button value={3} onClick={()=>setSelectedBtn(3)} sx={{
+                <Button disableElevation value={3} onClick={()=>setSelectedBtn(3)} sx={{
                         '&:hover': {
                             backgroundColor: selectedBtn == 3 ? 'var(--black)' : 'var(--btn-color4)',
                             
@@ -88,7 +88,7 @@ const TrendingProducts = () => {
                         
                     }} disableRipple variant='contained'>men's bottoms
                 </Button>
-                <Button value={4} onClick={()=>setSelectedBtn(4)} sx={{
+                <Button disableElevation value={4} onClick={()=>setSelectedBtn(4)} sx={{
                         '&:hover': {
                             backgroundColor: selectedBtn == 4 ? 'var(--black)' : 'var(--btn-color4)',
                             

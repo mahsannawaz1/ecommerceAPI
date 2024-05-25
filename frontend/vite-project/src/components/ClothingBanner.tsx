@@ -70,7 +70,7 @@ const ClothingBanner = ({ type }:Props) => {
                 {btnText2 && <Button sx={{
                     '&:hover': {
                         backgroundColor: btnColor,
-                
+
                     },
                     borderRadius:'30px',
                     bgcolor:btnColor,

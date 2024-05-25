@@ -1,6 +1,5 @@
 
 import { Box } from '@mui/material'
-
 import SeasonBanner from './SeasonBanner'
 import ClothingBanner from './ClothingBanner'
 import FitBanner from './FitBanner'
@@ -19,8 +18,6 @@ const Main = () => {
             <ClothingBanner  type='t_men'/>
             <FitBanner />
             <ShopCarousel />
-            
-            
         </Box>
         
     )

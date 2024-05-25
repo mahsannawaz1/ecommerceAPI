@@ -1,5 +1,6 @@
 
 
+import { Outlet } from 'react-router-dom'
 import Banner from './Banner'
 import Main from './Main'
 import NavBar from './NavBar'
@@ -13,7 +14,8 @@ const Layout = () => {
         {/* <Banner /> */}
         {/* <Main  /> */}
         {/* <ProductListPage /> */}
-        <ProductDetail />
+        {/* {<ProductDetail />} */}
+        {<Outlet />}
         </>
     )
 }

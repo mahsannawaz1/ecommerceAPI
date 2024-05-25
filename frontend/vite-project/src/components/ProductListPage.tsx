@@ -17,8 +17,11 @@ import Filter from './Filter'
 import ClearIcon from '@mui/icons-material/Clear';
 import QuickView from './QuickView'
 
+interface Props{
+    category: 'men' | 'women' | 'junior boys' | 'junior girls' | 'toddler boys' | 'toddler girls'
+}
 
-const ProductListPage = () => {
+const ProductListPage = ({ category }:Props) => {
     const [open, setOpen] =  useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

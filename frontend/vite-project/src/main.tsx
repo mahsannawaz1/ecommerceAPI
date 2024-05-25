@@ -1,7 +1,9 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import { ThemeProvider,createTheme } from '@mui/material'
+import { RouterProvider } from 'react-router-dom'
+import { routes } from './routes/routes.tsx'
+import './App.css'
+import React from 'react'
 const theme = createTheme({
   typography:{
     fontFamily: ['Sen', 'sans-serif'].join(','),
@@ -10,10 +12,10 @@ const theme = createTheme({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <ThemeProvider theme={theme}>
-        <App />
+      <RouterProvider router={routes}></RouterProvider>
     </ThemeProvider>
     
-  // </React.StrictMode>,
+  </React.StrictMode>,
 )
