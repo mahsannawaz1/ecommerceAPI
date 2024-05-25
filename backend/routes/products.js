@@ -1,4 +1,5 @@
 const { Product } = require('../models/Product')
+const Category = require('../models/Category')
 const Manufacturer = require('../models/Manufacturer')
 const upload = require('../middlewares/productUpload')
 const auth = require('../middlewares/auth')
@@ -10,12 +11,13 @@ Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
-    
+    const foundCategory = await Category.findOne({name:req.query.category})
+    console.log(foundCategory)
     if(req.query.type){
-        res.send(await Product.find({category:req.query.category,type:req.query.type}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
+        res.send(await Product.find({category:foundCategory._id,type:req.query.type}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
         return
     }
-    res.send(await Product.find({category:req.query.category}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
+    res.send(await Product.find({category:foundCategory._id}).populate({path:'manufacturer',select:'-_id'}).populate({path:'category',select:'-_id'}).sort(`${req.query.sort_by}`))  
 })
 router.get('/:id',async(req,res)=>{
     const product = await Product.findById(req.params.id).populate({path:'category',select:'-_id'}).select('-manufacturer')

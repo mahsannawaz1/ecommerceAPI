@@ -11,6 +11,7 @@ const morgan = require('morgan')
 const winston = require('winston')
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 
 winston.add(new winston.transports.Console())
@@ -20,11 +21,12 @@ app.use(express.urlencoded({extended:true}))
 app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
 
+
 mongoose.connect('mongodb://localhost/ecommerce')
 .then(()=>winston.info('Connected to MongoDB'))
 .catch(error=>winston.error(error.message,error))
 
-
+app.use(cors())
 app.use('/api/products',products)
 app.use('/api/categories',categories)
 app.use('/api/cart',carts)

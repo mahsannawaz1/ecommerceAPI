@@ -3,10 +3,15 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from 'react';
 import productImages from '../services/productImages'
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { Product } from '../interfaces/Product';
 interface Props{
+    products:Product[] | undefined,
+    category:String,
     handleOpen:()=>void
 }
-const ProductListGrid = ({handleOpen}:Props) => {
+const ProductListGrid = ({handleOpen,category,products}:Props) => {
 
     const [favourites,setFavourites] = useState<number[]>([])
 
@@ -23,11 +28,11 @@ const ProductListGrid = ({handleOpen}:Props) => {
 
     return (
         <Grid container spacing={2}>
-            {productImages.map((image,index)=>
+            {products?.map((product,index)=>
                 <Grid key={index} item lg={3} md={4} sm={6} xs={12} >
                     <Box position='relative' sx={{cursor:'pointer'}}>
-                        <img  src={image} height='100%' width='100%'  />
-                        <IconButton  onClick={()=>handleChangeFavourites(index)} sx={{position:'absolute',right:'0px',color:'var(--black)'}} disableRipple> {foundFavourite(index) == index ? <FavoriteIcon /> : <FavoriteBorderIcon /> }  </IconButton>
+                        <img  src={product.images[0]} height='100%' width='100%'  />
+                        <IconButton onClick={()=>handleChangeFavourites(index)} sx={{position:'absolute',right:'0px',color:'var(--black)'}} disableRipple> {foundFavourite(index) == index ? <FavoriteIcon /> : <FavoriteBorderIcon /> }  </IconButton>
                     </Box>
                     
                     <Box>
@@ -38,15 +43,15 @@ const ProductListGrid = ({handleOpen}:Props) => {
                                     cursor:'pointer'
                                 }
                             }
-                            } variant='body2'>AE LOGO GRAPHIC TANK TOP</Typography>
+                            } variant='body2'>{product.name}</Typography>
                         <Box>
-                            <Typography variant='body2' sx={{ textDecoration:'line-through' }} component={'span'}>PKR 1,200</Typography>
-                            <Typography variant='body2' color='error' marginLeft={'5px'} component={'span'}>PKR 1,200</Typography>
+                            <Typography variant='body2' sx={{ textDecoration:'line-through' }} component={'span'}>{product.price}</Typography>
+                            <Typography variant='body2' color='error' marginLeft={'5px'} component={'span'}>{product.price}</Typography>
                         </Box>
                         
                         <Typography variant='caption' color='error'>(Save 40%)</Typography>
                     </Box>
-                    <Stack >
+                    <Stack>
                         <Button onClick={handleOpen} color='secondary'>View Options</Button>
                     </Stack>
             </Grid>)}

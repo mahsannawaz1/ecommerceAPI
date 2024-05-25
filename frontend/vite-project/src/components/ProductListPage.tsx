@@ -16,17 +16,25 @@ import { colors,prices,sortBy,sizes } from '../services/filter';
 import Filter from './Filter'
 import ClearIcon from '@mui/icons-material/Clear';
 import QuickView from './QuickView'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { Product } from '../interfaces/Product'
 
 interface Props{
     category: 'men' | 'women' | 'junior boys' | 'junior girls' | 'toddler boys' | 'toddler girls'
 }
 
 const ProductListPage = ({ category }:Props) => {
+    const {data:products} = useQuery({
+        queryKey:['products'],
+        queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category } }).then(res=>res.data)
+    })
+
     const [open, setOpen] =  useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [type,setType] = useState<string>('men')
+    const [type,setType] = useState<string>(category)
 
     const [activeFilter,setActiveFilter] = useState<string | null>(null)
     const [filters,setFilters] = useState<{label:string,value:string}[]>([])
@@ -192,7 +200,7 @@ const ProductListPage = ({ category }:Props) => {
                             }
                             
                         </Box>
-                        <ProductListGrid handleOpen={handleOpen} />
+                        <ProductListGrid products={products} category={category} handleOpen={handleOpen} />
                     </Grid>
             </Grid>
         </Container>
