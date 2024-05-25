@@ -34,9 +34,9 @@ const ProductListPage = ({ category }:Props) => {
     const [filters,setFilters] = useState<{label:string,value:string}[]>([])
 
     const sizeFilters = filters.map(filter=>sizes.map(size=>size.value).includes(filter.value) ? filter.value : null)
-    const colorFilters = filters.map(filter=>sizes.map(color=>color.value).includes(filter.value) ? filter.value : null)
-    const priceFilters = filters.map(filter=>sizes.map(price=>price.value).includes(filter.value) ? filter.value : null)
-
+    const colorFilters = filters.map(filter=>colors.map(color=>color.value).includes(filter.value) ? filter.value : null)
+    const priceFilters = filters.map(filter=>prices.map(price=>price.value).includes(filter.value) ? filter.value : null)
+    
     const [currentSortBy,setCurrentSortBy] = useState<string>('')
 
     const handleChangeFilters = (obj:{label:string,value:string})=>{

@@ -14,7 +14,9 @@ router.get('/',async(req,res)=>{
     // console.log(req.query.sizeFilters)
     // console.log(req.query.colorFilters)
     // console.log(req.query.priceFilters)
+    
     const foundCategory = await Category.findOne({name:req.query.category})
+    
     if(req.query.sizeFilters && req.query.sizeFilters.length > 0){
         res.send(await Product.find(
             {
@@ -24,6 +26,19 @@ router.get('/',async(req,res)=>{
         ))
         return
     }
+
+    if(req.query.colorFilters && req.query.colorFilters.length > 0){
+        res.send(await Product.find(
+            {
+                category:foundCategory._id,
+                'sizeColorNames.colors': {
+                    $elemMatch: { name: { $in: req.query.colorFilters } }
+                }
+            }
+        ))
+        return
+    }
+
 
     if(req.query.sort_by){
         res.send(await Product.find({category:foundCategory._id })
