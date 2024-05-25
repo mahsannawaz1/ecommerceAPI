@@ -13,15 +13,25 @@ const router = require('express').Router()
 router.get('/',async(req,res)=>{
     // console.log(req.query.sizeFilters)
     // console.log(req.query.colorFilters)
-    // console.log(req.query.priceFilters)
-    
+    const prices = _.map(req.query.priceFilters,(value)=>parseFloat(value))
     const foundCategory = await Category.findOne({name:req.query.category})
+    
     
     if(req.query.sizeFilters && req.query.sizeFilters.length > 0){
         res.send(await Product.find(
             {
                 category:foundCategory._id,
                 'sizeColorNames.name': { $in: req.query.sizeFilters} 
+            }
+        ))
+        return
+    }
+    if(req.query.priceFilters && req.query.priceFilters.length > 0){
+        res.send(await Product.find(
+            {
+                category:foundCategory._id,
+                price: { $gte: _.min(prices),$lte: _.max(prices)},
+                
             }
         ))
         return

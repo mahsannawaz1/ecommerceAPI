@@ -36,7 +36,11 @@ const ProductListPage = ({ category }:Props) => {
     const sizeFilters = filters.map(filter=>sizes.map(size=>size.value).includes(filter.value) ? filter.value : null)
     const colorFilters = filters.map(filter=>colors.map(color=>color.value).includes(filter.value) ? filter.value : null)
     const priceFilters = filters.map(filter=>prices.map(price=>price.value).includes(filter.value) ? filter.value : null)
-    
+    .join('-')
+    .split('-')
+    .map(value=> value=='' ? NaN : value == 'Infinity' ? Infinity : parseFloat(value) )
+    .filter(value=>!Number.isNaN(value))
+    console.log(priceFilters)
     const [currentSortBy,setCurrentSortBy] = useState<string>('')
 
     const handleChangeFilters = (obj:{label:string,value:string})=>{

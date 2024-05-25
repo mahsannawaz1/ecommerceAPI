@@ -18,7 +18,7 @@ export const prices = [
     { label: 'PKR 7000.00 - PKR 8000.00', value: '7000-8000' },
     { label: 'PKR 8000.00 - PKR 9000.00', value: '8000-9000' },
     { label: 'PKR 9000.00 - PKR 10000.00', value: '9000-10000' },
-    { label: 'Greater than PKR 10000', value: '10000-' },
+    { label: 'Greater than PKR 10000', value: '10000-Infinity' },
 ];
 
 export const colors = [
