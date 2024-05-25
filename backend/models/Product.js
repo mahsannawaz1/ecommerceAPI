@@ -64,8 +64,7 @@ const productSchema = new mongoose.Schema({
                             _id:false,
                         }   
                     ]
-            }
-                
+                }    
             }   
         ],
         validate:{
