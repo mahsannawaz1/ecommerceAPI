@@ -11,7 +11,9 @@ Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
-    console.log(req.query.filters)
+    console.log(req.query.sizeFilters)
+    console.log(req.query.colorFilters)
+    console.log(req.query.priceFilters)
     const foundCategory = await Category.findOne({name:req.query.category})
     if(req.query.sort_by){
         res.send(await Product.find({category:foundCategory._id })
