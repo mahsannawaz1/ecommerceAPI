@@ -101,3 +101,10 @@ input[type='number'] {
     height:150% !important;
     transition: all 0.3s linear;
 }
+a{
+    color:var(--black) !important;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}

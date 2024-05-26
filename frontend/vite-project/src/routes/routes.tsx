@@ -16,7 +16,8 @@ export const routes = createBrowserRouter([
             { path:'shop-junior-boys',element: <ProductListPage category='junior boys'/> },
             { path:'shop-junior-girls',element: <ProductListPage category='junior girls'/> },
             { path:'shop-toddler-boys',element: <ProductListPage category='toddler boys'/> },
-            { path:'shop-toddler-girls',element: <ProductListPage category='toddler girls'/> }
+            { path:'shop-toddler-girls',element: <ProductListPage category='toddler girls'/> },
+            { path:'dapperlane/:id',element: <ProductDetail /> }
         ]
     }
 ])

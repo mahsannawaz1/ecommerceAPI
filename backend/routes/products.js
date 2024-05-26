@@ -11,58 +11,33 @@ Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
-    // console.log(req.query.sizeFilters)
-    // console.log(req.query.colorFilters)
-    const prices = _.map(req.query.priceFilters,(value)=>parseFloat(value))
-    const foundCategory = await Category.findOne({name:req.query.category})
+    const prices = _.map(req.query.priceFilters, value => parseFloat(value));
+    const foundCategory = await Category.findOne({ name: req.query.category });
+    const query = { category: foundCategory._id };
     
+    if (req.query.sizeFilters && req.query.sizeFilters.length > 0) {
+        query['sizeColorNames.name'] = { $in: req.query.sizeFilters };
+    }
     
-    if(req.query.sizeFilters && req.query.sizeFilters.length > 0){
-        res.send(await Product.find(
-            {
-                category:foundCategory._id,
-                'sizeColorNames.name': { $in: req.query.sizeFilters} 
-            }
-        ))
-        return
+    if (req.query.priceFilters && req.query.priceFilters.length > 0) {
+        query.price = { $gte: _.min(prices), $lte: _.max(prices) };
     }
-    if(req.query.priceFilters && req.query.priceFilters.length > 0){
-        res.send(await Product.find(
-            {
-                category:foundCategory._id,
-                price: { $gte: _.min(prices),$lte: _.max(prices)},
-                
-            }
-        ))
-        return
+    
+    if (req.query.colorFilters && req.query.colorFilters.length > 0) {
+        query['sizeColorNames.colors'] = {
+            $elemMatch: { name: { $in: req.query.colorFilters } }
+        };
     }
-
-    if(req.query.colorFilters && req.query.colorFilters.length > 0){
-        res.send(await Product.find(
-            {
-                category:foundCategory._id,
-                'sizeColorNames.colors': {
-                    $elemMatch: { name: { $in: req.query.colorFilters } }
-                }
-            }
-        ))
-        return
+    
+    if (req.query.sort_by) {
+        return res.send(await Product.find(query).sort(`${req.query.sort_by}`));
     }
-
-
-    if(req.query.sort_by){
-        res.send(await Product.find({category:foundCategory._id })
-        .sort(`${req.query.sort_by}`))  
-        return
+    
+    if (req.query.type) {
+        query.type = req.query.type;
     }
-
-    if(req.query.type){
-        res.send(await Product.find({category:foundCategory._id,type:req.query.type})
-        .sort(`${req.query.sort_by}`))  
-        return
-    }
-
-    res.send(await Product.find({category:foundCategory._id}).populate({path:'manufacturer',select:'-_id'}))  
+    
+    res.send(await Product.find(query).populate({ path: 'manufacturer', select: '-_id' }));
 })
 
 router.get('/:id',async(req,res)=>{
@@ -74,7 +49,7 @@ router.get('/:id',async(req,res)=>{
     res.send(product)  
 })
 
-router.post('/',[auth,admin,upload.array('images')],async (req,res)=>{
+router.post('/',[auth,upload.array('images')],async (req,res)=>{
     if(req.files && req.files.length<1){   
         res.status(400).send({error:'Images cannot be empty'})
         return
