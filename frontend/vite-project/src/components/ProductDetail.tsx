@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Product } from '../interfaces/Product';
 import { Color } from '../interfaces/Colors';
+import recentlyViewedProducts from '../services/recentlyViewedProducts';
 
 const breakpoints = [
     { width: 1, itemsToShow: 1, itemsToScroll: 1 },
@@ -27,6 +28,7 @@ const breakpoints = [
         queryKey: ['products', id],
         queryFn: () => axios.get<Product>(`http://localhost:3000/api/products/${id}`).then(res => res.data),
     });
+    const recentlyViewedPros = recentlyViewedProducts(product)
 
     const [currentSize, setCurrentSize] = useState<string>('');
     const [currentColor, setCurrentColor] = useState<Color>({} as Color);
@@ -204,7 +206,7 @@ const breakpoints = [
             renderArrow={({ type, onClick, isEdge }: ArrowProps) => <CustomCarouselArrow type={type} onClick={onClick} isEdge={isEdge} size='small' />}
             breakPoints={breakpoints}
             >
-            {productImages.map((img, index) => <TrendingProductItem key={index} url={img} />)}
+            {recentlyViewedPros.map((product, index) => <TrendingProductItem key={index} url={product.images[0]} />)}
             </Carousal>
         </Box>
         </Container>
