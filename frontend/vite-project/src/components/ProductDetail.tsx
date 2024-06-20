@@ -6,7 +6,7 @@ import { ArrowProps } from './ShopCarousel';
 import productImages from '../services/productImages';
 import TrendingProductItem from './TrendingProductItem';
 import CustomCarousalPagination from './CustomCarousalPagination';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Product } from '../interfaces/Product';

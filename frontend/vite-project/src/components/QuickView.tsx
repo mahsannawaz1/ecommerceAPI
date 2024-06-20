@@ -140,9 +140,7 @@ const QuickView = ({open,handleClose,product}:Props) => {
                             {szs.map(size=>
                             <Button 
                             onClick={(e) => {
-                                
-                                if(e.currentTarget.textContent){
-                                    
+                                if(e.currentTarget.textContent){ 
                                     const currSize = e.currentTarget.textContent.trim()
                                     setCurrentSize(e.currentTarget.textContent)
                                     const initialColors = product.sizeColorNames?.find(size => size.name == currSize)?.colors || [];
@@ -160,17 +158,16 @@ const QuickView = ({open,handleClose,product}:Props) => {
                                     borderRadius:0, 
                                     paddingY: 0,
                                     paddingX:0.5,
-                                    background: currentSize == size ? 'var(--black)' : 'var(--white)',
-                                    color: currentSize == size ? 'var(--white)' : 'var(--black)',
+                                    background: currentSize === size ? 'var(--black)' : 'var(--white)',
+                                    color: currentSize === size ? 'var(--white)' : 'var(--black)',
                                     justifyContent:'space-evenly',
                                     '&:hover': { 
                                         background: 'var(--black)',
                                         color:'var(--white)'
                                     } 
-                                }
-                            }
+                                }}
                         >
-                            <Typography marginRight={0.2} fontSize='12px'>{size} </Typography>
+                            <Typography marginRight={0.2} fontSize='12px'>{size}</Typography>
                         </Button>
                             )}
                             
@@ -201,8 +198,8 @@ const QuickView = ({open,handleClose,product}:Props) => {
 
                         </Box>
                         <Stack spacing={1}>
-                                <Button sx={{
-                                            background: 'var(--black)',
+                                <Button disabled={currentColor.qty === 0} sx={{
+                                            background: currentColor.qty === 0 ? 'var(--white)' : 'var(--black)',
                                             color:'var(--white)',
                                             border:'1px solid black',
                                             borderRadius:0,
@@ -211,7 +208,7 @@ const QuickView = ({open,handleClose,product}:Props) => {
                                                 background: 'var(--white)',
                                             } 
                                         }}
-                                >Add to CART</Button>
+                                >{currentColor.qty ===0 ? 'Out Of Stock' : 'Add to CART'}</Button>
                                 <Link to={`/dapperlane/${product._id}`}>
                                     <Button  sx={{
                                                 color:'var(--black)',
