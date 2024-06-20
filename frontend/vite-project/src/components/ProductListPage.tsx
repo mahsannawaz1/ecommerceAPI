@@ -15,7 +15,6 @@ import SizeFilter from './SizeFilter'
 import { colors,prices,sortByFilters,sizes } from '../services/filter';
 import Filter from './Filter'
 import ClearIcon from '@mui/icons-material/Clear';
-import QuickView from './QuickView'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Product } from '../interfaces/Product'
@@ -40,7 +39,7 @@ const ProductListPage = ({ category }:Props) => {
     .split('-')
     .map(value=> value=='' ? NaN : value == 'Infinity' ? Infinity : parseFloat(value) )
     .filter(value=>!Number.isNaN(value))
-    console.log(priceFilters)
+    
     const [currentSortBy,setCurrentSortBy] = useState<string>('')
 
     const handleChangeFilters = (obj:{label:string,value:string})=>{
@@ -214,11 +213,11 @@ const ProductListPage = ({ category }:Props) => {
                             }
                             
                         </Box>
-                        <ProductListGrid products={products} category={category} handleOpen={handleOpen} />
+                        <ProductListGrid products={products} category={category} handleOpen={handleOpen} handleClose={handleClose} open={open} />
                     </Grid>
             </Grid>
         </Container>
-        <QuickView open={open} handleClose={handleClose}  />
+        
         </>
     )
 }

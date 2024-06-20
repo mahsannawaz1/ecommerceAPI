@@ -6,7 +6,7 @@ import { ArrowProps } from './ShopCarousel';
 import productImages from '../services/productImages';
 import TrendingProductItem from './TrendingProductItem';
 import CustomCarousalPagination from './CustomCarousalPagination';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Product } from '../interfaces/Product';
@@ -34,10 +34,12 @@ const breakpoints = [
     const [currentColor, setCurrentColor] = useState<Color>({} as Color);
     const [qty, setQty] = useState(1);
     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
-    console.log(currentColor)
+    const szs = product?.sizeColorNames?.map(size => size.name) ?? [];
+    const clrs = product?.sizeColorNames?.find(size => size.name === currentSize)?.colors || [];
+    
     useEffect(() => {
         if (product) {
-        const initialSize = product.sizeColorNames?.[0]?.name || '';
+        const initialSize = product.sizeColorNames?.[0]?.name;
         setCurrentSize(initialSize);
         const initialColors = product.sizeColorNames?.find(size => size.name === initialSize)?.colors || [];
         setCurrentColor(initialColors[0] || {} as Color);
@@ -49,8 +51,6 @@ const breakpoints = [
         return <Typography>Loading...</Typography>;
     }
 
-    const szs = product?.sizeColorNames?.map(size => size.name) ?? [];
-    const clrs = product?.sizeColorNames?.find(size => size.name === currentSize)?.colors || [];
 
     return (
         <Container sx={{ marginY: 5 }}>
@@ -184,7 +184,7 @@ const breakpoints = [
             renderArrow={({ type, onClick, isEdge }: ArrowProps) => <CustomCarouselArrow type={type} onClick={onClick} isEdge={isEdge} size='small' />}
             breakPoints={breakpoints}
             >
-            {productImages.map((img, index) => <TrendingProductItem key={index} url={img} />)}
+            {productImages.map((img, index) => <TrendingProductItem key={index} url={img} product={product} />)}
             </Carousal>
         </Box>
         <Box>
@@ -195,7 +195,7 @@ const breakpoints = [
             renderArrow={({ type, onClick, isEdge }: ArrowProps) => <CustomCarouselArrow type={type} onClick={onClick} isEdge={isEdge} size='small' />}
             breakPoints={breakpoints}
             >
-            {productImages.map((img, index) => <TrendingProductItem key={index} url={img} />)}
+            {productImages.map((img, index) => <TrendingProductItem key={index} url={img} product={product} />)}
             </Carousal>
         </Box>
         <Box>
@@ -206,7 +206,12 @@ const breakpoints = [
             renderArrow={({ type, onClick, isEdge }: ArrowProps) => <CustomCarouselArrow type={type} onClick={onClick} isEdge={isEdge} size='small' />}
             breakPoints={breakpoints}
             >
-            {recentlyViewedPros.map((product, index) => <TrendingProductItem key={index} url={product.images[0]} />)}
+            {
+                recentlyViewedPros.map((product) => 
+                <Link key={product._id} to={`/dapperlane/${product._id}`}>
+                        <TrendingProductItem url={product.images[0]} product={product} />
+                </Link> 
+            )}
             </Carousal>
         </Box>
         </Container>

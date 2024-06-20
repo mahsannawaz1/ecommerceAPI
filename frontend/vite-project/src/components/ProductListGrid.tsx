@@ -2,17 +2,20 @@ import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState } from 'react';
-import productImages from '../services/productImages'
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+
 import { Product } from '../interfaces/Product';
 import { Link } from 'react-router-dom';
+import QuickView from './QuickView';
 interface Props{
     products:Product[] | undefined,
     category:String,
-    handleOpen:()=>void
+    open:boolean,
+    handleOpen:()=>void,
+    handleClose:()=>void
 }
-const ProductListGrid = ({handleOpen,category,products}:Props) => {
+const ProductListGrid = ({handleOpen,handleClose,open,category,products}:Props) => {
+
+    const [quickViewProduct,setQuickViewProduct] = useState<Product>({} as Product)
 
     const [favourites,setFavourites] = useState<number[]>([])
 
@@ -50,7 +53,11 @@ const ProductListGrid = ({handleOpen,category,products}:Props) => {
                         <Typography variant='caption' color='error'>(Save 40%)</Typography>
                     </Box>
                     <Stack>
-                        <Button  onClick={handleOpen} sx={{
+                        <Button  onClick={()=>{
+                                    handleOpen()
+                                    setQuickViewProduct(product)
+                                }} 
+                        sx={{
                                         background: 'var(--black)',
                                         color:'var(--white)',
                                         border:'1px solid black',
@@ -64,7 +71,7 @@ const ProductListGrid = ({handleOpen,category,products}:Props) => {
                     </Stack>
                 </Grid>)
             }
-            
+            <QuickView open={open} handleClose={handleClose} product={quickViewProduct}  />
         </Grid>
     )
 }
