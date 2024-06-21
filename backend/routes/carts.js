@@ -8,7 +8,13 @@ const Joi  =require('joi')
 Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
 
-router.post('/',async(req,res)=>{
+router.post('/create',async(req,res)=>{
+    let cart = new Cart()
+    await cart.save()
+    res.send(cart)
+})
+
+router.put('/',async(req,res)=>{
     const { value,error } = validateCartItem(req.body)
     if(error){
         res.status(400).send({error:error.details[0].message})
@@ -21,6 +27,7 @@ router.post('/',async(req,res)=>{
         return
     }
     const product = await Product.findById(value.product.id)
+
     let qty = 0
     for(size of product.sizeColorNames){
         if( size.name == value.product.size ){
@@ -30,23 +37,31 @@ router.post('/',async(req,res)=>{
             break
         }
     }
-    if(qty<value.qty){
-        res.status(400).send({error:'Out Of Stock'})
-        return
-    }
+    console.log('Remainign Qty: ',qty)
     let cartItem = await CartItem.findOne({'product.id':value.product.id, cart_id: cart._id,'product.size':value.product.size })
     if(cartItem){
-        cartItem.qty = value.qty
+        
+        if(qty < cartItem.qty + value.qty ){
+            res.status(400).send({error:'Out Of Stock'})
+            return
+        }
+        cartItem.qty += value.qty
         res.send(await cartItem.save())
         return
     }
+    else{
+        if(qty <= value.qty ){
+            res.status(400).send({error:'Out Of Stock'})
+            return
+        }
+        cartItem = new CartItem({
+            cart_id: value.cart_id,
+            product: value.product,
+            qty: value.qty,
+            unit_price: value.unit_price
+        })
+    }
     
-    cartItem = new CartItem({
-        cart_id: value.cart_id,
-        product: value.product,
-        qty: value.qty,
-        unit_price: value.unit_price
-    })
     
     res.send(await cartItem.save())
 })

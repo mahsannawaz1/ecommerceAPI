@@ -17,7 +17,7 @@ const cors = require('cors')
 winston.add(new winston.transports.Console())
 
 const app = express()
-app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
 

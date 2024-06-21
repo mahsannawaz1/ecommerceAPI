@@ -36,7 +36,25 @@ const breakpoints = [
     const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
     const szs = product?.sizeColorNames?.map(size => size.name) ?? [];
     const clrs = product?.sizeColorNames?.find(size => size.name === currentSize)?.colors || [];
-    
+    const handleChangeCart = ()=>{
+        const cart = localStorage.getItem('cart')
+        console.log(cart)
+        
+        if(cart){
+            
+            const { _id:cart_id } = JSON.parse(cart)
+            axios.put('http://localhost:3000/api/cart',{ 
+                cart_id,
+                product:{
+                    id:product?._id,
+                    size:currentSize,
+                    color:currentColor.name
+                },
+                qty:qty,
+                unit_price:product?.price 
+            })
+        }
+    }
     useEffect(() => {
         if (product) {
         const initialSize = product.sizeColorNames?.[0]?.name;
@@ -143,7 +161,7 @@ const breakpoints = [
             </Stack>
 
             <Stack marginX={5} marginY={2} justifyContent={'center'}>
-                <Button disabled={currentColor.qty === 0}
+                <Button onClick={handleChangeCart} disabled={currentColor.qty === 0}
                 sx={
                     currentColor.qty !== 0 ? {
                     background: 'var(--black)',
