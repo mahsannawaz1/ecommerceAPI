@@ -3,6 +3,7 @@ import Layout from '../components/Layout'
 import ProductDetail from '../components/ProductDetail'
 import Main from '../components/Main'
 import ProductListPage from '../components/ProductListPage'
+import { Cart } from '../components/Cart'
 
 
 export const routes = createBrowserRouter([
@@ -11,6 +12,7 @@ export const routes = createBrowserRouter([
         element:<Layout />,
         children:[
             { index:true,element: <Main /> },
+            { path:'cart',element: <Cart /> },
             { path:'shop-men',element: <ProductListPage category='men'/> },
             { path:'shop-women',element: <ProductListPage category='women'/> },
             { path:'shop-junior-boys',element: <ProductListPage category='junior boys'/> },

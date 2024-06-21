@@ -4,8 +4,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SearchIcon from '@mui/icons-material/Search';
 import icon from '../../public/icon.png'
-import Banner from './Banner'
 import Dilevery from './Dilevery'
+import { Link } from 'react-router-dom';
 
 
 const NavBar = () => {
@@ -30,11 +30,13 @@ const NavBar = () => {
                 <IconButton>
                     <FavoriteIcon style={{color:'#000'}} />
                 </IconButton>
-                <IconButton>
-                <Badge badgeContent={1} color="success">
-                    <ShoppingCartIcon style={{color:'#000'}} />
-                </Badge>
-                </IconButton>
+                <Link to="/cart">
+                    <IconButton >
+                    <Badge badgeContent={1} color="success">
+                        <ShoppingCartIcon style={{color:'#000'}} />
+                    </Badge>
+                    </IconButton>
+                </Link>
                 
             </Stack>
         </Stack>
