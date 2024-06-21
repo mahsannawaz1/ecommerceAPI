@@ -14,6 +14,13 @@ router.post('/create',async(req,res)=>{
     res.send(cart)
 })
 
+router.get('/:id',async(req,res)=>{
+    const cart_id = req.params.id
+    const cartItems = await CartItem.find({cart_id})
+    res.send(cartItems)
+})
+
+
 router.put('/',async(req,res)=>{
     const { value,error } = validateCartItem(req.body)
     if(error){
@@ -85,7 +92,8 @@ const validateCartItem = (data)=>{
         product:Joi.object({
             id:Joi.objectId().required(),
             size:Joi.string().required(),
-            color:Joi.string().required()
+            color:Joi.string().required(),
+            image:Joi.string().required(),
         }),
         qty:Joi.number().min(0).required(),
         unit_price:Joi.number().min(0).required()

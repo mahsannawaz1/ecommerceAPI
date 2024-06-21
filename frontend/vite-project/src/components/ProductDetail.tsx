@@ -48,10 +48,11 @@ const breakpoints = [
                 product:{
                     id:product?._id,
                     size:currentSize,
-                    color:currentColor.name
+                    color:currentColor.name,
+                    image:product?.images[0]
                 },
                 qty:qty,
-                unit_price:product?.price 
+                unit_price:product?.price
             })
         }
     }
