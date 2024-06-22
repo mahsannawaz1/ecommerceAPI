@@ -7,6 +7,7 @@ import { IconButton, Stack } from '@mui/material';
 import { CartItem } from './Cart';
 import CloseIcon from '@mui/icons-material/Close';
 import useDeleteCartItem from '../hooks/useDeleteCartItem';
+import { CartMessageInterface } from '../interfaces/CartMessageInterface';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -21,7 +22,7 @@ const style = {
 };
 interface Props{
     open:boolean,
-    onChangeMessage:(value:string)=>void,
+    onChangeMessage:(value:CartMessageInterface)=>void,
     handleClose:()=>void,
     cartItem:CartItem
 }
@@ -74,7 +75,7 @@ const CartItemDeleteModal = ({open,handleClose,cartItem,onChangeMessage}:Props) 
                             const deletedProduct = await useDeleteCartItem(cartItem.product.id,cartItem.product.color,cartItem.product.size)
                             console.log(deletedProduct)
                             handleClose()
-                            onChangeMessage(`Product ${cartItem.product.name} has been removed successfully.`)
+                            onChangeMessage({msg:`Product ${cartItem.product.name} has been removed successfully.`,msgType:'delete'})
                         }
                         catch(err){
                             console.log(err)

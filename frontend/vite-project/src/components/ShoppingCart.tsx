@@ -2,10 +2,11 @@ import { Box, Typography } from '@mui/material'
 import ShoppingCartItem from './ShoppingCartItem'
 
 import { CartItem } from './Cart'
+import { CartMessageInterface } from '../interfaces/CartMessageInterface'
 
 interface Props{
     cartItems:CartItem[],
-    onChangeMessage:(value:string)=>void
+    onChangeMessage:(value:CartMessageInterface)=>void
 }
 
 const ShoppingCart = ({cartItems,onChangeMessage}:Props) => {

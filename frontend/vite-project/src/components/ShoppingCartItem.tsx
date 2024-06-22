@@ -5,10 +5,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { CartItem } from './Cart';
 import useEditCartQty from '../hooks/useEditCartQty';
 import CartItemDeleteModal from './CartItemDeleteModal';
+import { CartMessageInterface } from '../interfaces/CartMessageInterface';
 
 interface Props{
     item:CartItem,
-    onChangeMessage:(value:string)=>void
+    onChangeMessage:(value:CartMessageInterface)=>void
 }
 const ShoppingCartItem = ({ item,onChangeMessage }:Props) => {
     const [qty, setQty] = useState(item.qty);
@@ -26,8 +27,8 @@ const ShoppingCartItem = ({ item,onChangeMessage }:Props) => {
                         <Typography whiteSpace={'wrap'}>{item.product.name}</Typography>
                     </Link>
                     <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                        <Typography sx={{ textDecoration: 'line-through' }}>PKR {item.unit_price}</Typography>
-                        <Typography color='error'>PKR {item.unit_price}</Typography>
+                        <Typography sx={{ textDecoration: 'line-through' }}>PKR {item.unit_price.toLocaleString()}</Typography>
+                        <Typography color='error'>PKR {item.unit_price.toLocaleString()}</Typography>
                     </Stack>
                     <Box display={'inline-flex'} alignItems={'center'} padding={0.3} sx={{ background: '#d32f2f', color: 'var(--white)', fontSize: 11 }} component={'span'}>(SAVE 40%)</Box>
                     <Box marginTop={2}>
@@ -68,10 +69,10 @@ const ShoppingCartItem = ({ item,onChangeMessage }:Props) => {
                             const cartItem = await useEditCartQty(product,parseInt(e.target.value as string),item.unit_price)
                             console.log(cartItem)
                             setQty(cartItem.qty)
-                            onChangeMessage(`Product ${cartItem.product.name} has been updated successfully.`)
+                            onChangeMessage({msg:`Product ${cartItem.product.name} has been updated successfully.`,msgType:'update'})
                         }
                         catch(error){
-                            onChangeMessage('Product is OUT OF STOCK')
+                            onChangeMessage({msg:'Product is OUT OF STOCK',msgType:'error'})
                         }
                         
                     }}

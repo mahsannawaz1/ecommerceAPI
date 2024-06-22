@@ -64,7 +64,7 @@ const breakpoints = [
         <Stack direction={'row'} spacing={8}>
             <Box position={'relative'}>
             <Box className='on-hover' width={500} height={600}>
-                <img width={'100%'} height={'100%'} className='on-hover-img' src={selectedImage || product?.images[0]} />
+                <img width={'100%'} height={'100%'} src={selectedImage || product?.images[0]} />
             </Box>
             <Box className='vertical-carousel-container'>
                 <Carousal

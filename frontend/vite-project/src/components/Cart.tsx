@@ -7,6 +7,9 @@ import CartCheckout from './CartCheckout'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import CartMessage from './CartMessage'
+import { CartMessageInterface } from '../interfaces/CartMessageInterface'
+
+
 
 export interface CartItem{
     cart_id:string,
@@ -23,14 +26,14 @@ export interface CartItem{
 }
 
 export const Cart = () => {
-    const [message,setMessage] = useState('')
+    const [message,setMessage] = useState<CartMessageInterface> ({} as CartMessageInterface)
     
     const [phase,setPhase] = useState(1)
     const handleChangePhase = (phase:number)=>{
         setPhase(phase)
     }
-    const handleChangeMessage = (msg:string)=>{
-        setMessage(msg)
+    const handleChangeMessage = (msgObj:CartMessageInterface)=>{
+        setMessage(msgObj)
     }
     const cart = localStorage.getItem('cart')
     let cartID = ''
@@ -46,7 +49,7 @@ export const Cart = () => {
         <Container fixed sx={{marginY:5}}>
             <CartPhase phase={phase} />
             <Box marginTop={10}>
-            {message && <Box>
+            {message.msg && <Box>
                             <CartMessage message={message} onChangeMessage={handleChangeMessage}  />
                         </Box> 
             }
