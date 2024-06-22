@@ -20,6 +20,37 @@ router.get('/:id',async(req,res)=>{
     res.send(cartItems)
 })
 
+router.put('/edit',async(req,res)=>{
+    const { value,error } = validateCartItem(req.body)
+    if(error){
+        res.status(400).send({error:error.details[0].message})
+        return
+    }
+    const cart = await Cart.findById(value.cart_id)
+    
+    if(!cart){
+        res.status(400).send({error:'Cart ID not found'})
+        return
+    }
+    const product = await Product.findById(value.product.id)
+    let qty = 0
+    for(size of product.sizeColorNames){
+        if( size.name == value.product.size ){
+            const colorInfo = size.colors.find(color=>color.name==value.product.color)
+            if(colorInfo)
+                qty = colorInfo.qty
+            break
+        }
+    }
+    let cartItem = await CartItem.findOne({'product.id':value.product.id, cart_id: cart._id,'product.size':value.product.size })
+    if(qty < value.qty ){
+        res.status(400).send({error:'Out Of Stock'})
+        return
+    }
+    cartItem.qty = value.qty
+    res.send(await cartItem.save())
+
+})
 
 router.put('/',async(req,res)=>{
     const { value,error } = validateCartItem(req.body)
@@ -44,7 +75,7 @@ router.put('/',async(req,res)=>{
             break
         }
     }
-    console.log('Remainign Qty: ',qty)
+    
     let cartItem = await CartItem.findOne({'product.id':value.product.id, cart_id: cart._id,'product.size':value.product.size })
     if(cartItem){
         
@@ -85,6 +116,16 @@ router.put('/:id',auth,async(req,res)=>{
     },{new:true})
 
     res.send(cart)
+})
+
+router.delete('/',async(req,res)=>{
+    let cartItem = await CartItem.findOneAndDelete({'product.id':req.body.productId, cart_id: req.body.cartId,'product.size':req.body.size,'product.color':req.body.color })
+    if(!cartItem){
+        res.status(400).send({error:'Invalid Product ID or Cart ID'})
+        return
+    }
+    res.send({message:'Product removed form the Cart successfully'})
+
 })
 const validateCartItem = (data)=>{
     const schema  =Joi.object({

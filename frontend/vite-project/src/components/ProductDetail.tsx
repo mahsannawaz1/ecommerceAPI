@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Product } from '../interfaces/Product';
 import { Color } from '../interfaces/Colors';
 import recentlyViewedProducts from '../services/recentlyViewedProducts';
+import useAddToCart from '../hooks/useAddToCart';
 
 const breakpoints = [
     { width: 1, itemsToShow: 1, itemsToScroll: 1 },
@@ -37,26 +38,11 @@ const breakpoints = [
     const szs = product?.sizeColorNames?.map(size => size.name) ?? [];
     const clrs = product?.sizeColorNames?.find(size => size.name === currentSize)?.colors || [];
     const handleChangeCart = ()=>{
-        const cart = localStorage.getItem('cart')
-        console.log(cart)
-        
-        if(cart){
-            
-            const { _id:cart_id } = JSON.parse(cart)
-            axios.put('http://localhost:3000/api/cart',{ 
-                cart_id,
-                product:{
-                    id:product?._id,
-                    name:product?.name,
-                    sku:product?.sku,
-                    size:currentSize,
-                    color:currentColor.name,
-                    image:product?.images[0]
-                },
-                qty:qty,
-                unit_price:product?.price
-            })
-        }
+        if(product)
+            useAddToCart(
+            {id:product?._id,sku:product?.sku,name:product?.name,image:product?.images[0],color:currentColor.name,size:currentSize}
+            ,qty,product?.price
+            )
     }
     useEffect(() => {
         if (product) {

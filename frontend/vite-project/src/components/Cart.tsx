@@ -6,8 +6,10 @@ import ShoppingCart from './ShoppingCart'
 import CartCheckout from './CartCheckout'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import CartMessage from './CartMessage'
 
 export interface CartItem{
+    cart_id:string,
     product:{
         id:string,
         sku:string,
@@ -21,9 +23,14 @@ export interface CartItem{
 }
 
 export const Cart = () => {
+    const [message,setMessage] = useState('')
+    
     const [phase,setPhase] = useState(1)
     const handleChangePhase = (phase:number)=>{
         setPhase(phase)
+    }
+    const handleChangeMessage = (msg:string)=>{
+        setMessage(msg)
     }
     const cart = localStorage.getItem('cart')
     let cartID = ''
@@ -31,16 +38,24 @@ export const Cart = () => {
         cartID = JSON.parse(cart)._id
     }
     const {data:cartItems} = useQuery({
-        queryKey:['cart'],
+        queryKey:['cart',message],
         queryFn: ()=> axios.get<CartItem[]>(`http://localhost:3000/api/cart/${cartID}`).then(res=>res.data)
     })
     const total = cartItems?.reduce((accumulator,item)=>accumulator + (item.qty * item.unit_price),0)
     return (
         <Container fixed sx={{marginY:5}}>
             <CartPhase phase={phase} />
+            <Box marginTop={10}>
+            {message && <Box>
+                            <CartMessage message={message} onChangeMessage={handleChangeMessage}  />
+                        </Box> 
+            }
             <CartDeliveryOption totalAmount={total || 0} />
+            </Box>
+            
+            
             <Stack direction={'row'} spacing={10} marginY={3}>
-                <ShoppingCart cartItems={cartItems ?? []} />
+                <ShoppingCart cartItems={cartItems ?? []} onChangeMessage={handleChangeMessage}  />
                 <CartCheckout totalAmount={total || 0} />
             </Stack>
             

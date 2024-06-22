@@ -1,4 +1,4 @@
 export interface Color{
-    name:String,
+    name:string,
     qty:number
 }

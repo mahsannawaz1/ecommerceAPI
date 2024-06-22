@@ -1,22 +1,29 @@
-import { Box, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material'
+import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
-
 import { Link } from 'react-router-dom'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CartItem } from './Cart';
+import useEditCartQty from '../hooks/useEditCartQty';
+import CartItemDeleteModal from './CartItemDeleteModal';
 
 interface Props{
-    item:CartItem
+    item:CartItem,
+    onChangeMessage:(value:string)=>void
 }
-const ShoppingCartItem = ({ item }:Props) => {
-    const [qty, setQty] = useState(1);
+const ShoppingCartItem = ({ item,onChangeMessage }:Props) => {
+    const [qty, setQty] = useState(item.qty);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     return (
-        <Stack direction={'row'} marginBottom={2} justifyContent={'space-between'} sx={{border:'1px solid var(--link)',padding:2}}>
+        <>
+        <Stack  direction={'row'}  justifyContent={'space-between'} marginBottom={2}  sx={{border:'1px solid var(--link)',padding:2}} >
             <Stack direction={'row'} gap={1.6}>
                 <img src={item.product.image} width={'87px'} height={'111px'}  />
                 <Box>
                     <Link to={`/dapperlane/${item.product.id}`}>
-                        <Typography >{item.product.name}</Typography>
+                        <Typography whiteSpace={'wrap'}>{item.product.name}</Typography>
                     </Link>
                     <Stack direction={'row'} alignItems={'center'} spacing={1}>
                         <Typography sx={{ textDecoration: 'line-through' }}>PKR {item.unit_price}</Typography>
@@ -32,16 +39,42 @@ const ShoppingCartItem = ({ item }:Props) => {
                 </Box>
             </Stack>
             <Stack justifyContent={'space-between'} alignItems={'flex-end'}>
-                <DeleteIcon />
+                <IconButton onClick={handleOpen} sx={{
+                    '&:hover':{
+                        color:'var(--black)',
+                        transition:'color 0.5s'
+                    }
+                }} disableRipple>
+                    <DeleteIcon />
+                </IconButton>
                 <FormControl sx={{ width: 80 }} size="small" variant='outlined'>
                 <InputLabel id="demo-select-small-label">Qty</InputLabel>
                 <Select
                     sx={{ borderRadius: 0, border: 0 }}
                     labelId="demo-select-small-label"
                     id="demo-select-small"
-                    value={item.qty}
+                    value={qty}
                     label="Qty"
-                    onChange={(e) => setQty(parseInt(e.target.value as string))}
+                    onChange={async(e) => {
+                        const product = {
+                            id:item.product.id,
+                            sku:item.product.sku,
+                            name:item.product.name,
+                            size:item.product.size,
+                            image:item.product.image,
+                            color:item.product.color,
+                        }
+                        try{
+                            const cartItem = await useEditCartQty(product,parseInt(e.target.value as string),item.unit_price)
+                            console.log(cartItem)
+                            setQty(cartItem.qty)
+                            onChangeMessage(`Product ${cartItem.product.name} has been updated successfully.`)
+                        }
+                        catch(error){
+                            onChangeMessage('Product is OUT OF STOCK')
+                        }
+                        
+                    }}
                 >
                     {[1, 2, 3, 4, 5, 6].map(q => <MenuItem key={q} value={q}>{q}</MenuItem>)}
                 </Select>
@@ -49,6 +82,8 @@ const ShoppingCartItem = ({ item }:Props) => {
 
             </Stack>
         </Stack>
+            <CartItemDeleteModal open={open} handleClose={handleClose} cartItem={item} onChangeMessage={onChangeMessage} />
+        </>
     )
 }
 

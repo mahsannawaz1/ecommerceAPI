@@ -7,11 +7,13 @@
     --btn:rgb(0, 57, 113);
     --black:rgb(0,0,0);
     --white:rgb(255,255,255);
+    --message:rgb(58, 214, 197);
     --link:rgb(136, 136, 136);
     --border: rgb(136, 136, 136,0.2);
     --pro-title-font:'25px';
     --pro-price-font:'12px';
     --pro-save-font:'10px';
+
 
 }
 *:root{
