@@ -12,6 +12,14 @@ const cartItemSchema = mongoose.Schema({
             ref:'Product',
             required:true
         },
+        sku:{
+            type:String,
+            required:true
+        },
+        name:{
+            type:String,
+            required:true
+        },
         size:{
             type:String,
             enum:sizes,

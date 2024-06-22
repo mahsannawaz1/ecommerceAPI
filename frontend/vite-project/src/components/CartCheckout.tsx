@@ -1,10 +1,12 @@
-import { Box, Button, Input, Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Button,  Stack, Typography } from '@mui/material'
 
-const CartCheckout = () => {
+interface Props{
+    totalAmount:number
+}
+const CartCheckout = ({totalAmount}:Props) => {
     return (
         <Box marginY={2}>
-            <Typography variant='h6'>Do You Have A Promotional Code?</Typography>
+            <Typography marginY={1} variant='h6'>Do You Have A Promotional Code?</Typography>
             <Stack direction={'row'}>
                 <input className="promo-input" type="text" placeholder='Promo Code' />
                 <Button 
@@ -21,17 +23,17 @@ const CartCheckout = () => {
                     } 
                     }}>Apply</Button>
             </Stack>
-            <Stack >
+            <Stack marginTop={4}>
                 <Typography variant='h6'>Order Summary</Typography>
                 <Box border={'1px solid var(--link)'} padding={2}>
                     <Stack direction='row' justifyContent={'space-between'} sx={{color:'var(--link)'}}>
                         <Typography>Subtotal</Typography>
-                        <Typography>PKR 11000</Typography>
+                        <Typography>PKR {totalAmount.toLocaleString()}</Typography>
                     </Stack>
                 <Box sx={{background:'var(--link)',height:'1px',marginTop:1,marginBottom:2}}></Box>
                 <Stack direction='row' justifyContent={'space-between'} >
                         <Typography variant="h6">Subtotal</Typography>
-                        <Typography variant="h6">PKR 11000</Typography>
+                        <Typography variant="h6">PKR {totalAmount.toLocaleString()}</Typography>
                 </Stack>
                 <Stack direction='row' justifyContent={'space-between'} sx={{color:'var(--link)'}}>
                         <Typography variant="body2">Excluding delivery</Typography>

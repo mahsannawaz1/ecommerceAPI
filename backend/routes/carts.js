@@ -91,6 +91,8 @@ const validateCartItem = (data)=>{
         cart_id:Joi.objectId().required(),
         product:Joi.object({
             id:Joi.objectId().required(),
+            sku:Joi.string().min(5).max(10).required(),
+            name:Joi.string().required(),
             size:Joi.string().required(),
             color:Joi.string().required(),
             image:Joi.string().required(),

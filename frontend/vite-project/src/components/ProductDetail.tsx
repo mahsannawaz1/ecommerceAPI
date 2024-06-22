@@ -47,6 +47,8 @@ const breakpoints = [
                 cart_id,
                 product:{
                     id:product?._id,
+                    name:product?.name,
+                    sku:product?.sku,
                     size:currentSize,
                     color:currentColor.name,
                     image:product?.images[0]
