@@ -13,10 +13,12 @@ const NavBar = () => {
         <>
         <Stack paddingBottom={1} direction='row' justifyContent={'space-around'} alignItems='center' borderBottom={'1px solid lightgrey'}>
             <TextField sx={{
+                
                 '& .MuiOutlinedInput-root': {
                     borderRadius: 0,
+                    
                 },
-            }} label="What are you looking for" size='small' color='success' InputProps={{
+            }} label="What are you looking for" size='small'  color='success' InputProps={{
                 endAdornment: <InputAdornment position='end'> <SearchIcon /> </InputAdornment>
             }} />
             <Stack direction='row'  alignItems='center'>
@@ -24,9 +26,41 @@ const NavBar = () => {
                 <Typography textTransform={'uppercase'} variant='h6'>DAPPERLANE</Typography>  
             </Stack> 
             
-            <Stack direction='row' paddingRight={4}>
-            <Button disableRipple color='success'>Create an Account</Button>
-                <Button disableRipple color='success'>Login</Button>
+            <Stack direction='row' paddingRight={4} spacing={1}>
+
+                    
+                    <Link to='/signup'>            
+                        <Button disableRipple
+                        sx={{
+                            
+                            background: 'var(--black)',
+                            color:'var(--white)',
+                            border:'1px solid black',
+                            borderRadius:0,
+                            paddingX:4,
+                            '&:hover': { 
+                                color:'var(--white)',
+                                background: 'var(--black)',
+                        } 
+                        }}>Create an account
+                        </Button>
+                    </Link>
+                <Link to='/signin'>
+                        <Button disableRipple
+                        sx={{
+                            
+                            background: 'var(--black)',
+                            color:'var(--white)',
+                            border:'1px solid black',
+                            borderRadius:0,
+                            paddingX:4,
+                            '&:hover': { 
+                                color:'var(--white)',
+                                background: 'var(--black)',
+                        } 
+                        }}>Login
+                        </Button>
+                </Link>
                 <IconButton>
                     <FavoriteIcon style={{color:'#000'}} />
                 </IconButton>

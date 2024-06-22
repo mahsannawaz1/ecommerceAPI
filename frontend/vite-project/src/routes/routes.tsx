@@ -4,6 +4,8 @@ import ProductDetail from '../components/ProductDetail'
 import Main from '../components/Main'
 import ProductListPage from '../components/ProductListPage'
 import { Cart } from '../components/Cart'
+import Signup from '../components/Signup'
+import SignIn from '../components/SignIn'
 
 
 export const routes = createBrowserRouter([
@@ -13,6 +15,8 @@ export const routes = createBrowserRouter([
         children:[
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
+            { path:'signup',element: <Signup /> },
+            { path:'signin',element: <SignIn /> },
             { path:'shop-men',element: <ProductListPage category='men'/> },
             { path:'shop-women',element: <ProductListPage category='women'/> },
             { path:'shop-junior-boys',element: <ProductListPage category='junior boys'/> },

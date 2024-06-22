@@ -9,7 +9,8 @@
     --white:rgb(255,255,255);
     --success-msg:rgb(58, 214, 197);
     --error-msg:#dc3545;
-    --link:rgb(136, 136, 136);
+    --link:rgb(168, 168, 168);
+    --heading-line:rgb(168, 168, 168,0.5);
     --border: rgb(136, 136, 136,0.2);
     --pro-title-font:'25px';
     --pro-price-font:'12px';
@@ -122,4 +123,12 @@ a:hover{
     font-family: 'Sen';
     font-size: 12;
     color:var(--link);
+}
+.textfield__label{
+    color:var(--black) !important;
+    opacity: 0.5;
+    
+}
+.textfield .MuiInput-underline::after{
+    border-color:var(--black) !important;
 }

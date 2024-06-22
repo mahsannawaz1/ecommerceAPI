@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import DoneIcon from '@mui/icons-material/Done';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { CartMessageInterface } from '../interfaces/CartMessageInterface';
@@ -26,7 +26,7 @@ const CartMessage = ({message,onChangeMessage}:Props) => {
             gap:1
             }} >
             {
-            message.msgType == 'update' ? <DoneIcon sx={{color:'white',width:30,height:30}} /> :
+            message.msgType == 'update' ? <CheckCircleOutlineIcon sx={{color:'white',width:30,height:30}} /> :
             message.msgType == 'delete' ? <DeleteForeverIcon sx={{color:'white',width:30,height:30}} /> :
             <CancelIcon sx={{color:'white',width:30,height:30}} />
         }
