@@ -62,7 +62,8 @@ router.post('/login',async(req,res)=>{
 })
 
 router.post('/verifyEmail',async(req,res)=>{
-    const token = req.params.token
+    console.log('token: ',req.body.token)
+    const token = req.body.token
     if(!token){
         res.status(400).send({error:'No Token provided!'})
         return

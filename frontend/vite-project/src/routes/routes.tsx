@@ -7,6 +7,7 @@ import { Cart } from '../components/Cart'
 import Signup from '../components/Signup'
 import SignIn from '../components/SignIn'
 import VerificationRequired from '../components/VerificationRequired'
+import VerifiedEmail from '../components/VerifiedEmail'
 
 
 export const routes = createBrowserRouter([
@@ -18,6 +19,7 @@ export const routes = createBrowserRouter([
             { path:'cart',element: <Cart /> },
             { path:'signup',element: <Signup /> },
             { path:'signup/verify',element: <VerificationRequired /> },
+            { path:'signup/complete',element: <VerifiedEmail /> },
             { path:'signin',element: <SignIn /> },
             { path:'shop-men',element: <ProductListPage category='men'/> },
             { path:'shop-women',element: <ProductListPage category='women'/> },

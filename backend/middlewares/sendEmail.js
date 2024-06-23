@@ -97,14 +97,14 @@ const sendEmail = async(email,emailType,userId)=>{
                 <div class='line'></div>
                 <h3>HELLO ${name},</h3>
                 <div class='line'></div>
-                <p>Thank you for registering with Dapperlane Outfitters UAE and welcome.</p>
+                <p>Thank you for registering with Dapperlane Outfitters PAK and welcome.</p>
                 <p>You have registered with the following e-mail address: <span> nawazehsen@gmail.com </span> </p>
                 <strong>Please verify your email address and activate your account by clicking the link below</strong>
                 <div>
-                    <a href='localhost:3000/verifyEmail?${hashedToken}'   <button>Verify your email </button> </a> 
+                    <a href='http://localhost:5173/signup/complete?token=${hashedToken}'   <button>Verify your email </button> </a> 
                 </div>
-                <p>Or verify using this link: <span>localhost:3000/verifyEmail?${hashedToken}</span></p>
-                <p>If you have any questions, check our <a href=${'http://localhost:5173'}><span>FAQs</span></a>, or contact our Customer Service team.</p>
+                <p>Or verify using this link: <a href='http://localhost:5173/signup/complete?token=${hashedToken}'>http://localhost:5173/signup/complete?token=${hashedToken}</a></p>
+                <p>If you have any questions, check our <a href='http://localhost:5173'><span>FAQs</span></a>, or contact our Customer Service team.</p>
                 <p>Best Wishes,</p>
                 <p>Dapperlane Outfitters PAK Team</p>
                 <p>To contact us, click <a href=${'http://localhost:5173'}><span>contact us.</span></a></p>
