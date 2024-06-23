@@ -19,6 +19,22 @@ const userSchema = new mongoose.Schema({
     isStaff:{
         type:Boolean,
         default:false
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
+    },
+    verifyToken:{
+        type:String,
+    },
+    verifyTokenExpiry:{
+        type:Date,
+    },
+    forgotPasswordToken:{
+        type:String,
+    },
+    forgotPasswordTokenExpiry:{
+        type:Date,
     }
 })
 

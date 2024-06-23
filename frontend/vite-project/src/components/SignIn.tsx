@@ -23,9 +23,9 @@ const SignIn = () => {
                             </Stack>
                             
                             <Box sx={{direction:'row',paddingTop:2,alignItems:'center'}} display={'flex'}    columnGap={5}>
-                                <Button 
+                                <Button
+                                type='submit' 
                                 sx={{
-                                
                                 background: 'var(--black)',
                                 color:'var(--white)',
                                 border:'1px solid black',

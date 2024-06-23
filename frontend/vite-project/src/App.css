@@ -129,6 +129,7 @@ a:hover{
     opacity: 0.5;
     
 }
+
 .textfield .MuiInput-underline::after{
     border-color:var(--black) !important;
 }
