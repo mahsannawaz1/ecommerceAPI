@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Container, FormControlLabel, FormGroup, InputAdornment, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button,  Container, InputAdornment, Stack, TextField, Typography } from '@mui/material'
 import facebookLogo from '../../public/facebook-login-logo.svg'
 import googleLogo from '../../public/google-login-logo.svg'
 import userLogo from '../../public/profile-icon.svg'
@@ -36,7 +36,7 @@ const SignIn = () => {
                                     background: 'var(--black)',
                                 }
                                 }}>Sign in</Button>
-                                <Link style={{fontWeight:500,textDecoration:'none'}} to='/'>Forgot password?</Link>
+                                <Link style={{fontWeight:500,textDecoration:'none'}} to='/signin/forgotPassword'>Forgot password?</Link>
                             </Box>
                         </Stack>
                     </form>

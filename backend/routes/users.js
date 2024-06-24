@@ -23,7 +23,7 @@ router.post('/register',async(req,res)=>{
         return
     }
     if(value.password != value.confirmPassword){
-        res.status(400).send({error:`Passwords doesn't match`})
+        res.status(400).send({error:`Passwords don't match`})
         return
     }
     const password = await hashedPassword(value.password)
@@ -62,7 +62,7 @@ router.post('/login',async(req,res)=>{
 })
 
 router.post('/verifyEmail',async(req,res)=>{
-    console.log('token: ',req.body.token)
+    
     const token = req.body.token
     if(!token){
         res.status(400).send({error:'No Token provided!'})
@@ -80,6 +80,50 @@ router.post('/verifyEmail',async(req,res)=>{
     res.send('Email Verified Successfully')
 
 })
+router.post('/sendResetEmail',async(req,res)=>{
+    const email = req.body.email
+    if(!email){
+        res.status(400).send({error:'No Email provided!'})
+        return
+    }
+    const user = await User.findOne({email})
+    if(!user){
+        res.status(400).send({error:'Invalid Email address entered.'})
+        return
+    }
+    sendEmail(user.email,'RESET',user._id)
+    res.send(user)
+})
+router.post('/changePassword',async(req,res)=>{
+    const { password,confirmPassword,token } = req.body
+    console.log('checking token')
+    if(!token){
+        res.status(400).send({error:'No Token provided!'})
+        return
+    }
+    console.log('checking password')
+    if(password!==confirmPassword){
+        res.status(400).send({error:'Passwords do not match.'})
+        return
+    }
+    console.log('checking user')
+    const user = await User.findOne({forgotPasswordToken:token,forgotPasswordTokenExpiry:{$gt:Date.now()}})
+    if(!user){
+        
+        res.status(400).send({error:'Invalid Token!'})
+        return
+    }
+    console.log('user is there')
+    const hashedPass = await hashedPassword(password)
+    user.password = hashedPass
+    user.forgotPasswordToken = null
+    user.forgotPasswordTokenExpiry = null
+    await user.save()
+    
+    res.send('Reset Password Successfully')
+    return
+})
+
 
 const validateUser = (data) => {
     const schema = Joi.object({

@@ -8,6 +8,9 @@ import Signup from '../components/Signup'
 import SignIn from '../components/SignIn'
 import VerificationRequired from '../components/VerificationRequired'
 import VerifiedEmail from '../components/VerifiedEmail'
+import ForgotPasswordEmail from '../components/ForgotPasswordEmail'
+import ResetPassword from '../components/ResetPassword'
+
 
 
 export const routes = createBrowserRouter([
@@ -18,9 +21,11 @@ export const routes = createBrowserRouter([
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
             { path:'signup',element: <Signup /> },
-            { path:'signup/verify',element: <VerificationRequired /> },
+            { path:'user/verify',element: <VerificationRequired /> },
             { path:'signup/complete',element: <VerifiedEmail /> },
             { path:'signin',element: <SignIn /> },
+            { path:'signin/forgotPassword',element: <ForgotPasswordEmail /> },
+            { path:'signin/reset',element: <ResetPassword /> },
             { path:'shop-men',element: <ProductListPage category='men'/> },
             { path:'shop-women',element: <ProductListPage category='women'/> },
             { path:'shop-junior-boys',element: <ProductListPage category='junior boys'/> },
