@@ -58,7 +58,7 @@ const ResetPassword = () => {
                 console.log(res)
                 navigate('/signin')
             })
-            .catch(()=>setError("Your Login link is expired. Please go to Login page to generate another."))
+            .catch((err)=>setError(err.response.data.error))
         }
     }
     return (

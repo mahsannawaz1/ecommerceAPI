@@ -11,6 +11,7 @@ import PasswordComplexity from 'joi-password-complexity';
 import { joiResolver } from '@hookform/resolvers/joi';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const complexityOptions = {
     min: 7,
@@ -58,6 +59,7 @@ const schema = Joi.object({
 })
 
 const Signup = () => {
+    const [error,setError] = useState("")
     const navigate = useNavigate()
     const {  register,handleSubmit,formState: { errors }} = useForm<SignUpInputs>({resolver:joiResolver(schema)})
     const [token,setToken] = useState< string | null> (null)
@@ -74,12 +76,29 @@ const Signup = () => {
                 console.log(res)
                 navigate('/signup/verify')
             })
+            .catch(err=>setError(err.response.data.error))
             console.log('Email sent succesfully')
         }
         
     }
     return (
         <Container fixed sx={{marginY:5}}>
+        {  error &&   
+        <Box display={'inline-flex'}  sx={{
+            width:'100%',
+            bgcolor:'red',
+            padding:'5px 10px',
+            color:'var(--white)',
+            alignItems:'center',
+            textTransform:'capitalize',
+            gap:1,
+            marginY:5
+            }} >
+            {error && <CancelIcon sx={{color:'white',width:30,height:30}} />}
+            
+            <Typography>{error}</Typography>
+            </Box>
+            }
             <Typography variant='h5' paddingY={0.5} borderBottom={'1px solid var(--border)'}>Create An Account</Typography>
             <Stack direction='row' spacing={10} marginTop={5}>
                 <Box width={'50%'}  >
@@ -173,22 +192,24 @@ const Signup = () => {
                         </Button>
                     </Stack>
                     <Typography>ALREADY HAVE AN ACCOUNT?</Typography>
-                    <Button
-                            sx={{
-                            background: 'var(--white)',
-                            color:'var(--black)',
-                            border:'1px solid black',
-                            borderRadius:0,
-                            textTransform:"capitalize",
-                            marginTop:2,
-                            '&:hover': {
+                    <Link to='/signin'>
+                        <Button
+                                sx={{
                                 background: 'var(--white)',
                                 color:'var(--black)',
-                            }
-                            }}>
-                                <img width={35} height={35} src={userLogo} />
-                                Sign in here
-                        </Button>
+                                border:'1px solid black',
+                                borderRadius:0,
+                                textTransform:"capitalize",
+                                marginTop:2,
+                                '&:hover': {
+                                    background: 'var(--white)',
+                                    color:'var(--black)',
+                                }
+                                }}>
+                                    <img width={35} height={35} src={userLogo} />
+                                    Sign in here
+                            </Button>
+                    </Link>
                 </Box>
             </Stack>
         </Container>

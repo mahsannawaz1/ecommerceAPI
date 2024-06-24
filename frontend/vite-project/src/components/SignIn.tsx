@@ -83,22 +83,24 @@ const SignIn = () => {
                         </Button>
                     </Stack>
                     <Typography>DON'T HAVE AN ACCOUNT YET?</Typography>
-                    <Button
-                            sx={{
-                            background: 'var(--white)',
-                            color:'var(--black)',
-                            border:'1px solid black',
-                            borderRadius:0,
-                            textTransform:"capitalize",
-                            marginTop:2,
-                            '&:hover': {
+                    <Link to='/signup'>
+                        <Button
+                                sx={{
                                 background: 'var(--white)',
                                 color:'var(--black)',
-                            }
-                            }}>
-                                <img width={35} height={35} src={userLogo} />
-                                Sign up here
-                        </Button>
+                                border:'1px solid black',
+                                borderRadius:0,
+                                textTransform:"capitalize",
+                                marginTop:2,
+                                '&:hover': {
+                                    background: 'var(--white)',
+                                    color:'var(--black)',
+                                }
+                                }}>
+                                    <img width={35} height={35} src={userLogo} />
+                                    Sign up here
+                            </Button>
+                    </Link>
                 </Box>
             </Stack>
         </Container>
