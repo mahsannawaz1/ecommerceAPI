@@ -27,7 +27,11 @@ passport.use(new GoogleStrategy({
             user = new User({
                 email: profile.emails[0].value,
                 password: null,
-                isVerified: profile.emails[0].verified 
+                isVerified: profile.emails[0].verified,
+                verifyToken:null,
+                forgotPasswordToken:null,
+                verifyTokenExpiry:null,
+                forgotPasswordTokenExpiry:null
             });
 
             await user.save();

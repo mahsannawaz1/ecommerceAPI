@@ -23,11 +23,13 @@ interface LoginInputs{
 }
 
 const schema = Joi.object({
-    email:Joi.string().email({tlds:{allow:false}}).required().messages({
-        'string.empty':'Email is required.',
-        'string.required':'Email Address must be a valid email.'
+    email:Joi.string().email({ tlds: { allow: false } }).required().messages({
+        'string.empty': 'Email Address is required.',
+        'string.email': 'Email Address must be a valid email.'
     }),
-    password:Joi.string().required()
+    password:Joi.string().required().messages({
+        'string.empty': 'Password is required.',
+    })
 })
 
 const SignIn = () => {
@@ -71,9 +73,11 @@ const SignIn = () => {
                         <Stack spacing={2}>
                             <Stack spacing={1.5} >
                                 <TextField {...register('email')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Email Address" size='small' />
+                                {errors.email && <Typography color='error' fontSize={12}>{errors.email.message}</Typography>}
                                 <TextField {...register('password')} type={showPass=='Show' ? 'password' : 'text'} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Password" size='small' InputProps={{
                                     endAdornment: <InputAdornment position='end'> <Box sx={{cursor:'pointer'}} onClick={()=>setShowPass(showPass == 'Show' ? 'Hide' : 'Show')}>{showPass}</Box> </InputAdornment>
                                 }} />
+                                {errors.password && <Typography color='error' fontSize={12}>{errors.password.message}</Typography>}
                             </Stack>
                             
                             <Box sx={{direction:'row',paddingTop:2,alignItems:'center'}} display={'flex'}    columnGap={5}>

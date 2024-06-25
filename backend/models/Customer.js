@@ -32,10 +32,6 @@ const customerSchema = new mongoose.Schema({
         ref: 'User',
         unique:true
     },
-    isCustomer:{
-        type:Boolean,
-        default:true
-    },
 })
 
 module.exports = mongoose.model('Customer',customerSchema)
