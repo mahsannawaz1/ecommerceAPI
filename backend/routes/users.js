@@ -3,6 +3,7 @@ const User = require('../models/User')
 const Customer = require('../models/Customer')
 const hashedPassword = require('../middlewares/hashPassword')
 
+const passport = require('passport')
 const crypto = require('crypto')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -30,7 +31,6 @@ router.post('/register',async(req,res)=>{
     user = new User({
         email: value.email,
         password: password,
-        emailToken: crypto.randomBytes(64).toString("hex")
     })
     user = await user.save()
     const customer = new Customer({
@@ -127,6 +127,28 @@ router.post('/changePassword',async(req,res)=>{
     res.send('Reset Password Successfully')
     return
 })
+
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: 'http://localhost:5173' }),
+    (req, res) => {
+        console.log('google')
+        console.log('User',req.user)
+        res.redirect('http://localhost:5173');
+        
+    }
+);
+
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+
+router.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    (req, res) => {
+        // res.redirect('http://localhost:5173/user/verify');
+    }
+);
+
 
 
 const validateUser = (data) => {

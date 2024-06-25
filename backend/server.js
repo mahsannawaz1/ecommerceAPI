@@ -12,6 +12,10 @@ const winston = require('winston')
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const passport = require('passport')
+const session = require('express-session')
+require('./routes/socialMediaAuth')
+
 
 
 winston.add(new winston.transports.Console())
@@ -26,12 +30,23 @@ mongoose.connect('mongodb://localhost/ecommerce')
 .then(()=>winston.info('Connected to MongoDB'))
 .catch(error=>winston.error(error.message,error))
 
+app.use(session({
+    secret:process.env.APP_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true
+}))
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(cors())
 app.use('/api/products',products)
 app.use('/api/categories',categories)
 app.use('/api/cart',carts)
 app.use('/api/checkout',orders)
 app.use('/api',users)
+
 app.use(error)
 
 const port = process.env.PORT || 3000

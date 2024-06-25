@@ -63,24 +63,26 @@ const SignIn = () => {
                                 <img width={35} height={35} src={facebookLogo} />
                                 Sign in with facebook
                         </Button>
-                        <Button
-                            sx={{
-                            background: 'var(--white)',
-                            color:'var(--black)',
-                            border:'1px solid black',
-                            borderRadius:0,
-                            textTransform:"capitalize",
-                            width:"50%",
-                            justifyContent:'flex-start',
-                            gap:1,
-                            '&:hover': {
+                        <Link to='http://localhost:3000/api/auth/google'>
+                            <Button
+                                sx={{
                                 background: 'var(--white)',
                                 color:'var(--black)',
-                            }
-                            }}>
-                                <img width={35} height={35} src={googleLogo} />
-                                Sign in with Google
-                        </Button>
+                                border:'1px solid black',
+                                borderRadius:0,
+                                textTransform:"capitalize",
+                                width:"50%",
+                                justifyContent:'flex-start',
+                                gap:1,
+                                '&:hover': {
+                                    background: 'var(--white)',
+                                    color:'var(--black)',
+                                }
+                                }}>
+                                    <img width={35} height={35} src={googleLogo} />
+                                    Sign in with Google
+                            </Button>
+                        </Link>
                     </Stack>
                     <Typography>DON'T HAVE AN ACCOUNT YET?</Typography>
                     <Link to='/signup'>

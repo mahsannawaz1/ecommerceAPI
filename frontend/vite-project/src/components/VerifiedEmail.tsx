@@ -5,19 +5,15 @@ import { useSearchParams } from 'react-router-dom'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 const VerifiedEmail = () => {
     const [searchParams] = useSearchParams()
-    const [isVerified,setIsVerified] = useState(false)
+    
     const [token,setToken] = useState("")
 
     const verifyUserEmail = ()=>{
         console.log(token)
-        return axios.post(`http://localhost:3000/api/verifyEmail`,{token}).then(res=>{
-            console.log(res.data)
-            setIsVerified(true)
-        })
+        return axios.post(`http://localhost:3000/api/verifyEmail`,{token})
     }
     useEffect(()=>{
         const token = searchParams.get('token')
-        // console.log(token)
         setToken(token || "")
     },[])
     useEffect(()=>{
@@ -49,7 +45,7 @@ const VerifiedEmail = () => {
                 <Typography><a style={{color:'rgb(168, 168, 168) !important'}} href="/signin">Sign In</a> to purchase and view exciting products.</Typography>
             </Stack>
         </Box>
-    </Container>
+        </Container>
     
     )
 }

@@ -20,19 +20,22 @@ const sendEmail = async(email,emailType,userId)=>{
             name = `${customer.firstName} ${customer.lastName}`
         } else if(emailType=='RESET'){
             
-            await User.findOneAndUpdate({email},
+            const user = await User.findOneAndUpdate({email},
                 {
                 forgotPasswordToken:hashedToken,
                 forgotPasswordTokenExpiry:Date.now() + 3600000
                 },
             )
+            const customer = await Customer.findOne({userId:user._id})
+            name = `${customer.firstName} ${customer.lastName}`
         }
         const transporter = nodemailer.createTransport({
-            host: "sandbox.smtp.mailtrap.io",
-            port: 2525,
+            host: "smtp.gmail.com",
+            port: 587,
+            secure:false,
             auth: {
-                user: 'bd4780176ac097',
-                pass: 'eaface2a35b52a'
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD
             }
         })
 
@@ -76,7 +79,7 @@ const sendEmail = async(email,emailType,userId)=>{
         <a href=${'http://localhost:5173'}>www.dapperlane.com.pk</a>
         ` : ''
         const mailOptions = {
-            from:'bd4780176ac097',
+            from:process.env.EMAIL,
             to:email,
             subject: emailType=='VERIFY' ? 
             `Email Verification for ${email} at Dapperlane Outfitters PAK` :

@@ -70,14 +70,12 @@ const Signup = () => {
     }
     const onDataSubmit = (data:SignUpInputs)=>{
         if(token){
-            console.log(data)
             axios.post('http://localhost:3000/api/register',{...data})
             .then(res=>{
                 console.log(res)
                 navigate('/signup/verify')
             })
             .catch(err=>setError(err.response.data.error))
-            console.log('Email sent succesfully')
         }
         
     }
@@ -172,24 +170,26 @@ const Signup = () => {
                                 <img width={35} height={35} src={facebookLogo} />
                                 Sign up with facebook
                         </Button>
-                        <Button
-                            sx={{
-                            background: 'var(--white)',
-                            color:'var(--black)',
-                            border:'1px solid black',
-                            borderRadius:0,
-                            textTransform:"capitalize",
-                            width:"50%",
-                            justifyContent:'flex-start',
-                            gap:1,
-                            '&:hover': {
+                        <Link to='http://localhost:3000/api/auth/google'>
+                            <Button
+                                sx={{
                                 background: 'var(--white)',
                                 color:'var(--black)',
-                            }
-                            }}>
-                                <img width={35} height={35} src={googleLogo} />
-                                Sign up with Google
-                        </Button>
+                                border:'1px solid black',
+                                borderRadius:0,
+                                textTransform:"capitalize",
+                                width:"50%",
+                                justifyContent:'flex-start',
+                                gap:1,
+                                '&:hover': {
+                                    background: 'var(--white)',
+                                    color:'var(--black)',
+                                }
+                                }}>
+                                    <img width={35} height={35} src={googleLogo} />
+                                    Sign up with Google
+                            </Button>
+                        </Link>
                     </Stack>
                     <Typography>ALREADY HAVE AN ACCOUNT?</Typography>
                     <Link to='/signin'>
