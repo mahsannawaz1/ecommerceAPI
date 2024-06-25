@@ -55,6 +55,11 @@ router.post('/login',async(req,res)=>{
         res.status(400).send({error:'Invalid Email or Password'})
         return
     }
+    if(!user.isVerified){
+        sendEmail(user.email,'VERIFY',user._id)
+        res.status(400).send({error:'Your email is not Verified.We have sent a verification email to your email address.'})
+        return
+    }
     console.log(process.env.JWT_SECRET_KEY)
     const token = jwt.sign({ _id:user._id,isAdmin:user.isAdmin,isStaff:user.isStaff },process.env.JWT_SECRET_KEY)
     const customer = await Customer.findOne({userId:user._id})
@@ -131,10 +136,14 @@ router.post('/changePassword',async(req,res)=>{
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: 'http://localhost:5173' }),
+    passport.authenticate('google', { failureRedirect: 'http://localhost:5173/signin' }),
     (req, res) => {
         console.log('google')
         console.log('User',req.user)
+        if(!req.user.isVerified){
+            sendEmail(req.user.email,'VERIFY',req.user._id)
+            res.redirect(`http://localhost:5173/user/verify?email=${req.user.email}`);
+        }
         res.redirect('http://localhost:5173');
         
     }

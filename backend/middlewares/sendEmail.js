@@ -69,8 +69,8 @@ const sendEmail = async(email,emailType,userId)=>{
         <p>Thank you for registering with Dapperlane Outfitters PAK and welcome.</p>
         <p>You have registered with the following e-mail address: <span> nawazehsen@gmail.com </span> </p>
         <p>Please verify your email address and activate your account by clicking the link below</p>
-        <a class="btn" href='http://localhost:5173/signup/complete?token=${hashedToken}'>Verify your email </a>
-        <p>Or verify using this link: <a href='http://localhost:5173/signup/complete?token=${hashedToken}'>http://localhost:5173/signup/complete?token=${hashedToken}</a></p>
+        <a class="btn" href='http://localhost:5173/user/complete?token=${hashedToken}'>Verify your email </a>
+        <p>Or verify using this link: <a href='http://localhost:5173/user/complete?token=${hashedToken}'>http://localhost:5173/user/complete?token=${hashedToken}</a></p>
         <p>If you have any questions, check our <a href='http://localhost:5173'><span>FAQs</span></a>, or contact our Customer Service team.</p>
         <p>Best Wishes,</p>
         <p>Dapperlane Outfitters PAK Team.</p>

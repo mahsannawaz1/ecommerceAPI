@@ -1,6 +1,7 @@
 const passport = require('passport')
 const User = require('../models/User')
 const Customer = require('../models/Customer')
+const sendEmail = require('../middlewares/sendEmail')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 
@@ -14,35 +15,36 @@ passport.deserializeUser(async(id,done)=>{
 })
 
 passport.use(new GoogleStrategy({
-    clientID:process.env.GOOGLE_ID,
+    clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET_KEY,
     callbackURL: 'http://localhost:3000/api/auth/google/callback',
     scope: ['profile', 'email']
-},async(accessToken, refreshToken, profile, done)=>{
-    console.log(profile)
-    const user = await User.findOne({ email:profile.emails[0].value })
-    console.log('Calling')
-    if(!user){
-        console.log('creating user')
-        const user = new User({
-            email:profile.emails[0].value,
-            password:null,
-            isVerified:true
-        })
-        await user.save()
-        const [firstName,lastName] = profile.displayName.split(' ')
-        const customer = new Customer({
-            firstName,
-            lastName,
-            userId:user._id
-        })
-        await customer.save()
-    }
-    done(null,user)
-    console.log('user done')
-}
-))
+}, async (accessToken, refreshToken, profile, done) => {
+    
+    try {
+        let user = await User.findOne({ email: profile.emails[0].value });
+        if (!user) {
+            user = new User({
+                email: profile.emails[0].value,
+                password: null,
+                isVerified: profile.emails[0].verified 
+            });
 
+            await user.save();
+
+            const [firstName, lastName] = profile.displayName.split(' ');
+            const customer = new Customer({
+                firstName,
+                lastName,
+                userId: user._id
+            });
+            await customer.save();
+        }
+        done(null, user);
+    } catch (error) {
+        done(error);
+    }
+}));
 passport.use(new FacebookStrategy({
     clientID:process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET_KEY,

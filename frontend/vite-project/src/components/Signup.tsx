@@ -73,7 +73,7 @@ const Signup = () => {
             axios.post('http://localhost:3000/api/register',{...data})
             .then(res=>{
                 console.log(res)
-                navigate('/signup/verify')
+                navigate(`/user/verify?${data.email}`)
             })
             .catch(err=>setError(err.response.data.error))
         }

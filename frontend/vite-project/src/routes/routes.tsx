@@ -12,7 +12,6 @@ import ForgotPasswordEmail from '../components/ForgotPasswordEmail'
 import ResetPassword from '../components/ResetPassword'
 
 
-
 export const routes = createBrowserRouter([
     {
         path:'/',
@@ -22,7 +21,7 @@ export const routes = createBrowserRouter([
             { path:'cart',element: <Cart /> },
             { path:'signup',element: <Signup /> },
             { path:'user/verify',element: <VerificationRequired /> },
-            { path:'signup/complete',element: <VerifiedEmail /> },
+            { path:'user/complete',element: <VerifiedEmail /> },
             { path:'signin',element: <SignIn /> },
             { path:'signin/forgotPassword',element: <ForgotPasswordEmail /> },
             { path:'signin/reset',element: <ResetPassword /> },
