@@ -63,7 +63,7 @@ router.post('/login',async(req,res)=>{
     console.log(process.env.JWT_SECRET_KEY)
     const token = jwt.sign({ _id:user._id,isAdmin:user.isAdmin,isStaff:user.isStaff },process.env.JWT_SECRET_KEY)
     const customer = await Customer.findOne({userId:user._id})
-    res.header('x-auth-token',token).send(customer)
+    res.send({customer,'x-auth-token':token})
 })
 
 router.post('/verifyEmail',async(req,res)=>{
