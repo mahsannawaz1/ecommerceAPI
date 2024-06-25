@@ -137,14 +137,20 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: 'http://localhost:5173/signin' }),
-    (req, res) => {
+    async(req, res) => {
         console.log('google')
         console.log('User',req.user)
         if(!req.user.isVerified){
             sendEmail(req.user.email,'VERIFY',req.user._id)
             res.redirect(`http://localhost:5173/user/verify?email=${req.user.email}`);
         }
+        const token = jwt.sign({ _id:req.user._id,isAdmin:req.user.isAdmin,isStaff:req.user.isStaff },process.env.JWT_SECRET_KEY)
+        const customer = await Customer.findOne({userId:req.user._id})
+        
+        
+        // store the token in the local storage
         res.redirect('http://localhost:5173');
+        
         
     }
 );
