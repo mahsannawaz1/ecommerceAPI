@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const ProfileLinks = () => {
     return (
         <Stack>
-            <Link to='/'>
+            <Link to='/profile'>
                 <Box marginBottom={1}>
                     <Typography
                     sx={{ cursor:'pointer',textTransform:'capitalize' }}
@@ -14,7 +14,7 @@ const ProfileLinks = () => {
                     >My Account</Typography>
                 </Box>
             </Link>
-            <Link to='/'>
+            <Link to='/profile/orders'>
                 <Box marginBottom={1}>
                     <Typography
                     sx={{ cursor:'pointer',textTransform:'capitalize' }}
@@ -33,7 +33,7 @@ const ProfileLinks = () => {
                     >Payment Cards</Typography>
                 </Box>
             </Link>
-            <Link to='/'>
+            <Link to='/profile/contact'>
                 <Box marginBottom={1}>
                     <Typography
                     sx={{ cursor:'pointer',textTransform:'capitalize' }}

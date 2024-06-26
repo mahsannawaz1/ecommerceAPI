@@ -1,6 +1,7 @@
 import React from 'react'
 import {Container, Grid,Stack,Typography,Box} from '@mui/material'
 import ProfileLinks from '../components/ProfileLinks'
+import { Outlet } from 'react-router-dom'
 const Profile = () => {
     return (
         <Container fixed sx={{marginY:5}}>
@@ -38,6 +39,9 @@ const Profile = () => {
                     <Box>
                         <ProfileLinks />
                     </Box>
+                </Grid>
+                <Grid item md={9} sm={12}>
+                    <Outlet />
                 </Grid>
             </Grid>
         </Container>

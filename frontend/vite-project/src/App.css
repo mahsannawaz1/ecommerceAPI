@@ -6,6 +6,7 @@
     --btn-color4:rgb(255, 255, 255);
     --btn:rgb(0, 57, 113);
     --black:rgb(0,0,0);
+    --info-bg:rgb(0, 122, 255);
     --white:rgb(255,255,255);
     --success-msg:rgb(58, 214, 197);
     --error-msg:#dc3545;
@@ -132,4 +133,12 @@ a:hover{
 
 .textfield .MuiInput-underline::after{
     border-color:var(--black) !important;
+}
+.order-input{
+    border:1px solid var(--border);
+    outline:0;
+    border-radius: 0;
+    padding:10px;
+    padding-right: 40px;
+    font-family: "Sen", sans-serif;
 }

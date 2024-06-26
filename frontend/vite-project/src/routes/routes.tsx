@@ -11,6 +11,9 @@ import VerifiedEmail from '../components/VerifiedEmail'
 import ForgotPasswordEmail from '../components/ForgotPasswordEmail'
 import ResetPassword from '../components/ResetPassword'
 import Profile from '../components/Profile'
+import MyAccount from '../components/MyAccount'
+import MyOrders from '../components/MyOrders'
+import ContactDetails from '../components/ContactDetails'
 
 
 export const routes = createBrowserRouter([
@@ -20,7 +23,11 @@ export const routes = createBrowserRouter([
         children:[
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
-            { path:'profile',element: <Profile /> },
+            { path:'profile',element: <Profile />,children:[
+                { path:'', element:<MyAccount /> },
+                { path:'orders', element:<MyOrders /> },
+                { path:'contact', element:<ContactDetails /> }
+            ] },
             { path:'signup',element: <Signup /> },
             { path:'user/verify',element: <VerificationRequired /> },
             { path:'user/complete',element: <VerifiedEmail /> },

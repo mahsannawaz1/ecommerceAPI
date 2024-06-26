@@ -10,8 +10,7 @@ const customerSchema = new mongoose.Schema({
     },
     phone:{
         type:String,
-        minlength:11,
-        maxlength:11,
+        length:10,
     },
     shippingAddress:{
         type: {
