@@ -10,6 +10,7 @@ import VerificationRequired from '../components/VerificationRequired'
 import VerifiedEmail from '../components/VerifiedEmail'
 import ForgotPasswordEmail from '../components/ForgotPasswordEmail'
 import ResetPassword from '../components/ResetPassword'
+import Profile from '../components/Profile'
 
 
 export const routes = createBrowserRouter([
@@ -19,6 +20,7 @@ export const routes = createBrowserRouter([
         children:[
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
+            { path:'profile',element: <Profile /> },
             { path:'signup',element: <Signup /> },
             { path:'user/verify',element: <VerificationRequired /> },
             { path:'user/complete',element: <VerifiedEmail /> },
