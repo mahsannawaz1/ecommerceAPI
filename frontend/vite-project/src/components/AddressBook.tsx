@@ -94,10 +94,7 @@ const AddressBook = () => {
 
     }
     useEffect(()=>{
-        console.log('out: ',user)
         if(Object.keys(user).length !== 0){
-            console.log(Object.keys(user).length)
-            console.log('in: ',user)
             setValue('firstName',user.firstName)
             setValue('lastName',user.lastName)
             setValue('phone',user.phone)
@@ -105,7 +102,7 @@ const AddressBook = () => {
             setSelectedCity(user.shippingAddress.city)
             setSelectedArea(user.shippingAddress.area)
         }
-    },[user,setValue,selectedCity,selectedArea])
+    },[user])
     return (
         <Stack spacing={4}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>

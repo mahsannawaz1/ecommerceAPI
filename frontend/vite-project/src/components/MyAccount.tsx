@@ -1,6 +1,8 @@
 import { Box, Button, Stack, Typography } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../contexts/userContext';
 
 
 const MyAccount = () => {
@@ -9,24 +11,27 @@ const MyAccount = () => {
     if(token){
         localStorage.setItem('Authorization',token)
     }
-    
+    const {user} = useContext(UserContext)
+
     return (
         <Stack spacing={2}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>
                 <Typography variant='h5' >My Account</Typography>
-                <Button
-                type='submit'
-                sx={{
-                background: 'var(--black)',
-                color:'var(--white)',
-                border:'1px solid black',
-                borderRadius:0,
-                textTransform:'capitalize',
-                '&:hover': {
-                    color:'var(--white)',
+                <Link to='/profile/contact'>
+                    <Button
+                    type='submit'
+                    sx={{
                     background: 'var(--black)',
-                }
-                }}>Edit Account Details</Button>
+                    color:'var(--white)',
+                    border:'1px solid black',
+                    borderRadius:0,
+                    textTransform:'capitalize',
+                    '&:hover': {
+                        color:'var(--white)',
+                        background: 'var(--black)',
+                    }
+                    }}>Edit Account Details</Button>
+                </Link>
             </Stack>
             <Box borderBottom={'1px solid var(--border)'} paddingBottom={6}>
                 <Typography  variant='h6' >Recent Orders</Typography>
@@ -68,7 +73,7 @@ const MyAccount = () => {
                 <Typography marginBottom={2}  variant='h6' borderBottom={'1px solid var(--border)'} paddingBottom={0.5}>Account Details</Typography>
                 <Stack>
                 <Typography  fontSize={14} >Email Address</Typography>
-                <Typography  variant='caption' sx={{color:'var(--link)'}}>nawazehsen@gmail.com</Typography>
+                <Typography  variant='caption' sx={{color:'var(--link)'}}>{user.email}</Typography>
                 </Stack>
             </Box>
         </Stack>

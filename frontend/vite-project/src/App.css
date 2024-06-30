@@ -128,12 +128,20 @@ a:hover{
 
 .textfield__label{
     color:var(--black) !important;
-   
     opacity: 0.5;
     
+    
 }
-.textfield .MuiOutlinedInput-root{
+.textfield{
+    padding: 0 !important;
+}
+
+.text-field .MuiOutlinedInput-root{
     border-radius:0;
+
+}
+.textfield .MuiInputBase-input {
+padding: 2px;
 }
 .textfield .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{
     border-color:var(--border);
@@ -146,6 +154,12 @@ a:hover{
 .textfield .MuiInput-underline::after{
     border-color:var(--black) !important;
 }
+.textfield  .Mui-disabled:before{
+    border-bottom-style:solid !important;
+    background:var(--border);
+    
+}
+
 .order-input{
     border:1px solid var(--border);
     outline:0;

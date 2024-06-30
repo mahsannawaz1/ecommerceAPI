@@ -15,7 +15,7 @@ const theme = createTheme({
 })
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  
     <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={theme}>
       
@@ -23,7 +23,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ReactQueryDevtools />
     </ThemeProvider>
     </QueryClientProvider>
-
-    
-  </React.StrictMode>,
 )
