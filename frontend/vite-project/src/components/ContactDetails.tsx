@@ -100,7 +100,7 @@ const ContactDetails = () => {
                 <TextField  defaultValue={' '} {...register('lastName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Last Name" size='small' />
                 {errors.lastName && <Typography color='error' fontSize={12}>{errors.lastName.message}</Typography>}
                 <TextField  {...register('phone')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Mobile Number" size='small' InputProps={{
-                    startAdornment: <InputAdornment position='end' disableTypography  sx={{marginRight:1}}>+92</InputAdornment>
+                    startAdornment: <InputAdornment position='end' disableTypography  sx={{marginRight:1,color:'var(--link)'}}>+92</InputAdornment>
                 }} />
                 {errors.phone && <Typography color='error' fontSize={12}>{errors.phone.message}</Typography>}
                 <TextField value={email} disabled variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Email Address" size='small' />

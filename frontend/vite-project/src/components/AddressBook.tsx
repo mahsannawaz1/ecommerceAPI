@@ -77,8 +77,9 @@ const AddressBook = () => {
         if(value!='')
             setCityError('')
         else
-        setCityError('City should not be empty.')
+            setCityError('City should not be empty.')
         setSelectedCity(value)
+        setSelectedArea('')
         
     }
     const onAreaChange = (value:string)=>{
@@ -106,7 +107,7 @@ const AddressBook = () => {
     return (
         <Stack spacing={4}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>
-                <Typography variant='h5' >Contact Details</Typography>
+                <Typography variant='h5' >Address Book</Typography>
             </Stack>
             <form onSubmit={handleSubmit(onHandleSubmit)}>
             <Stack spacing={2} width={'50%'}>
@@ -115,7 +116,7 @@ const AddressBook = () => {
                 <TextField  {...register('lastName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Last Name" size='small' />
                 {errors.lastName && <Typography color='error' fontSize={12}>{errors.lastName.message}</Typography>}
                 <TextField  {...register('phone')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Mobile Number" size='small' InputProps={{
-                    startAdornment: <InputAdornment position='end' disableTypography  sx={{marginRight:1,paddingBottom:0.5}}>+92</InputAdornment>
+                    startAdornment: <InputAdornment position='end' disableTypography  sx={{marginRight:1,color:'var(--link)'}}>+92</InputAdornment>
                 }} />
                 {errors.phone && <Typography color='error' fontSize={12}>{errors.phone.message}</Typography>}
                 <Stack>
@@ -127,7 +128,8 @@ const AddressBook = () => {
                     <Autocomplete
                         
                         value={selectedCity}
-                        onChange={(e) => onCityChange(e.currentTarget.textContent || '')}
+                        onChange={(e,value) => onCityChange(value || '')}
+                        
                         id="combo-box-demo-1"
                         options={cities.map((city) => city.city)}
                         renderInput={(params) => <TextField  {...params} className='textfield' InputLabelProps={{className:'textfield__label'}} label="Select City" />}
@@ -139,7 +141,8 @@ const AddressBook = () => {
                     <Autocomplete
                         
                         value={selectedArea}
-                        onChange={(e) => onAreaChange(e.currentTarget.textContent || '')}
+                        
+                        onChange={(e,value) => onAreaChange(value || '')}
                         id="combo-box-demo-2"
                         options={cities.map((city) => city.city === selectedCity ? city.areas : []).flat()}
                         renderInput={(params) => <TextField {...params} className='textfield' InputLabelProps={{className:'textfield__label'}} label="Select Area" />}
