@@ -1,9 +1,15 @@
 import { Box, Button, Stack, Typography } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+
 
 const MyAccount = () => {
+    const [searchParams] = useSearchParams()
+    const token = searchParams.get('token')
+    if(token){
+        localStorage.setItem('Authorization',token)
+    }
+    
     return (
         <Stack spacing={2}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>

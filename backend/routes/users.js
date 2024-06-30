@@ -2,7 +2,7 @@
 const User = require('../models/User')
 const Customer = require('../models/Customer')
 const hashedPassword = require('../middlewares/hashPassword')
-
+const auth = require('../middlewares/auth')
 const passport = require('passport')
 const crypto = require('crypto')
 const bcrypt = require('bcrypt')
@@ -11,6 +11,8 @@ const Joi  =require('joi')
 const sendEmail = require('../middlewares/sendEmail')
 Joi.objectId = require('joi-objectid')(Joi)
 const router = require('express').Router()
+const _ = require('lodash')
+
 
 router.post('/register',async(req,res)=>{
     const { value,error } = validateUser(req.body)
@@ -40,11 +42,15 @@ router.post('/register',async(req,res)=>{
     })
     await customer.save()
     sendEmail(user.email,'VERIFY',user._id)
-    res.send(user)
+    res.send('User registered Successfully')
 })
 
 router.post('/login',async(req,res)=>{
     const {value,error} = authenticateUser(req.body)
+    if(error){
+        res.status(400).send({error:error.details[0].message})
+        return
+    }
     const user = await User.findOne({email:value.email})
     if(!user){
         res.status(400).send({error:'Invalid Email or Password'})
@@ -57,13 +63,12 @@ router.post('/login',async(req,res)=>{
     }
     if(!user.isVerified){
         sendEmail(user.email,'VERIFY',user._id)
-        res.status(400).send({error:'Your email is not Verified.We have sent a verification email to your email address.'})
+        res.status(400).send({error:'Your email is not verified. We have sent a verification email to your email address.'})
         return
     }
-    console.log(process.env.JWT_SECRET_KEY)
     const token = jwt.sign({ _id:user._id,isAdmin:user.isAdmin,isStaff:user.isStaff },process.env.JWT_SECRET_KEY)
     const customer = await Customer.findOne({userId:user._id})
-    res.send({customer,'x-auth-token':token})
+    res.send({customer,Authorization:token,email:user.email})
 })
 
 router.post('/verifyEmail',async(req,res)=>{
@@ -138,22 +143,38 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: 'http://localhost:5173/signin' }),
     async(req, res) => {
-        console.log('google')
-        console.log('User',req.user)
         if(!req.user.isVerified){
             sendEmail(req.user.email,'VERIFY',req.user._id)
             res.redirect(`http://localhost:5173/user/verify?email=${req.user.email}`);
         }
-        const token = jwt.sign({ _id:req.user._id,isAdmin:req.user.isAdmin,isStaff:req.user.isStaff },process.env.JWT_SECRET_KEY)
-        const customer = await Customer.findOne({userId:req.user._id})
-        
-        
-        // store the token in the local storage
-        res.redirect('http://localhost:5173');
-        
-        
+        const token = jwt.sign({ _id:req.user._id,isAdmin:req.user.isAdmin,isStaff:req.user.isStaff,email:req.user.email },process.env.JWT_SECRET_KEY)
+        res.redirect(`http://localhost:5173/profile?token=${token}`);
     }
-);
+)
+
+router.get('/userDetails',auth,async(req,res)=>{
+    const user = await User.findById(req.user._id)
+    const customer = await Customer.findOne({userId:user._id})
+    res.send({...customer,email:user.email})
+})
+router.post('/profile',auth,async(req,res)=>{
+    
+    console.log(req.body)
+    const {value,error} = validateProfile(req.body)
+    if(error){
+        res.status(400).send({error:error.details[0].message})
+        return
+    }
+    
+    const customer = await Customer.findOneAndUpdate({userId:req.user._id},{
+        ...value,
+        shippingAddress:{
+            ...value.shippingAddress
+        }
+    })
+    res.send(customer)
+})
+
 
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
@@ -185,5 +206,19 @@ const authenticateUser = (data) => {
     return schema.validate(data)
 }
 
+const validateProfile = (data) => {
+    const schema = Joi.object({
+        firstName:Joi.string().required(),
+        lastName:Joi.string().required(),
+        phone:Joi.string().required(),
+        shippingAddress: Joi.object({
+            city:Joi.string().required(),
+            area:Joi.string().required(),
+            address:Joi.string().required(),
+            country:Joi.string().required()
+        }),
+    })
+    return schema.validate(data)
+}
 
 module.exports = router

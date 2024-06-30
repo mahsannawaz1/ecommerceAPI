@@ -42,7 +42,7 @@ const ProfileLinks = () => {
                     >Contact Details</Typography>
                 </Box>
             </Link>
-            <Link to='/'>
+            <Link to='/profile/address'>
                 <Box marginBottom={1}>
                     <Typography
                     sx={{ cursor:'pointer',textTransform:'capitalize' }}

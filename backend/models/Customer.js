@@ -16,7 +16,9 @@ const customerSchema = new mongoose.Schema({
         type: {
             city:{
                 type:String,
-                enum: cities
+            },
+            area:{
+                type:String,
             },
             country:{
                 type:String,

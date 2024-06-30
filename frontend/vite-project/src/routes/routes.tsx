@@ -14,6 +14,8 @@ import Profile from '../components/Profile'
 import MyAccount from '../components/MyAccount'
 import MyOrders from '../components/MyOrders'
 import ContactDetails from '../components/ContactDetails'
+import AddressBook from '../components/AddressBook'
+import PrivateRoute from '../components/PrivateRoute'
 
 
 export const routes = createBrowserRouter([
@@ -23,11 +25,7 @@ export const routes = createBrowserRouter([
         children:[
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
-            { path:'profile',element: <Profile />,children:[
-                { path:'', element:<MyAccount /> },
-                { path:'orders', element:<MyOrders /> },
-                { path:'contact', element:<ContactDetails /> }
-            ] },
+            
             { path:'signup',element: <Signup /> },
             { path:'user/verify',element: <VerificationRequired /> },
             { path:'user/complete',element: <VerifiedEmail /> },
@@ -41,6 +39,17 @@ export const routes = createBrowserRouter([
             { path:'shop-toddler-boys',element: <ProductListPage category='toddler boys'/> },
             { path:'shop-toddler-girls',element: <ProductListPage category='toddler girls'/> },
             { path:'dapperlane/:id',element: <ProductDetail /> }
+        ]
+    },
+    {
+        element:<PrivateRoute />,
+        children:[
+            { path:'profile',element: <Profile />,children:[
+                { path:'', element:<MyAccount /> },
+                { path:'orders', element:<MyOrders /> },
+                { path:'contact', element:<ContactDetails /> },
+                { path:'address', element:<AddressBook /> }
+            ] },
         ]
     }
 ])

@@ -1,8 +1,17 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {Container, Grid,Stack,Typography,Box} from '@mui/material'
 import ProfileLinks from '../components/ProfileLinks'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 const Profile = () => {
+    const navigate = useNavigate()
+    useEffect(()=>{
+        const user = useAuth()
+        if(!user){
+            navigate('/signin')
+        }
+    },[])
+
     return (
         <Container fixed sx={{marginY:5}}>
             <Stack spacing={1} marginTop={1} marginBottom={6} direction='row' justifyContent={'flex-start'} alignItems={'center'}>
