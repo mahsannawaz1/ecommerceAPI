@@ -10,12 +10,13 @@ import VerificationRequired from '../components/VerificationRequired'
 import VerifiedEmail from '../components/VerifiedEmail'
 import ForgotPasswordEmail from '../components/ForgotPasswordEmail'
 import ResetPassword from '../components/ResetPassword'
-import Profile from '../components/Profile'
+
 import MyAccount from '../components/MyAccount'
 import MyOrders from '../components/MyOrders'
 import ContactDetails from '../components/ContactDetails'
 import AddressBook from '../components/AddressBook'
 import PrivateRoute from '../components/PrivateRoute'
+import Profile from '../components/Profile'
 
 
 export const routes = createBrowserRouter([
@@ -23,9 +24,20 @@ export const routes = createBrowserRouter([
         path:'/',
         element:<Layout />,
         children:[
+
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
-            
+            {
+        element:<PrivateRoute />,
+        children:[
+            { path:'profile',element: <Profile />,children:[
+                { path:'', element:<MyAccount /> },
+                { path:'orders', element:<MyOrders /> },
+                { path:'contact', element:<ContactDetails /> },
+                { path:'address', element:<AddressBook /> }
+            ] },
+        ]
+        },
             { path:'signup',element: <Signup /> },
             { path:'user/verify',element: <VerificationRequired /> },
             { path:'user/complete',element: <VerifiedEmail /> },
@@ -41,15 +53,5 @@ export const routes = createBrowserRouter([
             { path:'dapperlane/:id',element: <ProductDetail /> }
         ]
     },
-    {
-        element:<PrivateRoute />,
-        children:[
-            { path:'profile',element: <Profile />,children:[
-                { path:'', element:<MyAccount /> },
-                { path:'orders', element:<MyOrders /> },
-                { path:'contact', element:<ContactDetails /> },
-                { path:'address', element:<AddressBook /> }
-            ] },
-        ]
-    }
+    
 ])

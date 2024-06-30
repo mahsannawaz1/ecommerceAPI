@@ -3,8 +3,9 @@ import { useForm} from 'react-hook-form'
 import Joi from 'joi'
 import { joiResolver } from '@hookform/resolvers/joi'
 import cities from '../services/cities'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import UserContext from '../contexts/userContext'
 
 interface AddressInputs{
     firstName:string,
@@ -33,12 +34,13 @@ const schema = Joi.object({
 })
 
 const AddressBook = () => {
+    const { user } = useContext(UserContext)
     const [selectedCity,setSelectedCity] = useState('')
     const [selectedArea,setSelectedArea] = useState('')
     const [cityError,setCityError] = useState('')
     const [areaError,setAreaError] = useState('')
     
-    const {register,handleSubmit,formState:{errors}} = useForm<AddressInputs>({resolver:joiResolver(schema)})
+    const {register,handleSubmit,formState:{errors},setValue} = useForm<AddressInputs>({resolver:joiResolver(schema)})
     const onHandleSubmit = ({firstName,lastName,phone,address}:AddressInputs)=>{
         if(selectedArea && selectedCity){
             axios.post('http://localhost:3000/api/profile',
@@ -91,7 +93,19 @@ const AddressBook = () => {
             setSelectedArea('')
 
     }
-
+    useEffect(()=>{
+        console.log('out: ',user)
+        if(Object.keys(user).length !== 0){
+            console.log(Object.keys(user).length)
+            console.log('in: ',user)
+            setValue('firstName',user.firstName)
+            setValue('lastName',user.lastName)
+            setValue('phone',user.phone)
+            setValue('address',user.shippingAddress.address)
+            setSelectedCity(user.shippingAddress.city)
+            setSelectedArea(user.shippingAddress.area)
+        }
+    },[user,setValue,selectedCity,selectedArea])
     return (
         <Stack spacing={4}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>
@@ -99,9 +113,9 @@ const AddressBook = () => {
             </Stack>
             <form onSubmit={handleSubmit(onHandleSubmit)}>
             <Stack spacing={2} width={'50%'}>
-                <TextField defaultValue={'Muhammad Ahsan'} {...register('firstName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="First Name" size='small' />
+                <TextField  {...register('firstName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="First Name" size='small' />
                 {errors.firstName && <Typography color='error' fontSize={12}>{errors.firstName.message}</Typography>}
-                <TextField defaultValue={'Nawaz'} {...register('lastName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Last Name" size='small' />
+                <TextField  {...register('lastName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Last Name" size='small' />
                 {errors.lastName && <Typography color='error' fontSize={12}>{errors.lastName.message}</Typography>}
                 <TextField  {...register('phone')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Mobile Number" size='small' InputProps={{
                     startAdornment: <InputAdornment position='end' disableTypography  sx={{marginRight:1,paddingBottom:0.5}}>+92</InputAdornment>

@@ -153,10 +153,26 @@ router.get('/auth/google/callback',
 )
 
 router.get('/userDetails',auth,async(req,res)=>{
+    
     const user = await User.findById(req.user._id)
     const customer = await Customer.findOne({userId:user._id})
-    res.send({...customer,email:user.email})
+    console.log(user,customer)
+    res.send({
+
+        firstName:customer.firstName,
+        lastName:customer.lastName,
+        email:user.email,
+        phone:customer.phone,
+        shippingAddress:{
+            city:customer.shippingAddress.city,
+            area:customer.shippingAddress.area,
+            address:customer.shippingAddress.address,
+            country:customer.shippingAddress.country,
+        },
+        
+    })
 })
+
 router.post('/profile',auth,async(req,res)=>{
     
     console.log(req.body)

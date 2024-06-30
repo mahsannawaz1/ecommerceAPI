@@ -40,6 +40,13 @@ passport.use(new GoogleStrategy({
             const customer = new Customer({
                 firstName,
                 lastName,
+                phone:'',
+                shippingAddress:{
+                    city:'',
+                    area:'',
+                    address:'',
+                    country:'Pakistan',
+                },
                 userId: user._id
             });
             await customer.save();
