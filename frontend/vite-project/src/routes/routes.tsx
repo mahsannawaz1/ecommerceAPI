@@ -28,16 +28,16 @@ export const routes = createBrowserRouter([
             { index:true,element: <Main /> },
             { path:'cart',element: <Cart /> },
             {
-        element:<PrivateRoute />,
-        children:[
-            { path:'profile',element: <Profile />,children:[
-                { path:'', element:<MyAccount /> },
-                { path:'orders', element:<MyOrders /> },
-                { path:'contact', element:<ContactDetails /> },
-                { path:'address', element:<AddressBook /> }
-            ] },
-        ]
-        },
+            element:<PrivateRoute />,
+            children:[
+                { path:'profile',element: <Profile />,children:[
+                    { path:'', element:<MyAccount /> },
+                    { path:'orders', element:<MyOrders /> },
+                    { path:'contact', element:<ContactDetails /> },
+                    { path:'address', element:<AddressBook /> }
+                ] },
+            ]
+            },
             { path:'signup',element: <Signup /> },
             { path:'user/verify',element: <VerificationRequired /> },
             { path:'user/complete',element: <VerifiedEmail /> },

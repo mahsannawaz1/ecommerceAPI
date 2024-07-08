@@ -174,21 +174,32 @@ router.get('/userDetails',auth,async(req,res)=>{
 })
 
 router.post('/profile',auth,async(req,res)=>{
-    
-    console.log(req.body)
     const {value,error} = validateProfile(req.body)
     if(error){
         res.status(400).send({error:error.details[0].message})
         return
     }
-    
+    const user = await User.findById(req.user._id)
     const customer = await Customer.findOneAndUpdate({userId:req.user._id},{
         ...value,
         shippingAddress:{
             ...value.shippingAddress
         }
     })
-    res.send(customer)
+    res.send({
+
+        firstName:customer.firstName,
+        lastName:customer.lastName,
+        email:user.email,
+        phone:customer.phone,
+        shippingAddress:{
+            city:customer.shippingAddress.city,
+            area:customer.shippingAddress.area,
+            address:customer.shippingAddress.address,
+            country:customer.shippingAddress.country,
+        },
+        
+    })
 })
 
 

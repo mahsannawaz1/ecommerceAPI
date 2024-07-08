@@ -1,3 +1,4 @@
+import React from 'react'
 import {  Autocomplete, Button, InputAdornment, Stack, TextField, Typography } from '@mui/material'
 import { useForm} from 'react-hook-form'
 import Joi from 'joi'
@@ -6,7 +7,6 @@ import cities from '../services/cities'
 import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import UserContext from '../contexts/userContext'
-import User from '../interfaces/User'
 
 interface AddressInputs{
     firstName:string,
@@ -33,12 +33,7 @@ const schema = Joi.object({
         'string.empty': 'Shipping Address should not be empty.',
     }),
 })
-
-interface Props{
-    handleClose?:()=>void,
-    onChangeUserWithAddress:(user:User | null) => void
-}
-const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
+const CheckoutAddress = () => {
     const { user } = useContext(UserContext)
     const [selectedCity,setSelectedCity] = useState('')
     const [selectedArea,setSelectedArea] = useState('')
@@ -48,7 +43,7 @@ const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
     const {register,handleSubmit,formState:{errors},setValue} = useForm<AddressInputs>({resolver:joiResolver(schema)})
     const onHandleSubmit = ({firstName,lastName,phone,address}:AddressInputs)=>{
         if(selectedArea && selectedCity){
-            axios.post<User>('http://localhost:3000/api/profile',
+            axios.post('http://localhost:3000/api/profile',
                 { 
                 firstName,
                 lastName,
@@ -67,21 +62,7 @@ const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
                     'Authorization':`Bearer ${localStorage.getItem('Authorization')}`
                     }
                 }
-            ).then(res=>{
-                const {firstName,lastName,email,phone,shippingAddress} = res.data
-                onChangeUserWithAddress({
-                    firstName,
-                    lastName,
-                    email,
-                    phone,
-                    shippingAddress
-                })
-            })
-            .finally(()=>{
-                if(location.href == 'http://localhost:5173/cart' && handleClose){
-                    handleClose()
-                }
-            })
+            ).then(res=>console.log(res.data))
 
         }
     }
@@ -125,12 +106,11 @@ const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
     },[user])
     return (
         <Stack spacing={4}>
-            {location.href != 'http://localhost:5173/cart' && <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>
-                
+            <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2} paddingBottom={1.5} borderBottom={'1px solid var(--border)'}>
                 <Typography variant='h5' >Address Book</Typography>
-            </Stack>}
+            </Stack>
             <form onSubmit={handleSubmit(onHandleSubmit)}>
-            <Stack spacing={2} width={ location.href == 'http://localhost:5173/cart' ? '100%' : '50%'}>
+            <Stack spacing={2} width={'50%'}>
                 <TextField  {...register('firstName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="First Name" size='small' />
                 {errors.firstName && <Typography color='error' fontSize={12}>{errors.firstName.message}</Typography>}
                 <TextField  {...register('lastName')} variant="standard" className='textfield' InputLabelProps={{className:'textfield__label'}} label="Last Name" size='small' />
@@ -175,25 +155,24 @@ const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
 
             </Stack>
             
-                <Button
-                onClick={checkError}
-                type='submit' 
-                sx={{
-                background: 'var(--black)',
-                color:'var(--white)',
-                border:'1px solid black',
-                borderRadius:0,
-                marginY:2,
-                paddingX:7,
-                width:location.href == 'http://localhost:5173/cart' ? '100%' : 'initial',
-                '&:hover': {
-                    color:'var(--white)',
-                    background: 'var(--black)',
-                }
-                }}>Save</Button>
+                                <Button
+                                onClick={checkError}
+                                type='submit' 
+                                sx={{
+                                background: 'var(--black)',
+                                color:'var(--white)',
+                                border:'1px solid black',
+                                borderRadius:0,
+                                marginY:2,
+                                paddingX:7,
+                                '&:hover': {
+                                    color:'var(--white)',
+                                    background: 'var(--black)',
+                                }
+                                }}>Sign in</Button>
             </form>
         </Stack>
     )
 }
 
-export default AddressBook
+export default CheckoutAddress

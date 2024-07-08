@@ -1,9 +1,12 @@
 import { Box, Button,  Stack, Typography } from '@mui/material'
+import userAuth from '../hooks/userAuth'
 
 interface Props{
-    totalAmount:number
+    totalAmount:number,
+    onHandlePhaseChange:(value:number)=>void
 }
-const CartCheckout = ({totalAmount}:Props) => {
+const CartCheckout = ({totalAmount,onHandlePhaseChange}:Props) => {
+    const token = userAuth()
     return (
         <Box marginY={2}>
             <Typography marginY={1} variant='h6'>Do You Have A Promotional Code?</Typography>
@@ -40,6 +43,7 @@ const CartCheckout = ({totalAmount}:Props) => {
                         <Typography variant="body2">Inclusive of VAT</Typography>
                 </Stack>
                 <Button 
+                    onClick={()=>onHandlePhaseChange(token ? 3 : 2)}
                     sx={{
                         
                         background: 'rgb(56, 90, 220)',
@@ -52,7 +56,8 @@ const CartCheckout = ({totalAmount}:Props) => {
                             color:'var(--white)',
                             background: 'rgb(56, 90, 220)',
                     } 
-                    }}>CONTINUE TO CHECKOUT</Button>
+                    }}>CONTINUE TO CHECKOUT
+                </Button>
                 </Box>
             </Stack>
         </Box>

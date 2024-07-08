@@ -1,13 +1,15 @@
 import { Box, Container, Stack } from '@mui/material'
-import  { useState } from 'react'
+import  { Fragment, useState } from 'react'
 import CartPhase from './CartPhase'
 import CartDeliveryOption from './CartDeliveryOption'
-import ShoppingCart from './ShoppingCart'
-import CartCheckout from './CartCheckout'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import CartMessage from './CartMessage'
 import { CartMessageInterface } from '../interfaces/CartMessageInterface'
+import Bag from './Bag'
+import CartSignIn from './CartSignIn'
+import CheckoutDelivery from './CheckoutDelivery'
+import userAuth from '../hooks/userAuth'
 
 
 
@@ -26,9 +28,10 @@ export interface CartItem{
 }
 
 export const Cart = () => {
+    const token = userAuth()
     const [message,setMessage] = useState<CartMessageInterface> ({} as CartMessageInterface)
     
-    const [phase,setPhase] = useState(1)
+    const [phase,setPhase] = useState(3)
     const handleChangePhase = (phase:number)=>{
         setPhase(phase)
     }
@@ -49,17 +52,24 @@ export const Cart = () => {
         <Container fixed sx={{marginY:5}}>
             <CartPhase phase={phase} />
             <Box marginTop={10}>
-            {message.msg && <Box>
-                            <CartMessage message={message} onChangeMessage={handleChangeMessage}  />
-                        </Box> 
+            {
+            message.msg && <Box>
+                <CartMessage message={message} onChangeMessage={handleChangeMessage}  />
+            </Box> 
             }
-            <CartDeliveryOption totalAmount={total || 0} />
+            {phase===1 && <CartDeliveryOption totalAmount={total || 0} />}
             </Box>
             
             
             <Stack direction={'row'} spacing={10} marginY={3}>
-                <ShoppingCart cartItems={cartItems ?? []} onChangeMessage={handleChangeMessage}  />
-                <CartCheckout totalAmount={total || 0} />
+                {phase ==1 && 
+                <Fragment>
+                    <Bag cartItems={cartItems ?? []} total={total || 0} onChangeMessage={handleChangeMessage} onHandlePhaseChange={handleChangePhase} />
+                </Fragment>
+                }
+                
+                {(phase===2 && !token) &&  <CartSignIn onHandlePhaseChange={handleChangePhase} />}
+                {phase===3 && <CheckoutDelivery cartItems={cartItems ?? []} total={total || 0} onHandlePhaseChange={handleChangePhase} />}
             </Stack>
             
         </Container>

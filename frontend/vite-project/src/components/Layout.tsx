@@ -7,6 +7,7 @@ import axios from 'axios'
 
 
 const Layout = () => {
+
     useEffect(()=>{
         const cart = localStorage.getItem('cart')
         if(!cart){

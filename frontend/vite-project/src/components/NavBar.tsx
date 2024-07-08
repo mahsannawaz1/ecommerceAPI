@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 
 
 const NavBar = () => {
+    const length = localStorage.getItem('cartLength') || '0'
     const token = userAuth()
     const [isUser,setIsUser] = useState('')
     const onLogout = ()=>{
@@ -118,9 +119,9 @@ const NavBar = () => {
                 </IconButton>
                 <Link to="/cart">
                     <IconButton >
-                    <Badge badgeContent={1} color="success">
+                    
                         <ShoppingCartIcon style={{color:'#000'}} />
-                    </Badge>
+                    
                     </IconButton>
                 </Link>
                 

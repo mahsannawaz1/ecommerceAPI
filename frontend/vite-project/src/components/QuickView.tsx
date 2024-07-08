@@ -56,7 +56,7 @@ const QuickView = ({open,handleClose,product}:Props) => {
                 <Box sx={style}>
                     <Box position='relative' padding={1}>
                         <Typography textAlign={'center'}>QuickView</Typography>
-                        <IconButton
+                        <IconButton disableRipple
                         onClick={handleClose}
                         sx={
                             {
