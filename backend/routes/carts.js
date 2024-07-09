@@ -109,11 +109,7 @@ router.put('/:id',auth,async(req,res)=>{
         res.status(400).send({error:'Invalid Cart ID'})
         return
     }
-    const cart = await Cart.findByIdAndUpdate(req.params.id,{
-        $set:{
-            customerId:req.user._id
-        }
-    },{new:true})
+    const cart = await Cart.findByIdAndUpdate(req.params.id,{new:true})
 
     res.send(cart)
 })

@@ -31,7 +31,7 @@ export const Cart = () => {
     const token = userAuth()
     const [message,setMessage] = useState<CartMessageInterface> ({} as CartMessageInterface)
     
-    const [phase,setPhase] = useState(3)
+    const [phase,setPhase] = useState(1)
     const handleChangePhase = (phase:number)=>{
         setPhase(phase)
     }

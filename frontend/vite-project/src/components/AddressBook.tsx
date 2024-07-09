@@ -36,7 +36,7 @@ const schema = Joi.object({
 
 interface Props{
     handleClose?:()=>void,
-    onChangeUserWithAddress:(user:User | null) => void
+    onChangeUserWithAddress?:(user:User | null) => void
 }
 const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
     const { user } = useContext(UserContext)
@@ -69,13 +69,16 @@ const AddressBook = ({handleClose,onChangeUserWithAddress}:Props) => {
                 }
             ).then(res=>{
                 const {firstName,lastName,email,phone,shippingAddress} = res.data
-                onChangeUserWithAddress({
-                    firstName,
-                    lastName,
-                    email,
-                    phone,
-                    shippingAddress
-                })
+                if(onChangeUserWithAddress){
+                    onChangeUserWithAddress({
+                        firstName,
+                        lastName,
+                        email,
+                        phone,
+                        shippingAddress
+                    })
+                }
+                    
             })
             .finally(()=>{
                 if(location.href == 'http://localhost:5173/cart' && handleClose){

@@ -10,7 +10,8 @@ const Layout = () => {
 
     useEffect(()=>{
         const cart = localStorage.getItem('cart')
-        if(!cart){
+        console.log(cart)
+        if(cart==null){
             axios.post('http://localhost:3000/api/cart/create').then(res=>localStorage.setItem('cart', JSON.stringify(res.data)))
         }
     },[])
