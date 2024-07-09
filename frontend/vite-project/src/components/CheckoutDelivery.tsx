@@ -4,7 +4,7 @@ import { CartItem } from './Cart'
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useEffect, useReducer, useState } from 'react';
+import { Fragment, useEffect, useReducer, useState } from 'react';
 import AddressBookModal from './AddressBookModal';
 import axios from 'axios';
 import User from '../interfaces/User';
@@ -276,16 +276,22 @@ const CheckoutDelivery = ({cartItems,total,onHandlePhaseChange}:Props) => {
                                     <Typography >FREE</Typography>
                                 </Stack>
                                 <Stack direction='row' justifyContent={'space-between'} >
+                                { paymentMethod=='cod' && 
+                                <Fragment>
                                     <Stack className="cod-tooltip" direction='row' alignItems={'cen'} spacing={0.5}>
                                         <Typography >Cash on delivery service charge </Typography>
-                                        
-                                        <Tooltip arrow title='The cash on delivery option is subject to 
+                                        <Tooltip arrow title='The cash on delivery option is subject to
                                         an additional service charge of PKR 500 per order.'>
                                             <InfoOutlinedIcon color='info' className='cursor-pointer' />
                                         </Tooltip>
                                     </Stack>
                                     <Typography >PKR 500</Typography>
+                                </Fragment>
+                                    }
+                                    
+                                
                             </Stack>
+                        
                             <Box sx={{background:'var(--link)',height:'1px',marginTop:1,marginBottom:2}}></Box>
                             <Stack direction='row' justifyContent={'space-between'} >
                                     <Typography variant="h6">Order Total</Typography>
