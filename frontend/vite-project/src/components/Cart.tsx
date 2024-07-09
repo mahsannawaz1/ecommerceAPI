@@ -50,7 +50,7 @@ export const Cart = () => {
     const total = cartItems?.reduce((accumulator,item)=>accumulator + (item.qty * item.unit_price),0)
     return (
         <Container fixed sx={{marginY:5}}>
-            <CartPhase phase={phase} />
+            <CartPhase phase={phase} onHandlePhaseChange={handleChangePhase} />
             <Box marginTop={10}>
             {
             message.msg && <Box>

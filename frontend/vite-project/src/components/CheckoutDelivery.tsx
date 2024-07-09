@@ -220,6 +220,7 @@ const CheckoutDelivery = ({cartItems,total,onHandlePhaseChange}:Props) => {
                                 read our <Link className='bold-link' to='/'> returns & refunds</Link> Page.
                             </Typography>
                             <Button
+                            disabled={deliveryMethod=='home' && user==null}
                                 type='submit' 
                                 sx={{
                                 background: 'var(--black)',
