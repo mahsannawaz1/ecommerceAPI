@@ -21,7 +21,7 @@ interface Props{
     total:number,
     onHandlePhaseChange:(value:number)=>void
 }
-const CheckoutDelivery = ({cartItems,total,onHandlePhaseChange}:Props) => {
+const CheckoutDelivery = ({cartItems,total}:Props) => {
     const [user,dispatch] = useReducer(userReducer,{} as User)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -199,7 +199,7 @@ const CheckoutDelivery = ({cartItems,total,onHandlePhaseChange}:Props) => {
                                             <img src={paypalIcon} height={40} />   
                                         </Box>
                                     </Stack>
-                                    <Stack direction={'row'} justifyContent={'space-between'} sx={{background:'var(--border)',padding:'5px 15px'}}>
+                                    {deliveryMethod=='home' && <Stack direction={'row'} justifyContent={'space-between'} sx={{background:'var(--border)',padding:'5px 15px'}}>
                                         <Stack direction={'row'}>
                                             <FormControlLabel value="cod" control={<Radio disableRipple onClick={()=>setPaymentMethod('cod')} color='success' />} label="" />
                                             <Stack direction={'row'}  alignItems={'center'}  spacing={2}>
@@ -209,7 +209,8 @@ const CheckoutDelivery = ({cartItems,total,onHandlePhaseChange}:Props) => {
                                         <Box>
                                             <img src={cashIcon} height={40} />  
                                         </Box>
-                                    </Stack>
+                                    </Stack>}
+                                    
                                 </RadioGroup>
                             </FormControl>
                         </Stack>
