@@ -58,6 +58,25 @@ const CheckoutDelivery = ({cartItems,total}:Props) => {
         })
     },[userWithAddress])
 
+    const handlePurchase = ()=>{
+        console.log(localStorage.getItem('Authorization'))
+        axios.post('http://localhost:3000/api/stripe', {
+            cartItems
+        }, 
+        {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('Authorization')}`
+            }
+        })
+        .then(res => {
+            window.location = res.data.url;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error appropriately
+        });
+    }
+
     return (
         <UserContext.Provider value={{user,dispatch}}>
             <Container fixed sx={{marginY:5}} >
@@ -221,6 +240,7 @@ const CheckoutDelivery = ({cartItems,total}:Props) => {
                                 read our <Link className='bold-link' to='/'> returns & refunds</Link> Page.
                             </Typography>
                             <Button
+                            onClick={handlePurchase}
                             disabled={deliveryMethod=='home' && user==null}
                                 type='submit' 
                                 sx={{

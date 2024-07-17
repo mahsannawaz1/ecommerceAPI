@@ -16,6 +16,7 @@ const useAddToCart = (
     if(cart){
         
         const { _id:cart_id } = JSON.parse(cart)
+        console.log(cart_id)
         axios.put('http://localhost:3000/api/cart',{ 
             cart_id,
             product:{

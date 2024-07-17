@@ -5,6 +5,7 @@ const { products } = require('./routes/products')
 const categories = require('./routes/categories')
 const carts = require('./routes/carts')
 const orders = require('./routes/orders')
+const stripe = require('./routes/stripe')
 const users = require('./routes/users')
 const error = require('./middlewares/error')
 const morgan = require('morgan')
@@ -14,16 +15,18 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const passport = require('passport')
 const session = require('express-session')
-require('./routes/socialMediaAuth')
 
+require('./routes/socialMediaAuth')
 
 
 winston.add(new winston.transports.Console())
 
 const app = express()
+app.use('/api/checkout',orders)
 app.use(express.json())
 app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
+
 
 
 mongoose.connect('mongodb://localhost/ecommerce')
@@ -44,7 +47,7 @@ app.use(cors())
 app.use('/api/products',products)
 app.use('/api/categories',categories)
 app.use('/api/cart',carts)
-app.use('/api/checkout',orders)
+app.use('/api/stripe',stripe)
 app.use('/api',users)
 
 app.use(error)

@@ -19,6 +19,9 @@
 
 
 }
+html{
+scroll-behavior: smooth;
+}
 *:root{
     box-sizing: border-box;
     scroll-behavior: smooth !important;

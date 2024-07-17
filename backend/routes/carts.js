@@ -53,6 +53,7 @@ router.put('/edit',async(req,res)=>{
 })
 
 router.put('/',async(req,res)=>{
+    console.log(req.body)
     const { value,error } = validateCartItem(req.body)
     if(error){
         res.status(400).send({error:error.details[0].message})
@@ -125,7 +126,7 @@ router.delete('/',async(req,res)=>{
 })
 const validateCartItem = (data)=>{
     const schema  =Joi.object({
-        cart_id:Joi.objectId().required(),
+        cart_id:Joi.string().required(),
         product:Joi.object({
             id:Joi.objectId().required(),
             sku:Joi.string().min(5).max(10).required(),
