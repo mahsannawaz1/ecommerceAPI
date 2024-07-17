@@ -22,7 +22,8 @@ require('./routes/socialMediaAuth')
 winston.add(new winston.transports.Console())
 
 const app = express()
-app.use('/api/checkout',orders)
+app.use(cors())
+app.use('/api/orders',orders)
 app.use(express.json())
 app.use('/uploads',express.static('uploads'))
 app.use(morgan('dev'))
@@ -43,7 +44,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors())
+
+
 app.use('/api/products',products)
 app.use('/api/categories',categories)
 app.use('/api/cart',carts)

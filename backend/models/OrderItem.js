@@ -12,6 +12,14 @@ const orderItemSchema = mongoose.Schema({
             ref:'Product',
             required:true
         },
+        name:{
+            type:String,
+            required:true
+        },
+        sku:{
+            type:String,
+            required:true
+        },
         size:{
             type:String,
             enum:sizes,
@@ -19,6 +27,10 @@ const orderItemSchema = mongoose.Schema({
         },
 
         color:{
+            type:String,
+            required:true
+        },
+        image:{
             type:String,
             required:true
         }

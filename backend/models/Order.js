@@ -11,5 +11,6 @@ const orderSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Customer',
     },
+    
 })
 module.exports = mongoose.model('Order',orderSchema)

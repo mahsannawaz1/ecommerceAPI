@@ -14,7 +14,7 @@ const express = require('express')
 const Customer = require('../models/Customer')
 const router = require('express').Router()
 
-router.post('/order', express.raw({ type: 'application/json' }), async (req, res) => {
+router.post('/', express.raw({ type: 'application/json' }), async (req, res) => {
 
     const signature = req.header('stripe-signature')
     const payload = req.body
@@ -52,7 +52,14 @@ router.post('/order', express.raw({ type: 'application/json' }), async (req, res
         cartItems.forEach(async (cartItem) => {
             let orderItem = new OrderItem({
                 order_id: order._id,
-                product: cartItem.product,
+                product: {
+                    id:cartItem.product.id,
+                    name:cartItem.product.name,
+                    color:cartItem.product.color,
+                    size:cartItem.product.size,
+                    image:cartItem.product.image,
+                    sku:cartItem.product.sku
+                },
                 qty: cartItem.qty
             })
             productIDs.push(cartItem.product.id)
@@ -68,6 +75,27 @@ router.post('/order', express.raw({ type: 'application/json' }), async (req, res
     }
 
 
+
+})
+
+router.get('/',auth,async(req,res)=>{
+    const customer = await Customer.findOne({userId:req.user._id})
+    const orders = await Order.find({customerId:customer._id})
+    const populatedOrders = await Promise.all(orders.map(async (order) => {
+        // Find orderItems for the current order
+        const orderItems = await OrderItem.find({ order_id: order._id });
+
+        return {
+            orderId: order._id,
+            status: order.status,
+            customerId: order.customerId,
+            orderItems
+        };
+    }));
+
+    res.json(populatedOrders);
+    
+    res.send(orders)
 
 })
 
