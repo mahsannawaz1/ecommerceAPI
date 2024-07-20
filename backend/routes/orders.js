@@ -79,8 +79,14 @@ router.post('/', express.raw({ type: 'application/json' }), async (req, res) => 
 })
 
 router.get('/',auth,async(req,res)=>{
+
+    const { limit } = req.query
+    console.log('Limit:',limit)
+    const take = limit ? parseInt(limit) : null
     const customer = await Customer.findOne({userId:req.user._id})
-    const orders = await Order.find({customerId:customer._id})
+    let orders = await Order.find({customerId:customer._id})
+    if(take)
+        orders = await Order.find({customerId:customer._id}).limit(take)
     const populatedOrders = await Promise.all(orders.map(async (order) => {
         // Find orderItems for the current order
         const orderItems = await OrderItem.find({ order_id: order._id });
@@ -93,9 +99,9 @@ router.get('/',auth,async(req,res)=>{
         };
     }));
 
-    res.json(populatedOrders);
+    res.send(populatedOrders);
     
-    res.send(orders)
+    
 
 })
 

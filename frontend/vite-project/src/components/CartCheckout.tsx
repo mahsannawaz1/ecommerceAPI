@@ -43,6 +43,8 @@ const CartCheckout = ({totalAmount,onHandlePhaseChange}:Props) => {
                         <Typography variant="body2">Inclusive of VAT</Typography>
                 </Stack>
                 <Button 
+                    disableRipple
+                    disabled={totalAmount == 0}
                     onClick={()=>onHandlePhaseChange(token ? 3 : 2)}
                     sx={{
                         

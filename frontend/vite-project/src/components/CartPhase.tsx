@@ -8,7 +8,7 @@ interface Props{
     onHandlePhaseChange:(value:number)=>void
 }
 
-const CartPhase = ({ phase,onHandlePhaseChange }:Props) => {
+const CartPhase = ({ phase, onHandlePhaseChange }:Props) => {
     const width = phase == 1 ? '0' : phase==2 ? '33.33%' : phase==3 ? '66.66%' : '100%'
     const token = userAuth()
     return (

@@ -129,69 +129,25 @@ const NavBar = () => {
         </Stack>
         <Stack direction='row' spacing={4} marginY={2} justifyContent='center' >
             
-                <Typography variant='body2' sx={{
-                    '&:hover':{
-                        borderBottom:'1px solid black',
-                        cursor:'pointer'
-
-                    },
-                    
-                }}>Spring Refresh</Typography>
-                <Typography variant='body2' sx={{
-                    '&:hover':{
-                        borderBottom:'1px solid black',
-
-                    },
-                    cursor:'pointer'
-                }}>Men</Typography>
-                <Typography variant='body2' sx={{
-                    '&:hover':{
-                        borderBottom:'1px solid black',
-
-                    },
-                    cursor:'pointer'
-                }}>Women</Typography>
-                <Typography variant='body2' sx={{
-                    '&:hover':{
-                        borderBottom:'1px solid black',
-
-                    },
-                    cursor:'pointer'
-                }}>Boys</Typography>
-                <Typography variant='body2' sx={{
-                    borderBottom: '1px solid transparent',
-                    fontWeight:'normal',
-                    '&:hover':{
-                        borderBottom:'1px solid black',
-                        cursor:'pointer'
-                    },
-
-                }}>Girls</Typography>
-                <Typography  variant='body2' sx={{
-                    
-                    borderBottom: '1px solid transparent',
-                    fontWeight:'normal',
-                    '&:hover':{
-                        borderBottom:'1px solid black',
-                        cursor:'pointer'
-                    },
-
-                }}>Accessories</Typography>
+                <Typography variant='body2' >Spring Refresh</Typography>
+                <Link to='/shop-men'>
+                    <Typography variant='body2'>Men</Typography>
+                </Link>
+                <Link to='/shop-women'>
+                    <Typography variant='body2'>Women</Typography>
+                </Link>
+                <Link to='/shop-junior-boys'>
+                    <Typography variant='body2'>Boys</Typography>
+                </Link>
+                <Link to='/shop-junior-girls'>
+                    <Typography variant='body2'>Girls</Typography>
+                </Link>
+                <Typography  variant='body2'>Accessories</Typography>
                 
-                <Typography color='error' variant='body2' sx={{
-                    
-                    borderBottom: '1px solid transparent',
-                    fontWeight:'normal',
-                    '&:hover':{
-                        borderBottom:'1px solid #f44336',
-                        cursor:'pointer'
-                    },
-
-                }}>Clearance</Typography>
+                <Typography color='error' variant='body2'>Clearance</Typography>
                 
             </Stack> 
             <Dilevery />
-            
         </>
     )
 }

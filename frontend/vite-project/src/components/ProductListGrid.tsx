@@ -1,7 +1,7 @@
 import { Box, Button, Grid, IconButton, Stack, Typography } from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Product } from '../interfaces/Product';
 import { Link } from 'react-router-dom';
@@ -29,7 +29,6 @@ const ProductListGrid = ({handleOpen,handleClose,open,category,products}:Props) 
     const foundFavourite = (value:number) => {
         return favourites.find(fav=>value == fav) == undefined ? -1 : value
     }
-
     return (
         <Grid container spacing={2}>
             {products?.map((product,index)=>

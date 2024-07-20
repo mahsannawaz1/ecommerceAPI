@@ -3,6 +3,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useContext } from 'react';
 import UserContext from '../contexts/userContext';
+import OrdersTable from './OrdersTable';
 
 
 const MyAccount = () => {
@@ -35,23 +36,8 @@ const MyAccount = () => {
             </Stack>
             <Box borderBottom={'1px solid var(--border)'} paddingBottom={6}>
                 <Typography  variant='h6' >Recent Orders</Typography>
-                <Typography sx={{color:'var(--link)',fontSize:13,marginTop:3,marginBottom:1}}>You have no recent orders to display.</Typography>
-                <Stack direction='row' justifyContent={'center'}>
-                    <Button
-                    type='submit'
-                    sx={{
-                    background: 'var(--black)',
-                    color:'var(--white)',
-                    border:'1px solid black',
-                    borderRadius:0,
-                    paddingX:4,
-                    textTransform:'capitalize',
-                    '&:hover': {
-                        color:'var(--white)',
-                        background: 'var(--black)',
-                    }
-                    }}>Go Shopping</Button>
-                </Stack>
+                <OrdersTable limit={2} />
+                
             </Box>
             <Stack direction='row' justifyContent={'space-around'} alignItems={'center'} paddingY={3} sx={{bgcolor:'var(--info-bg)',color:'var(--white)'}}>
                 <Stack direction='row' spacing={0.5} alignItems={'center'}>

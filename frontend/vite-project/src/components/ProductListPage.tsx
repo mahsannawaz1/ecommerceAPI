@@ -7,7 +7,7 @@ import shirts from '../../public/shirtAvatar.png'
 import jeans from '../../public/jeansAvatar.png'
 import under from '../../public/underAvatar.png'
 import polos from '../../public/polosAvatar.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CategoryComponent from './CategoryComponent'
 import SizeComponent from './SizeComponent'
 import ProductListGrid from './ProductListGrid'
@@ -28,7 +28,9 @@ const ProductListPage = ({ category }:Props) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [type,setType] = useState<string>(category)
-
+    useEffect(()=>{
+        setType(category)
+    },[category])
     const [activeFilter,setActiveFilter] = useState<string | null>(null)
     const [filters,setFilters] = useState<{label:string,value:string}[]>([])
 
@@ -56,7 +58,7 @@ const ProductListPage = ({ category }:Props) => {
     }
 
     const { data:products } = useQuery({
-        queryKey:['products',currentSortBy,sizeFilters,colorFilters,priceFilters],
+        queryKey:['products',currentSortBy,sizeFilters,colorFilters,priceFilters,category],
         queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>res.data)
     })
 
@@ -142,8 +144,9 @@ const ProductListPage = ({ category }:Props) => {
                             textDecoration:'underline'
 
                         },
+                        textTransform:'capitalize',
                         cursor:'pointer'
-                    }}>Men</Typography>
+                    }}>{category}</Typography>
             </Stack>
             <Grid columnSpacing={7} container>
                     <Grid item md={3} display={{xs:'none',md:'block'}} >
