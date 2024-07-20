@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, Container, FormControlLabel, FormGroup, InputAdornment, Stack, TextField, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReCAPTCHA from "react-google-recaptcha"
 import { Link } from 'react-router-dom'
 import facebookLogo from '../../public/facebook-login-logo.svg'
@@ -12,6 +12,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import CancelIcon from '@mui/icons-material/Cancel';
+import useAuth from '../hooks/useAuth'
 
 const complexityOptions = {
     min: 7,
@@ -59,8 +60,15 @@ const schema = Joi.object({
 })
 
 const Signup = () => {
-    const [error,setError] = useState("")
     const navigate = useNavigate()
+    const user = useAuth()
+    useEffect(()=>{
+        if(user){
+            navigate('/')
+        }
+    },[])
+        
+    const [error,setError] = useState("")
     const {  register,handleSubmit,formState: { errors }} = useForm<SignUpInputs>({resolver:joiResolver(schema)})
     const [token,setToken] = useState< string | null> (null)
     const [showPass,setShowPass] = useState('Show')

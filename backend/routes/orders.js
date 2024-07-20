@@ -14,10 +14,10 @@ const express = require('express')
 const Customer = require('../models/Customer')
 const router = require('express').Router()
 
-router.post('/', express.raw({ type: 'application/json' }), async (req, res) => {
+router.post('/', express.json({verify: (req,res,buf) => { req.rawBody = buf }}), async (req, res) => {
 
     const signature = req.header('stripe-signature')
-    const payload = req.body
+    const payload = req.rawBody
     let event
     try {
         event = stripe.webhooks.constructEvent(payload, signature, process.env.STRIPE_ENDPOINT_SECRET)
@@ -58,6 +58,7 @@ router.post('/', express.raw({ type: 'application/json' }), async (req, res) => 
                     color:cartItem.product.color,
                     size:cartItem.product.size,
                     image:cartItem.product.image,
+                    price:cartItem.unit_price,
                     sku:cartItem.product.sku
                 },
                 qty: cartItem.qty
@@ -100,8 +101,6 @@ router.get('/',auth,async(req,res)=>{
     }));
 
     res.send(populatedOrders);
-    
-    
 
 })
 

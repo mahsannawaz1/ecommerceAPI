@@ -1,14 +1,15 @@
 import { Box, Stack, Typography } from '@mui/material'
-
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import DoneIcon from '@mui/icons-material/Done';
 import userAuth from '../hooks/userAuth';
 
 interface Props{
+    paymentFailed:boolean,
     phase:number,
     onHandlePhaseChange:(value:number)=>void
 }
 
-const CartPhase = ({ phase, onHandlePhaseChange }:Props) => {
+const CartPhase = ({ paymentFailed, phase, onHandlePhaseChange }:Props) => {
     const width = phase == 1 ? '0' : phase==2 ? '33.33%' : phase==3 ? '66.66%' : '100%'
     const token = userAuth()
     return (
@@ -48,13 +49,9 @@ const CartPhase = ({ phase, onHandlePhaseChange }:Props) => {
                 <Typography position={'absolute'} top={30} whiteSpace={'nowrap'}>Delivery and Payment</Typography>
             </Stack>
             <Stack
-            onClick={()=>{
-                if(token && phase < 4)
-                    onHandlePhaseChange(4)
 
-            }} 
             position={'relative'} alignItems={'center'} spacing={1}> 
-                <Box className={token && phase!=3 ? "cursor-pointer" : ""} sx={{width:30,background:phase>=4 ? 'var(--black)' : 'var(--white)',color:phase>=4 ? 'var(--white)' : 'var(--black)',height:30,borderRadius:'100%',border:'1px solid black',display:'flex',justifyContent:'center',alignItems:'center'}}>{phase>4 ? <DoneIcon /> : 4}</Box> 
+                <Box className={token && phase!=3 ? "cursor-pointer" : ""} sx={{width:30,background:phase==4 ? paymentFailed ? 'none' : 'var(--black)' : 'var(--white)',color:phase==4 ? 'var(--white)' : 'var(--black)',height:30,borderRadius:'100%',border: paymentFailed ? 'none' : '1px solid black',display:'flex',justifyContent:'center',alignItems:'center'}}>{phase==4 ? paymentFailed ? <CloseRoundedIcon /> : <DoneIcon /> : 4}</Box> 
                 <Typography position={'absolute'} top={30} whiteSpace={'nowrap'}> Confirmation</Typography>
             </Stack>
         </Box>

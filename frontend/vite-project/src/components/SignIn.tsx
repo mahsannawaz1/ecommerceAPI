@@ -2,13 +2,14 @@ import { Box, Button,  Container, InputAdornment, Stack, TextField, Typography }
 import facebookLogo from '../../public/facebook-login-logo.svg'
 import googleLogo from '../../public/google-login-logo.svg'
 import userLogo from '../../public/profile-icon.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {useForm }from 'react-hook-form'
 import Joi from 'joi'
 import { joiResolver } from '@hookform/resolvers/joi'
 import CancelIcon from '@mui/icons-material/Cancel';
 import axios, { AxiosHeaders } from 'axios'
+import useAuth from '../hooks/useAuth'
 
 interface LoginResponse{
     customer:{
@@ -34,6 +35,12 @@ const schema = Joi.object({
 
 const SignIn = () => {
     const navigate = useNavigate()
+    const user = useAuth()
+    useEffect(()=>{
+        if(user){
+            navigate('/')
+        }
+    },[])
     const [error,setError] = useState("")
     const {register,handleSubmit,formState:{errors}} = useForm<LoginInputs>({resolver:joiResolver(schema)})
 
