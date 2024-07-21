@@ -6,10 +6,11 @@ import userAuth from '../hooks/userAuth';
 interface Props{
     paymentFailed:boolean,
     phase:number,
+    total:number | undefined,
     onHandlePhaseChange:(value:number)=>void
 }
 
-const CartPhase = ({ paymentFailed, phase, onHandlePhaseChange }:Props) => {
+const CartPhase = ({ total, paymentFailed, phase, onHandlePhaseChange }:Props) => {
     const width = phase == 1 ? '0' : phase==2 ? '33.33%' : phase==3 ? '66.66%' : '100%'
     const token = userAuth()
     return (
@@ -28,8 +29,8 @@ const CartPhase = ({ paymentFailed, phase, onHandlePhaseChange }:Props) => {
             </Stack>
             <Stack 
             onClick={()=>{
-                if(token)
-                    onHandlePhaseChange(3)
+                if(token)              
+                    total == 0 ? onHandlePhaseChange(1) : onHandlePhaseChange(3)
                 else if(!token)
                     onHandlePhaseChange(2)
 
@@ -41,8 +42,7 @@ const CartPhase = ({ paymentFailed, phase, onHandlePhaseChange }:Props) => {
             <Stack
             onClick={()=>{
                 if(token && phase < 3)
-                    onHandlePhaseChange(3)
-
+                    total == 0 ? onHandlePhaseChange(1) : onHandlePhaseChange(3)
             }} 
             position={'relative'} alignItems={'center'} spacing={1}>
                 <Box className={token && phase!=3 ? "cursor-pointer" : ""} sx={{width:30,background:phase>=3 ? 'var(--black)' : 'var(--white)',color:phase>=3 ? 'var(--white)' : 'var(--black)',height:30,borderRadius:'100%',border:'1px solid black',display:'flex',justifyContent:'center',alignItems:'center'}}>{phase>3 ? <DoneIcon /> : 3}</Box> 

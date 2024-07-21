@@ -13,6 +13,7 @@ import userAuth from '../hooks/userAuth'
 import { useSearchParams } from 'react-router-dom'
 import OrderFailPage from './OrderFailPage'
 import OrderSuccessPage from './OrderSuccessPage'
+import EmptyCartPage from './EmptyCartPage'
 
 
 
@@ -64,36 +65,40 @@ export const Cart = () => {
     return (
         <Container fixed sx={{marginY:5}}>
 
-            <CartPhase phase={phase} onHandlePhaseChange={handleChangePhase} paymentFailed={paymentFailed} />
-            {   phase == 4 
-                    ? 
-                paymentFailed
-                    ?
+            {cartItems?.length == 0 && <EmptyCartPage />}
 
-                <OrderFailPage onHandlePhaseChange={handleChangePhase} /> 
-                    :
-                <OrderSuccessPage />
-                    :        
+            {cartItems?.length != 0 && 
                 <Fragment>
-                    <Box marginTop={10}>
-                    {
-                        message.msg && 
-                        <Box>
-                            <CartMessage message={message} onChangeMessage={handleChangeMessage}  />
-                        </Box> 
+                    <CartPhase total={total} phase={phase} onHandlePhaseChange={handleChangePhase} paymentFailed={paymentFailed} />
+                    {   phase == 4
+                            ?
+                        paymentFailed
+                            ?
+                        <OrderFailPage onHandlePhaseChange={handleChangePhase} />
+                            :
+                        <OrderSuccessPage />
+                            :
+                        <Fragment>
+                            <Box marginTop={10}>
+                            {
+                                message.msg &&
+                                <Box>
+                                    <CartMessage message={message} onChangeMessage={handleChangeMessage}  />
+                                </Box>
+                            }
+                            {phase===1 && <CartDeliveryOption totalAmount={total || 0} />}
+                            </Box>
+                            <Stack direction={'row'} spacing={10} marginY={3}>
+                                {phase ==1 &&
+                                    <Fragment>
+                                        <Bag cartItems={cartItems ?? []} total={total || 0} onChangeMessage={handleChangeMessage} onHandlePhaseChange={handleChangePhase} />
+                                    </Fragment>
+                                }
+                                {(phase===2 && !token) &&  <CartSignIn onHandlePhaseChange={handleChangePhase} />}
+                                {phase===3 && <CheckoutDelivery cartItems={cartItems ?? []} total={total || 0} onHandlePhaseChange={handleChangePhase} />}
+                            </Stack>
+                        </Fragment>
                     }
-                    {phase===1 && <CartDeliveryOption totalAmount={total || 0} />}
-                    </Box>
-
-                    <Stack direction={'row'} spacing={10} marginY={3}>
-                        {phase ==1 &&
-                            <Fragment>
-                                <Bag cartItems={cartItems ?? []} total={total || 0} onChangeMessage={handleChangeMessage} onHandlePhaseChange={handleChangePhase} />
-                            </Fragment>
-                        }
-                        {(phase===2 && !token) &&  <CartSignIn onHandlePhaseChange={handleChangePhase} />}
-                        {phase===3 && <CheckoutDelivery cartItems={cartItems ?? []} total={total || 0} onHandlePhaseChange={handleChangePhase} />}
-                    </Stack>
                 </Fragment>
             }
         </Container>
