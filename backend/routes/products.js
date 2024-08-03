@@ -14,7 +14,9 @@ router.get('/',async(req,res)=>{
     const prices = _.map(req.query.priceFilters, value => parseFloat(value));
     const foundCategory = await Category.findOne({ name: req.query.category });
     const query = { category: foundCategory._id };
-    
+    if(req.query.types){
+        query['type'] = { $in: req.query.types }
+    }
     if (req.query.sizeFilters && req.query.sizeFilters.length > 0) {
         query['sizeColorNames.name'] = { $in: req.query.sizeFilters };
     }
@@ -42,7 +44,6 @@ router.get('/',async(req,res)=>{
 
 router.get('/trending',async(req,res)=>{
     const types = req.query.types
-    console.log('QUERY',req.query)
     const foundCategory = await Category.findOne({ name: req.query.category });
     res.send(await Product.find({
         type: { $in: types },
@@ -97,14 +98,14 @@ router.post('/',[auth,upload.array('images')],async (req,res)=>{
 
 const validateProduct = (data)=>{
     const schema = Joi.object({
-        sku:Joi.string().min(5).max(10).required(),
+        sku:Joi.string().min(5).max(11).required(),
         name:Joi.string().min(5).max(255).required(),
         description:Joi.string().required(),
         manufacturer:Joi.objectId().required(),
         category:Joi.objectId().required(),
         price:Joi.number().min(0).required(),
         fit:Joi.string().valid('regular','relaxed','slim','loose').required(),
-        type:Joi.string().valid('t-shirts','polos','shirts','trousers','jeans','activewear').required(),
+        type:Joi.string().valid('t-shirts','graphic-tees','polos','shirts','flannels','trousers','joggers','sweatpants','pants','shorts','leggings','skirts','jeans','activewear-top','activewear-bottom','hoodies','sweatshirts','underwear','jackets','coats','sweaters','cardigans','tanktops','blouses','jumpsuits','dresses').required(),
         sizeColorNames:Joi.array().unique('name').min(1).items(
             Joi.object(
                 {

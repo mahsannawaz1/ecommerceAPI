@@ -1,11 +1,16 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { clothingCategoriesMen,clothingCategoriesWomen,clothingCategoriesJuniors } from '../services/clothingCategories'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { Product } from '../interfaces/Product'
 interface Props{
-    type: string
+    type: string,
+    handleChangeProducts:(products:Product[]) => void
 }
 type clothingCategories = typeof clothingCategoriesMen | typeof clothingCategoriesWomen | typeof clothingCategoriesJuniors
-const CategoryComponent = ({type}:Props) => {
+const CategoryComponent = ({type,handleChangeProducts}:Props) => {
+    const [productType,setProductType] = useState<string[]>()
     let category : clothingCategories ;
     let keys= []
     if(type=='men')
@@ -15,6 +20,14 @@ const CategoryComponent = ({type}:Props) => {
     else 
         category = clothingCategoriesJuniors
     keys = Object.keys(category)
+    useEffect(()=>{
+        if(productType && productType?.length>0){
+            axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category:type,types:productType } }).then(res=>handleChangeProducts(res.data))
+        }
+    },[productType])
+    
+    
+
     return (
         <>
             {keys.map(key=>{
@@ -26,11 +39,11 @@ const CategoryComponent = ({type}:Props) => {
                         <Box marginBottom={4}>
                             { category[key as keyof typeof category].map((category,index)=> 
                                 <Box key={index} marginBottom={1}>
-                                    <Typography 
+                                    <Typography onClick={()=>setProductType(category.value)}
                                     sx={{ color:'var(--link)',cursor:'pointer',textTransform:'capitalize' }} 
                                     variant='body2' 
                                     component={'span'}
-                                    >{category}</Typography>
+                                    >{category.type}</Typography>
                                 </Box>
                             )}
                         </Box>

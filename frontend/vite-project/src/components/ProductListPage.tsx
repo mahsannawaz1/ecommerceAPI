@@ -33,7 +33,7 @@ const ProductListPage = ({ category }:Props) => {
     },[category])
     const [activeFilter,setActiveFilter] = useState<string | null>(null)
     const [filters,setFilters] = useState<{label:string,value:string}[]>([])
-
+    const [products,setProducts] = useState<Product[]>()
     const sizeFilters = filters.map(filter=>sizes.map(size=>size.value).includes(filter.value) ? filter.value : null)
     const colorFilters = filters.map(filter=>colors.map(color=>color.value).includes(filter.value) ? filter.value : null)
     const priceFilters = filters.map(filter=>prices.map(price=>price.value).includes(filter.value) ? filter.value : null)
@@ -57,10 +57,14 @@ const ProductListPage = ({ category }:Props) => {
         setCurrentSortBy(value)
     }
 
-    const { data:products } = useQuery({
-        queryKey:['products',currentSortBy,sizeFilters,colorFilters,priceFilters,category],
-        queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>res.data)
-    })
+    // const { data:products } = useQuery({
+    //     queryKey:['products',currentSortBy,sizeFilters,colorFilters,priceFilters,category],
+    //     queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>res.data)
+    // })
+
+    useEffect(()=>{
+        axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>setProducts(res.data))
+    },[currentSortBy,filters,category])
 
 
     return (
@@ -151,7 +155,7 @@ const ProductListPage = ({ category }:Props) => {
             <Grid columnSpacing={7} container>
                     <Grid item md={3} display={{xs:'none',md:'block'}} >
                         <Box>
-                            <CategoryComponent type={type} />
+                            <CategoryComponent type={type} handleChangeProducts={setProducts} />
                         </Box>
                     </Grid>
                     <Grid item md={9} sm={12}>

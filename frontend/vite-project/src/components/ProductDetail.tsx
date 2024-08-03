@@ -84,8 +84,8 @@ const breakpoints = [
             <Box width={{ lg: '31%', md: 'auto' }}>
             <Typography variant='h5' textAlign={'center'} marginBottom={2}>{product?.name}</Typography>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={1}>
-                <Typography sx={{ textDecoration: 'line-through' }}>{product?.price}</Typography>
-                <Typography color='error'>{product?.price}</Typography>
+                <Typography sx={{ textDecoration: 'line-through' }}>PKR {product?.price.toLocaleString()}</Typography>
+                <Typography color='error'>{product?.price.toLocaleString()}</Typography>
                 <Box display={'flex'} alignItems={'center'} padding={0.3} sx={{ background: '#d32f2f', color: 'var(--white)', fontSize: 11 }} component={'span'}>(SAVE 40%)</Box>
             </Stack>
             <Typography textAlign={'center'} marginY={0.5} sx={{ color: 'var(--link)', fontSize: 10 }}>Inclusive of VAT Item Code: 1161-3571-409</Typography>

@@ -45,8 +45,8 @@ const ProductListGrid = ({handleOpen,handleClose,open,category,products}:Props) 
                             <Typography fontSize={'var(--pro-title-font)'} variant='body2'>{product.name}</Typography>
                         </Link>
                         <Box>
-                            <Typography variant='body2' sx={{ textDecoration:'line-through' }} component={'span'}>{product.price}</Typography>
-                            <Typography variant='body2' color='error' marginLeft={'5px'} component={'span'}>{product.price}</Typography>
+                            <Typography variant='body2' sx={{ textDecoration:'line-through' }} component={'span'}>PKR {product.price.toLocaleString()}</Typography>
+                            <Typography variant='body2' color='error' marginLeft={'5px'} component={'span'}>{product.price.toLocaleString()}</Typography>
                         </Box>
                         
                         <Typography variant='caption' color='error'>(Save 40%)</Typography>
