@@ -40,6 +40,19 @@ router.get('/',async(req,res)=>{
     res.send(await Product.find(query).populate({ path: 'manufacturer', select: '-_id' }));
 })
 
+router.get('/trending',async(req,res)=>{
+    const types = req.query.types
+    console.log('QUERY',req.query)
+    const foundCategory = await Category.findOne({ name: req.query.category });
+    res.send(await Product.find({
+        type: { $in: types },
+        category: foundCategory._id
+    }).populate({ path: 'manufacturer', select: '-_id' }));
+    
+})
+
+
+
 router.get('/:id',async(req,res)=>{
     const product = await Product.findById(req.params.id).populate({path:'category',select:'-_id'}).select('-manufacturer')
     if(!product){
