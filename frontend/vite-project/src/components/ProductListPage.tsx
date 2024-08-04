@@ -15,15 +15,16 @@ import SizeFilter from './SizeFilter'
 import { colors,prices,sortByFilters,sizes } from '../services/filter';
 import Filter from './Filter'
 import ClearIcon from '@mui/icons-material/Clear';
-import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Product } from '../interfaces/Product'
+import { Link } from 'react-router-dom'
 
 interface Props{
     category: 'men' | 'women' | 'junior boys' | 'junior girls' | 'toddler boys' | 'toddler girls'
 }
 
 const ProductListPage = ({ category }:Props) => {
+    const [productType,setProductType] = useState<string[]>()
     const [open, setOpen] =  useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -57,81 +58,59 @@ const ProductListPage = ({ category }:Props) => {
         setCurrentSortBy(value)
     }
 
-    // const { data:products } = useQuery({
-    //     queryKey:['products',currentSortBy,sizeFilters,colorFilters,priceFilters,category],
-    //     queryFn: ()=> axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>res.data)
-    // })
-
     useEffect(()=>{
-        axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>setProducts(res.data))
-    },[currentSortBy,filters,category])
+        axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category,types:productType,sort_by:currentSortBy,sizeFilters,colorFilters,priceFilters } }).then(res=>setProducts(res.data))
+    },[currentSortBy,filters,category,productType])
 
 
     return (
         <>
         <Container fixed sx={{marginY:5}}>
             <Stack direction='row' spacing={2} overflow={'auto'}>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setCurrentSortBy('-createdAt')}  sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={newArrivals} alt="New Arrivals" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>New Arrivals</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['graphic-tees'])}  sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={tees} alt="Graphic tees" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Graphic tees</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['polos'])} sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={polos} alt="Polos" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Polos</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['shirts','flannels'])} sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={shirts} alt="Shirts & Flannels" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Shirts & Flannels</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['hoodies','sweatshirts'])} sx={{ cursor:'pointer' }}> 
                     <img width={'120px'}  src={hoodies} alt="Hoodies & SweatShirts" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Hoodies & SweatShirts</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['jeans'])} sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={jeans} alt="Jeans" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Jeans</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['joggers','sweatpants'])} sx={{ cursor:'pointer' }}> 
                     <img width={'120px'}  src={joggers} alt="Joggers & Sweatpants" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Joggers & Sweatpants</Typography>
                 </Box>
-                <Box  sx={{ cursor:'pointer' }}>
+                <Box onClick={()=>setProductType(['underwear'])} sx={{ cursor:'pointer' }}>
                     <img width={'120px'}  src={under} alt="Underwear" />
                     <Typography textAlign={'center'} width='100px' whiteSpace={'wrap'} lineHeight={1.2} variant='body2'>Underwear</Typography>
                 </Box>
             </Stack>
             <Stack spacing={1} marginY={1} direction='row' justifyContent={'flex-start'} alignItems={'center'}>
-                <Typography variant='caption' sx={{
-                        color:'var(--link)',
-                        '&:hover':{
-                            
-                            textDecoration:'underline'
-
-                        },
-                        cursor:'pointer'
-                    }}>Home </Typography>
-                <Typography variant='caption' sx={{
-                        color:'var(--link)',
-                        '&:hover':{
-                            
-                            textDecoration:'underline'
-
-                        },
-                        cursor:'pointer'
-                    }}>&gt;</Typography>
-                <Typography variant='caption' sx={{
-                        color:'var(--link)',
-                        '&:hover':{
-                            
-                            textDecoration:'underline'
-
-                        },
-                        cursor:'pointer'
-                    }}>American Eagle</Typography>
+                <Link to='/'>
+                    <Typography variant='caption' sx={{
+                            color:'var(--link)',
+                            '&:hover':{
+                                textDecoration:'underline'
+                            },
+                            cursor:'pointer'
+                        }}>Home
+                    </Typography>
+                </Link>
                 <Typography variant='caption' sx={{
                         color:'var(--link)',
                         '&:hover':{
@@ -141,6 +120,17 @@ const ProductListPage = ({ category }:Props) => {
                         },
                         cursor:'pointer'
                     }}>&gt;</Typography>
+                <Link to='/'>
+                    <Typography variant='caption' sx={{
+                            color:'var(--link)',
+                            '&:hover':{
+                    
+                                textDecoration:'underline'
+                            },
+                            cursor:'pointer'
+                        }}>Dapperlane
+                        </Typography>
+                </Link>
                 <Typography variant='caption' sx={{
                         color:'var(--link)',
                         '&:hover':{
@@ -148,14 +138,26 @@ const ProductListPage = ({ category }:Props) => {
                             textDecoration:'underline'
 
                         },
-                        textTransform:'capitalize',
                         cursor:'pointer'
-                    }}>{category}</Typography>
+                    }}>&gt;</Typography>
+                
+                    <Typography variant='caption' sx={{
+                            color:'var(--link)',
+                            textTransform:'capitalize',
+                        }}>{category}</Typography>
+                
             </Stack>
             <Grid columnSpacing={7} container>
                     <Grid item md={3} display={{xs:'none',md:'block'}} >
                         <Box>
-                            <CategoryComponent type={type} handleChangeProducts={setProducts} />
+                            <CategoryComponent 
+                            type={type} 
+                            handleChangeProducts={setProducts} 
+                            sort_by={currentSortBy} 
+                            sizeFilters={sizeFilters}
+                            colorFilters={colorFilters}
+                            priceFilters={priceFilters}
+                            />
                         </Box>
                     </Grid>
                     <Grid item md={9} sm={12}>

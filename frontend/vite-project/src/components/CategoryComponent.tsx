@@ -1,15 +1,18 @@
 import { Box, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { clothingCategoriesMen,clothingCategoriesWomen,clothingCategoriesJuniors } from '../services/clothingCategories'
-import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Product } from '../interfaces/Product'
 interface Props{
     type: string,
-    handleChangeProducts:(products:Product[]) => void
+    handleChangeProducts:(products:Product[]) => void,
+    sort_by:string,
+    sizeFilters:(string | null)[],
+    colorFilters:(string | null)[],
+    priceFilters:number[]
 }
 type clothingCategories = typeof clothingCategoriesMen | typeof clothingCategoriesWomen | typeof clothingCategoriesJuniors
-const CategoryComponent = ({type,handleChangeProducts}:Props) => {
+const CategoryComponent = ({type,handleChangeProducts,sort_by,colorFilters,priceFilters,sizeFilters}:Props) => {
     const [productType,setProductType] = useState<string[]>()
     let category : clothingCategories ;
     let keys= []
@@ -22,7 +25,7 @@ const CategoryComponent = ({type,handleChangeProducts}:Props) => {
     keys = Object.keys(category)
     useEffect(()=>{
         if(productType && productType?.length>0){
-            axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category:type,types:productType } }).then(res=>handleChangeProducts(res.data))
+            axios.get<Product[]>('http://localhost:3000/api/products',{ params:{ category:type,types:productType,sort_by,sizeFilters,colorFilters,priceFilters } }).then(res=>handleChangeProducts(res.data))
         }
     },[productType])
     

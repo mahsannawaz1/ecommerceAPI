@@ -12,6 +12,7 @@ const router = require('express').Router()
 
 router.get('/',async(req,res)=>{
     const prices = _.map(req.query.priceFilters, value => parseFloat(value));
+    const colors = _.map(req.query.colorFilters, value =>value.toLowerCase());
     const foundCategory = await Category.findOne({ name: req.query.category });
     const query = { category: foundCategory._id };
     if(req.query.types){
@@ -25,9 +26,9 @@ router.get('/',async(req,res)=>{
         query.price = { $gte: _.min(prices), $lte: _.max(prices) };
     }
     
-    if (req.query.colorFilters && req.query.colorFilters.length > 0) {
+    if (colors && colors > 0) {
         query['sizeColorNames.colors'] = {
-            $elemMatch: { name: { $in: req.query.colorFilters } }
+            $elemMatch: { name: { $in: colors } }
         };
     }
     
